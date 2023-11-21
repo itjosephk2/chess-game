@@ -28,10 +28,28 @@ const chessController = {
     for (let square of squares) {
     square.addEventListener("click", function () {
         if (isPieceSelected) {
-          movePiece(square, chessboard, selectedPiece);
+          let isMoveLegal = checkifMoveIsLegal(selectedPiece, square);
+          if (isMoveLegal) {
+            movePiece(square, chessboard, selectedPiece);
+          } else {
+            console.log("Illegal Move");
+          }
         } else {
           if (square.innerHTML != "") {
-            selectedPiece = selectPiece(square.firstChild);
+            if (isWhiteToMove) {
+              if (square.firstChild.dataset.char != square.firstChild.dataset.char.toLowerCase()) {
+                selectedPiece = selectPiece(square.firstChild);
+              } else {
+                console.log("White to move");
+              }
+            } else {
+              if (square.firstChild.dataset.char == square.firstChild.dataset.char.toLowerCase()) {
+                selectedPiece = selectPiece(square.firstChild);
+              } else {
+                console.log("Black to move");
+              }
+            }
+
           }
         }
       });
@@ -43,6 +61,7 @@ const chessController = {
 // Additional state variables
 let isPieceSelected = false;
 let selectedPiece = null;
+let isWhiteToMove = true;
 
 /**
 * Reset the piece selection state
@@ -51,10 +70,22 @@ function resetSelection() {
   if (selectedPiece) {
     selectedPiece.classList.remove("selected");
   }
+  isWhiteToMove = isWhiteToMove ? false : true;
   isPieceSelected = false;
   selectedPiece = null;
 }
 
+function checkifMoveIsLegal(square, selectedPiece) {
+  console.log(square.innerHTML);
+  if (square.innerHTML != "") {
+    alert("Check is working");
+    console.log(selectedPiece.dataset.color);
+    if (selectedPiece.dataset.color == square.firstChild.dataset.color) {
+      return false;
+    }
+  }
+  return true;
+}
 
 /**
 * Piece selection
@@ -127,6 +158,7 @@ function createPieceElement(pieceChar) {
   const pieceElement = document.createElement("i");
   pieceElement.classList.add('chess-piece', color + '-piece', 'fa-solid', 'fa-chess-' + pieceType);
   pieceElement.setAttribute('data-char', pieceChar);
+  pieceElement.setAttribute('data-color', color);
   return pieceElement;
 }
 
