@@ -75,14 +75,40 @@ function resetSelection() {
   selectedPiece = null;
 }
 
-function checkifMoveIsLegal(square, selectedPiece) {
-  console.log(square.innerHTML);
+function checkifMoveIsLegal(selectedPiece, square) {
   if (square.innerHTML != "") {
-    alert("Check is working");
     console.log(selectedPiece.dataset.color);
     if (selectedPiece.dataset.color == square.firstChild.dataset.color) {
       return false;
     }
+  }
+  switch (selectedPiece.dataset.char) {
+    case 'P':
+      if (square.dataset.square != selectedPiece.parentElement.dataset.square - 8) {
+        console.log("Illegal Move");
+        return false;
+      }
+      break;
+    case 'r':
+      if (Math.floor(square.dataset.square / 8) != Math.floor(selectedPiece.parentElement.dataset.square / 8) && square.dataset.square % 8 != selectedPiece.parentElement.dataset.square % 8) {
+        console.log("Illegal Move");
+        return false;
+      }
+      break;
+    case 'n':
+      pieceType = 'knight';
+      break;
+    case 'b':
+      pieceType = 'bishop';
+      break;
+    case 'q':
+      pieceType = 'queen';
+      break;
+    case 'k':
+      pieceType = 'king';
+      break;
+    default:
+      break;
   }
   return true;
 }
