@@ -31,8 +31,9 @@ const chessController = {
           let isMoveLegal = checkifMoveIsLegal(selectedPiece, square);
           if (isMoveLegal) {
             movePiece(square, chessboard, selectedPiece);
+            changePlayerTurn();
           } else {
-            console.log("Illegal Move");
+            resetSelection();
           }
         } else {
           if (square.innerHTML != "") {
@@ -70,43 +71,159 @@ function resetSelection() {
   if (selectedPiece) {
     selectedPiece.classList.remove("selected");
   }
-  isWhiteToMove = isWhiteToMove ? false : true;
   isPieceSelected = false;
   selectedPiece = null;
 }
 
+function changePlayerTurn() {
+  isWhiteToMove = isWhiteToMove ? false : true;
+}
+
 function checkifMoveIsLegal(selectedPiece, square) {
+
   if (square.innerHTML != "") {
-    console.log(selectedPiece.dataset.color);
     if (selectedPiece.dataset.color == square.firstChild.dataset.color) {
+      resetSelection();
       return false;
     }
   }
+
   switch (selectedPiece.dataset.char) {
+
     case 'P':
-      if (square.dataset.square != selectedPiece.parentElement.dataset.square - 8) {
+      if (square.dataset.square == selectedPiece.parentElement.dataset.square - 8 ||
+
+        (!selectedPiece.dataset.hasMoved && square.dataset.square == selectedPiece.parentElement.dataset.square - 16) ||
+
+        (square.dataset.square == selectedPiece.parentElement.dataset.square - 7
+          && square.firstChild.dataset.color != selectedPiece.dataset.color) ||
+
+        (square.dataset.square == selectedPiece.parentElement.dataset.square - 9
+          && square.firstChild.dataset.color != selectedPiece.dataset.color)
+        ) {
+        selectedPiece.setAttribute("data-has-moved", "true");
+        return true;
+      }
+      return false;
+
+    case 'p':
+      if (square.dataset.square -8 == selectedPiece.parentElement.dataset.square ||
+
+        (!selectedPiece.dataset.hasMoved && square.dataset.square -16 == selectedPiece.parentElement.dataset.square) ||
+
+        (square.dataset.square - 7 == selectedPiece.parentElement.dataset.square
+          && square.firstChild.dataset.color != selectedPiece.dataset.color) ||
+
+        (square.dataset.square - 9 == selectedPiece.parentElement.dataset.square
+          && square.firstChild.dataset.color != selectedPiece.dataset.color)
+        ) {
+        selectedPiece.setAttribute("data-has-moved", "true");
+        return true;
+      }
+      return false;
+
+    case 'r':
+      if (Math.floor(square.dataset.square / 8) != Math.floor(selectedPiece.parentElement.dataset.square / 8)
+      && square.dataset.square % 8 != selectedPiece.parentElement.dataset.square % 8) {
         console.log("Illegal Move");
         return false;
       }
       break;
-    case 'r':
-      if (Math.floor(square.dataset.square / 8) != Math.floor(selectedPiece.parentElement.dataset.square / 8) && square.dataset.square % 8 != selectedPiece.parentElement.dataset.square % 8) {
+
+    case 'R':
+      if (Math.floor(square.dataset.square / 8) != Math.floor(selectedPiece.parentElement.dataset.square / 8)
+      && square.dataset.square % 8 != selectedPiece.parentElement.dataset.square % 8) {
         console.log("Illegal Move");
         return false;
       }
       break;
     case 'n':
-      pieceType = 'knight';
-      break;
+    if (parseInt(square.dataset.square) + 10 == selectedPiece.parentElement.dataset.square ||
+        parseInt(square.dataset.square) - 10 == selectedPiece.parentElement.dataset.square ||
+        parseInt(square.dataset.square) + 17 == selectedPiece.parentElement.dataset.square ||
+        parseInt(square.dataset.square) - 17 == selectedPiece.parentElement.dataset.square ||
+        parseInt(square.dataset.square) + 15 == selectedPiece.parentElement.dataset.square ||
+        parseInt(square.dataset.square) - 15 == selectedPiece.parentElement.dataset.square ||
+        parseInt(square.dataset.square) + 6 == selectedPiece.parentElement.dataset.square ||
+        parseInt(square.dataset.square) - 6 == selectedPiece.parentElement.dataset.square) {
+      console.log("This is a valid move");
+      return true;
+    }
+      return false;
+    case 'N':
+    if (parseInt(square.dataset.square) + 10 == selectedPiece.parentElement.dataset.square ||
+        parseInt(square.dataset.square) - 10 == selectedPiece.parentElement.dataset.square ||
+        parseInt(square.dataset.square) + 17 == selectedPiece.parentElement.dataset.square ||
+        parseInt(square.dataset.square) - 17 == selectedPiece.parentElement.dataset.square ||
+        parseInt(square.dataset.square) + 15 == selectedPiece.parentElement.dataset.square ||
+        parseInt(square.dataset.square) - 15 == selectedPiece.parentElement.dataset.square ||
+        parseInt(square.dataset.square) + 6 == selectedPiece.parentElement.dataset.square ||
+        parseInt(square.dataset.square) - 6 == selectedPiece.parentElement.dataset.square) {
+      console.log("This is a valid move");
+      return true;
+    }
+      return false;
     case 'b':
-      pieceType = 'bishop';
+      if ((square.dataset.square - selectedPiece.parentElement.dataset.square) % 7 == 0 ||
+      (square.dataset.square - selectedPiece.parentElement.dataset.square) % 9 == 0 ) {
+        console.log("Valid Move");
+        return true;
+      }
+      return false;
+    case 'B':
+      if ((square.dataset.square - selectedPiece.parentElement.dataset.square) % 7 == 0 ||
+      (square.dataset.square - selectedPiece.parentElement.dataset.square) % 9 == 0 ) {
+        console.log("Valid Move");
+        return true;
+      }
+      return false;
       break;
     case 'q':
-      pieceType = 'queen';
-      break;
+      if ((square.dataset.square - selectedPiece.parentElement.dataset.square) % 7 == 0 ||
+      (square.dataset.square - selectedPiece.parentElement.dataset.square) % 9 == 0 ||
+      Math.floor(square.dataset.square / 8) == Math.floor(selectedPiece.parentElement.dataset.square / 8) ||
+      square.dataset.square % 8 == selectedPiece.parentElement.dataset.square % 8) {
+        console.log("This is a valid Move");
+        return true;
+      }
+      return false;
+    case 'Q':
+      if ((square.dataset.square - selectedPiece.parentElement.dataset.square) % 7 == 0 ||
+      (square.dataset.square - selectedPiece.parentElement.dataset.square) % 9 == 0 ||
+      Math.floor(square.dataset.square / 8) == Math.floor(selectedPiece.parentElement.dataset.square / 8) ||
+      square.dataset.square % 8 == selectedPiece.parentElement.dataset.square % 8) {
+        console.log("This is a valid Move");
+        return true;
+      }
+      return false;
     case 'k':
-      pieceType = 'king';
-      break;
+      console.log(selectedPiece.parentElement.dataset.square);
+      if (parseInt(square.dataset.square) + 1 == selectedPiece.parentElement.dataset.square ||
+          parseInt(square.dataset.square) - 1 == selectedPiece.parentElement.dataset.square ||
+          parseInt(square.dataset.square) + 7 == selectedPiece.parentElement.dataset.square ||
+          parseInt(square.dataset.square) + 8 == selectedPiece.parentElement.dataset.square ||
+          parseInt(square.dataset.square) + 9 == selectedPiece.parentElement.dataset.square ||
+          parseInt(square.dataset.square) - 7 == selectedPiece.parentElement.dataset.square ||
+          parseInt(square.dataset.square) - 8 == selectedPiece.parentElement.dataset.square ||
+          parseInt(square.dataset.square) - 9 == selectedPiece.parentElement.dataset.square) {
+            console.log("this is a valid Move");
+            return true;
+      }
+      return false;
+    case 'K':
+      console.log(selectedPiece.parentElement.dataset.square);
+      if (parseInt(square.dataset.square) + 1 == selectedPiece.parentElement.dataset.square ||
+          parseInt(square.dataset.square) - 1 == selectedPiece.parentElement.dataset.square ||
+          parseInt(square.dataset.square) + 7 == selectedPiece.parentElement.dataset.square ||
+          parseInt(square.dataset.square) + 8 == selectedPiece.parentElement.dataset.square ||
+          parseInt(square.dataset.square) + 9 == selectedPiece.parentElement.dataset.square ||
+          parseInt(square.dataset.square) - 7 == selectedPiece.parentElement.dataset.square ||
+          parseInt(square.dataset.square) - 8 == selectedPiece.parentElement.dataset.square ||
+          parseInt(square.dataset.square) - 9 == selectedPiece.parentElement.dataset.square) {
+            console.log("this is a valid Move");
+            return true;
+      }
+      return false;
     default:
       break;
   }
@@ -156,6 +273,7 @@ function movePiece(square, chessboard, selectedPiece) {
 function createPieceElement(pieceChar) {
   let color = "white";
   let pieceType;
+  let hasMoved = "false";
   if (pieceChar == pieceChar.toLowerCase()){
     color = "black";
   }
@@ -185,6 +303,7 @@ function createPieceElement(pieceChar) {
   pieceElement.classList.add('chess-piece', color + '-piece', 'fa-solid', 'fa-chess-' + pieceType);
   pieceElement.setAttribute('data-char', pieceChar);
   pieceElement.setAttribute('data-color', color);
+  pieceElement.setAttribute('data-has-moved', hasMoved);
   return pieceElement;
 }
 
