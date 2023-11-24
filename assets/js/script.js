@@ -28,9 +28,12 @@ const chessController = {
     for (let square of squares) {
     square.addEventListener("click", function () {
         if (isPieceSelected) {
-          let isMoveLegal = checkifMoveIsLegal(selectedPiece, square);
+          let isMoveLegal = checkifMoveIsLegal(selectedPiece, square, chessboard);
           if (isMoveLegal) {
             movePiece(square, chessboard, selectedPiece);
+            for (x of chessboard) {
+              console.log(x);
+            }
             changePlayerTurn();
           } else {
             resetSelection();
@@ -79,7 +82,7 @@ function changePlayerTurn() {
   isWhiteToMove = isWhiteToMove ? false : true;
 }
 
-function checkifMoveIsLegal(selectedPiece, square) {
+function checkifMoveIsLegal(selectedPiece, square, chessboard) {
 
   if (square.innerHTML != "") {
     if (selectedPiece.dataset.color == square.firstChild.dataset.color) {
@@ -91,14 +94,21 @@ function checkifMoveIsLegal(selectedPiece, square) {
   switch (selectedPiece.dataset.char) {
 
     case 'P':
-      if (square.dataset.square == selectedPiece.parentElement.dataset.square - 8 ||
+      if (square.innerHTML == '' &&
+      square.dataset.square == selectedPiece.parentElement.dataset.square - 8 ||
 
-        (!selectedPiece.dataset.hasMoved && square.dataset.square == selectedPiece.parentElement.dataset.square - 16) ||
+        (square.innerHTML == '' &&
+        chessboard[Math.floor((selectedPiece.parentElement.dataset.square - 8) / 8)]
+        [(selectedPiece.parentElement.dataset.square - 8) % 8] == 0 &&
+        selectedPiece.dataset.hasMoved == "false" &&
+        square.dataset.square == selectedPiece.parentElement.dataset.square - 16) ||
 
-        (square.dataset.square == selectedPiece.parentElement.dataset.square - 7
+        (square.firstChild == 'i' &&
+        square.dataset.square == selectedPiece.parentElement.dataset.square - 7
           && square.firstChild.dataset.color != selectedPiece.dataset.color) ||
 
-        (square.dataset.square == selectedPiece.parentElement.dataset.square - 9
+        (square.firstChild == 'i' &&
+        square.dataset.square == selectedPiece.parentElement.dataset.square - 9
           && square.firstChild.dataset.color != selectedPiece.dataset.color)
         ) {
         selectedPiece.setAttribute("data-has-moved", "true");
@@ -109,7 +119,11 @@ function checkifMoveIsLegal(selectedPiece, square) {
     case 'p':
       if (square.dataset.square -8 == selectedPiece.parentElement.dataset.square ||
 
-        (!selectedPiece.dataset.hasMoved && square.dataset.square -16 == selectedPiece.parentElement.dataset.square) ||
+        (square.innerHTML == '' &&
+        chessboard[Math.floor((square.dataset.square - 8) / 8)]
+        [(square.dataset.square - 8) % 8] == 0 &&
+        selectedPiece.dataset.hasMoved == "false"
+        && square.dataset.square - 16 == selectedPiece.parentElement.dataset.square) ||
 
         (square.dataset.square - 7 == selectedPiece.parentElement.dataset.square
           && square.firstChild.dataset.color != selectedPiece.dataset.color) ||
