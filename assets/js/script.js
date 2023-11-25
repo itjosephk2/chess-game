@@ -67,6 +67,14 @@ let isPieceSelected = false;
 let selectedPiece = null;
 let isWhiteToMove = true;
 
+function getRow(squareId) {
+  return Math.floor(squareId / 8);
+}
+
+function getCol(squareId) {
+  return squareId % 8;
+}
+
 /**
 * Reset the piece selection state
 */
@@ -83,6 +91,25 @@ function changePlayerTurn() {
 }
 
 function checkifMoveIsLegal(selectedPiece, square, chessboard) {
+  let currentSquare = parseInt(selectedPiece.parentElement.dataset.square);
+  let selectedSquare = parseInt(square.dataset.square);
+  let squaresMoved = currentSquare - selectedSquare;
+  let currentSquareRow = getRow(currentSquare);
+  let currentSquareCol = getCol(currentSquare);
+  let selectedSquareRow = getRow(selectedSquare);
+  let selectedSquareCol = getCol(selectedSquare);
+  let left = -1;
+  let right = 1;
+  let up = - 8;
+  let down = + 8;
+  let upRight = -7;
+  let upLeft = -9;
+  let downLeft = 7;
+  let downRight = 9;
+
+  if (squaresMoved < 0) {
+    squaresMoved = squaresMoved * -1;
+  }
 
   if (square.innerHTML != "") {
     if (selectedPiece.dataset.color == square.firstChild.dataset.color) {
@@ -94,41 +121,45 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
   switch (selectedPiece.dataset.char) {
 
     case 'P':
-      if (square.innerHTML == '' &&
-      square.dataset.square == selectedPiece.parentElement.dataset.square - 8 ||
-
+      // moving forward 1 space
+      console.log(currentSquare + up);
+      if (square.innerHTML == '' && selectedSquare == currentSquare + up ||
+        // Moving forwards 2 spaces on turn 1
         (square.innerHTML == '' &&
-        chessboard[Math.floor((selectedPiece.parentElement.dataset.square - 8) / 8)]
-        [(selectedPiece.parentElement.dataset.square - 8) % 8] == 0 &&
+        chessboard[currentSquareRow + 1][currentSquareCol] == 0 &&
         selectedPiece.dataset.hasMoved == "false" &&
-        square.dataset.square == selectedPiece.parentElement.dataset.square - 16) ||
-
-        (square.firstChild == 'i' &&
-        square.dataset.square == selectedPiece.parentElement.dataset.square - 7
-          && square.firstChild.dataset.color != selectedPiece.dataset.color) ||
-
-        (square.firstChild == 'i' &&
-        square.dataset.square == selectedPiece.parentElement.dataset.square - 9
-          && square.firstChild.dataset.color != selectedPiece.dataset.color)
+        detinationSquare == currentSquare + (up * 2)) ||
+        // Taking Left
+        (square.innerHTML != '' && selectedSquare == currentSquare + upLeft) ||
+        // Taking Right
+        (square.innerHTML != '' && selectedSquare == currentSquare + upRight)
         ) {
-        selectedPiece.setAttribute("data-has-moved", "true");
-        return true;
-      }
+          selectedPiece.setAttribute("data-has-moved", "true");
+          return true;
+        }
       return false;
 
     case 'p':
-      if (square.dataset.square -8 == selectedPiece.parentElement.dataset.square ||
 
+      // moving forward 1 space
+      if (square.innerHTML == '' &&
+        selectedSquare -8 == currentSquare ||
+
+        // MOving 2 spaces on turn 1
         (square.innerHTML == '' &&
-        chessboard[Math.floor((square.dataset.square - 8) / 8)]
-        [(square.dataset.square - 8) % 8] == 0 &&
-        selectedPiece.dataset.hasMoved == "false"
-        && square.dataset.square - 16 == selectedPiece.parentElement.dataset.square) ||
+        chessboard[Math.floor((selectedSquare - 8) / 8)]
+        [(selectedSquare - 8) % 8] == 0 &&
+        selectedPiece.dataset.hasMoved == "false" &&
+        selectedSquare - 16 == currentSquare) ||
 
-        (square.dataset.square - 7 == selectedPiece.parentElement.dataset.square
+        // Capture Left
+        (square.innerHTML != '' &&
+          selectedSquare - 7 == currentSquare
           && square.firstChild.dataset.color != selectedPiece.dataset.color) ||
 
-        (square.dataset.square - 9 == selectedPiece.parentElement.dataset.square
+        // Capture Right
+        (square.innerHTML != '' &&
+          selectedSquare - 9 == currentSquare
           && square.firstChild.dataset.color != selectedPiece.dataset.color)
         ) {
         selectedPiece.setAttribute("data-has-moved", "true");
@@ -136,104 +167,92 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
       }
       return false;
 
-    case 'r':
-      if (Math.floor(square.dataset.square / 8) != Math.floor(selectedPiece.parentElement.dataset.square / 8)
-      && square.dataset.square % 8 != selectedPiece.parentElement.dataset.square % 8) {
-        console.log("Illegal Move");
-        return false;
-      }
-      break;
-
     case 'R':
-      if (Math.floor(square.dataset.square / 8) != Math.floor(selectedPiece.parentElement.dataset.square / 8)
-      && square.dataset.square % 8 != selectedPiece.parentElement.dataset.square % 8) {
-        console.log("Illegal Move");
-        return false;
+    case 'r':
+      if (selectedSquareRow == currentSquareRow ||
+        selectedSquareCol == currentSquareCol) {
+        return true;
       }
-      break;
-    case 'n':
-    if (parseInt(square.dataset.square) + 10 == selectedPiece.parentElement.dataset.square ||
-        parseInt(square.dataset.square) - 10 == selectedPiece.parentElement.dataset.square ||
-        parseInt(square.dataset.square) + 17 == selectedPiece.parentElement.dataset.square ||
-        parseInt(square.dataset.square) - 17 == selectedPiece.parentElement.dataset.square ||
-        parseInt(square.dataset.square) + 15 == selectedPiece.parentElement.dataset.square ||
-        parseInt(square.dataset.square) - 15 == selectedPiece.parentElement.dataset.square ||
-        parseInt(square.dataset.square) + 6 == selectedPiece.parentElement.dataset.square ||
-        parseInt(square.dataset.square) - 6 == selectedPiece.parentElement.dataset.square) {
-      console.log("This is a valid move");
-      return true;
-    }
       return false;
+
+    case 'n':
     case 'N':
-    if (parseInt(square.dataset.square) + 10 == selectedPiece.parentElement.dataset.square ||
-        parseInt(square.dataset.square) - 10 == selectedPiece.parentElement.dataset.square ||
-        parseInt(square.dataset.square) + 17 == selectedPiece.parentElement.dataset.square ||
-        parseInt(square.dataset.square) - 17 == selectedPiece.parentElement.dataset.square ||
-        parseInt(square.dataset.square) + 15 == selectedPiece.parentElement.dataset.square ||
-        parseInt(square.dataset.square) - 15 == selectedPiece.parentElement.dataset.square ||
-        parseInt(square.dataset.square) + 6 == selectedPiece.parentElement.dataset.square ||
-        parseInt(square.dataset.square) - 6 == selectedPiece.parentElement.dataset.square) {
+    if (selectedSquare + 10 == currentSquare ||
+        selectedSquare - 10 == currentSquare ||
+        selectedSquare + 17 == currentSquare ||
+        selectedSquare - 17 == currentSquare ||
+        selectedSquare + 15 == currentSquare ||
+        selectedSquare - 15 == currentSquare ||
+        selectedSquare + 6 == currentSquare ||
+        selectedSquare - 6 == currentSquare) {
       console.log("This is a valid move");
       return true;
     }
       return false;
     case 'b':
-      if ((square.dataset.square - selectedPiece.parentElement.dataset.square) % 7 == 0 ||
-      (square.dataset.square - selectedPiece.parentElement.dataset.square) % 9 == 0 ) {
-        console.log("Valid Move");
+      for (let i = 1; i < squaresMoved / 7; i++) {
+        if (chessboard[(Math.floor((selectedPiece.parentElement.dataset.square) / 8)) + i][((selectedPiece.parentElement.dataset.square) % 8) + i] != 0) {
+          console.log("Piece in the way");
+          console.log((Math.floor((selectedPiece.parentElement.dataset.square) / 8)) + 1);
+          console.log(((selectedPiece.parentElement.dataset.square) % 8) - 1);
+          console.log(chessboard[(Math.floor((selectedPiece.parentElement.dataset.square) / 8) + 1)][(selectedPiece.parentElement.dataset.square) % 8] + 1 );
+          return false;
+        }
+      }
+      for (let i = 1; i < squaresMoved / 9; i++) {
+        if (chessboard[Math.floor((selectedPiece.parentElement.dataset.square + 9) / 8)][(selectedPiece.parentElement.dataset.square + 9) % 8] != 0) {
+          console.log("Piece in the way");
+          console.log(chessboard[Math.floor((selectedPiece.parentElement.dataset.square + 9) / 8)][(selectedPiece.parentElement.dataset.square + 9) % 8] );
+          return false;
+        }
+      }
+
+      if (square.dataset.color === selectedPiece.parentElement.dataset.color &&
+      squaresMoved % 7 == 0 ||
+      square.dataset.color === selectedPiece.parentElement.dataset.color &&
+      squaresMoved % 9 == 0 ) {
+
         return true;
       }
       return false;
     case 'B':
-      if ((square.dataset.square - selectedPiece.parentElement.dataset.square) % 7 == 0 ||
-      (square.dataset.square - selectedPiece.parentElement.dataset.square) % 9 == 0 ) {
-        console.log("Valid Move");
+      if (squaresMoved % 7 == 0) {
+        squaresMoved = squaresMoved / 7;
+      }
+      if (squaresMoved % 9 == 0) {
+        squaresMoved = squaresMoved / 9;
+      }
+      if (square.dataset.color === selectedPiece.parentElement.dataset.color &&
+      squaresMoved % 7 == 0 ||
+      square.dataset.color === selectedPiece.parentElement.dataset.color &&
+      squaresMoved % 9 == 0 ) {
+
         return true;
       }
       return false;
       break;
-    case 'q':
-      if ((square.dataset.square - selectedPiece.parentElement.dataset.square) % 7 == 0 ||
-      (square.dataset.square - selectedPiece.parentElement.dataset.square) % 9 == 0 ||
-      Math.floor(square.dataset.square / 8) == Math.floor(selectedPiece.parentElement.dataset.square / 8) ||
-      square.dataset.square % 8 == selectedPiece.parentElement.dataset.square % 8) {
-        console.log("This is a valid Move");
-        return true;
-      }
-      return false;
     case 'Q':
-      if ((square.dataset.square - selectedPiece.parentElement.dataset.square) % 7 == 0 ||
-      (square.dataset.square - selectedPiece.parentElement.dataset.square) % 9 == 0 ||
-      Math.floor(square.dataset.square / 8) == Math.floor(selectedPiece.parentElement.dataset.square / 8) ||
-      square.dataset.square % 8 == selectedPiece.parentElement.dataset.square % 8) {
+    case 'q':
+      if (((selectedSquare - currentSquare) % 7 == 0 ||
+      (selectedSquare - currentSquare) % 9 == 0) ||
+       selectedSquareRow == currentSquareRow ||
+       selectedSquareCol == currentSquareCol) {
         console.log("This is a valid Move");
         return true;
       }
       return false;
+
+    case 'k':
     case 'k':
       console.log(selectedPiece.parentElement.dataset.square);
-      if (parseInt(square.dataset.square) + 1 == selectedPiece.parentElement.dataset.square ||
-          parseInt(square.dataset.square) - 1 == selectedPiece.parentElement.dataset.square ||
-          parseInt(square.dataset.square) + 7 == selectedPiece.parentElement.dataset.square ||
-          parseInt(square.dataset.square) + 8 == selectedPiece.parentElement.dataset.square ||
-          parseInt(square.dataset.square) + 9 == selectedPiece.parentElement.dataset.square ||
-          parseInt(square.dataset.square) - 7 == selectedPiece.parentElement.dataset.square ||
-          parseInt(square.dataset.square) - 8 == selectedPiece.parentElement.dataset.square ||
-          parseInt(square.dataset.square) - 9 == selectedPiece.parentElement.dataset.square) {
-            console.log("this is a valid Move");
-            return true;
-      }
-      return false;
-    case 'K':
-      console.log(selectedPiece.parentElement.dataset.square);
-      if (parseInt(square.dataset.square) + 1 == selectedPiece.parentElement.dataset.square ||
-          parseInt(square.dataset.square) - 1 == selectedPiece.parentElement.dataset.square ||
-          parseInt(square.dataset.square) + 7 == selectedPiece.parentElement.dataset.square ||
-          parseInt(square.dataset.square) + 8 == selectedPiece.parentElement.dataset.square ||
-          parseInt(square.dataset.square) + 9 == selectedPiece.parentElement.dataset.square ||
-          parseInt(square.dataset.square) - 7 == selectedPiece.parentElement.dataset.square ||
-          parseInt(square.dataset.square) - 8 == selectedPiece.parentElement.dataset.square ||
-          parseInt(square.dataset.square) - 9 == selectedPiece.parentElement.dataset.square) {
+      if (parseInt(selectedSquare) + left == currentSquare ||
+          parseInt(selectedSquare) + right == currentSquare ||
+          parseInt(selectedSquare) + down == currentSquare ||
+          parseInt(selectedSquare) + up == currentSquare ||
+          parseInt(selectedSquare) + downLeft == currentSquare ||
+          parseInt(selectedSquare) + downRight == currentSquare ||
+          parseInt(selectedSquare) + upLeft == currentSquare ||
+          parseInt(selectedSquare) + upRight == currentSquare) {
             console.log("this is a valid Move");
             return true;
       }
@@ -260,7 +279,6 @@ function selectPiece(piece) {
   isPieceSelected = true;
 
   // Stop event propagation
-  event.stopPropagation();
 
   return selectedPiece;
 }
