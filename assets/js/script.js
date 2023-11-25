@@ -75,6 +75,13 @@ function getCol(squareId) {
   return squareId % 8;
 }
 
+function getDirection(isDirection, direction) {
+  if (isDirection) {
+    return direction = direction * -1;
+  }
+  return direction = direction;
+}
+
 /**
 * Reset the piece selection state
 */
@@ -98,14 +105,14 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
   let currentSquareCol = getCol(currentSquare);
   let selectedSquareRow = getRow(selectedSquare);
   let selectedSquareCol = getCol(selectedSquare);
-  let left = -1;
-  let right = 1;
-  let up = - 8;
-  let down = + 8;
-  let upRight = -7;
-  let upLeft = -9;
-  let downLeft = 7;
-  let downRight = 9;
+  const LEFT = -1;
+  const RIGHT = 1;
+  const UP = - 8;
+  const DOWN = + 8;
+  const UPRIGHT = -7;
+  const UPLEFT = -9;
+  const DOWNLEFT = 7;
+  const DOWNRIGHT = 9;
 
   if (squaresMoved < 0) {
     squaresMoved = squaresMoved * -1;
@@ -122,17 +129,19 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
 
     case 'P':
       // moving forward 1 space
-      console.log(currentSquare + up);
-      if (square.innerHTML == '' && selectedSquare == currentSquare + up ||
+      console.log(currentSquareRow);
+      console.log(currentSquareRow - 1);
+      // console.log(chessboard[tmp][currentSquareCol]);
+      if (square.innerHTML == '' && selectedSquare == currentSquare + UP ||
         // Moving forwards 2 spaces on turn 1
         (square.innerHTML == '' &&
-        chessboard[currentSquareRow + 1][currentSquareCol] == 0 &&
+        chessboard[getRow(currentSquare + UP)][currentSquareCol] == 0 &&
         selectedPiece.dataset.hasMoved == "false" &&
-        detinationSquare == currentSquare + (up * 2)) ||
+        selectedSquare == currentSquare + (UP * 2)) ||
         // Taking Left
-        (square.innerHTML != '' && selectedSquare == currentSquare + upLeft) ||
+        (square.innerHTML != '' && selectedSquare == currentSquare + UPLEFT) ||
         // Taking Right
-        (square.innerHTML != '' && selectedSquare == currentSquare + upRight)
+        (square.innerHTML != '' && selectedSquare == currentSquare + UPRIGHT)
         ) {
           selectedPiece.setAttribute("data-has-moved", "true");
           return true;
@@ -177,51 +186,50 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
 
     case 'n':
     case 'N':
-    if (selectedSquare + 10 == currentSquare ||
-        selectedSquare - 10 == currentSquare ||
-        selectedSquare + 17 == currentSquare ||
-        selectedSquare - 17 == currentSquare ||
-        selectedSquare + 15 == currentSquare ||
-        selectedSquare - 15 == currentSquare ||
-        selectedSquare + 6 == currentSquare ||
-        selectedSquare - 6 == currentSquare) {
-      console.log("This is a valid move");
-      return true;
-    }
-      return false;
-    case 'b':
-      for (let i = 1; i < squaresMoved / 7; i++) {
-        if (chessboard[(Math.floor((selectedPiece.parentElement.dataset.square) / 8)) + i][((selectedPiece.parentElement.dataset.square) % 8) + i] != 0) {
-          console.log("Piece in the way");
-          console.log((Math.floor((selectedPiece.parentElement.dataset.square) / 8)) + 1);
-          console.log(((selectedPiece.parentElement.dataset.square) % 8) - 1);
-          console.log(chessboard[(Math.floor((selectedPiece.parentElement.dataset.square) / 8) + 1)][(selectedPiece.parentElement.dataset.square) % 8] + 1 );
-          return false;
-        }
-      }
-      for (let i = 1; i < squaresMoved / 9; i++) {
-        if (chessboard[Math.floor((selectedPiece.parentElement.dataset.square + 9) / 8)][(selectedPiece.parentElement.dataset.square + 9) % 8] != 0) {
-          console.log("Piece in the way");
-          console.log(chessboard[Math.floor((selectedPiece.parentElement.dataset.square + 9) / 8)][(selectedPiece.parentElement.dataset.square + 9) % 8] );
-          return false;
-        }
-      }
-
-      if (square.dataset.color === selectedPiece.parentElement.dataset.color &&
-      squaresMoved % 7 == 0 ||
-      square.dataset.color === selectedPiece.parentElement.dataset.color &&
-      squaresMoved % 9 == 0 ) {
-
+      if (selectedSquare + 10 == currentSquare ||
+          selectedSquare - 10 == currentSquare ||
+          selectedSquare + 17 == currentSquare ||
+          selectedSquare - 17 == currentSquare ||
+          selectedSquare + 15 == currentSquare ||
+          selectedSquare - 15 == currentSquare ||
+          selectedSquare + 6 == currentSquare ||
+          selectedSquare - 6 == currentSquare) {
+        console.log("This is a valid move");
         return true;
       }
       return false;
+
+    case 'b':
     case 'B':
+    let isBackwards = true;
+    let isLeft = true;
+    let rowChange;
+    let colChange;
+      if (currentSquareRow < selectedSquareRow) {
+        isBackwards = false;
+      }
+      if (currentSquareCol < selectedSquareCol) {
+        isLeft = false;
+      }
       if (squaresMoved % 7 == 0) {
-        squaresMoved = squaresMoved / 7;
+        for (let i = 1; i < squaresMoved / 7; i++) {
+          rowChange = getDirection(isBackwards, i);
+          colChange = getDirection(isLeft, i);
+          if (chessboard[currentSquareRow + rowChange][currentSquareCol + colChange] != 0) {
+            return false;
+          }
+        }
       }
       if (squaresMoved % 9 == 0) {
-        squaresMoved = squaresMoved / 9;
+        for (let i = 1; i < squaresMoved / 9; i++) {
+          rowChange = getDirection(isBackwards, i);
+          colChange = getDirection(isLeft, i);
+          if (chessboard[currentSquareRow + rowChange][currentSquareCol + colChange] != 0) {
+            return false;
+          }
+        }
       }
+
       if (square.dataset.color === selectedPiece.parentElement.dataset.color &&
       squaresMoved % 7 == 0 ||
       square.dataset.color === selectedPiece.parentElement.dataset.color &&
@@ -230,7 +238,7 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
         return true;
       }
       return false;
-      break;
+
     case 'Q':
     case 'q':
       if (((selectedSquare - currentSquare) % 7 == 0 ||
@@ -245,14 +253,14 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
     case 'k':
     case 'k':
       console.log(selectedPiece.parentElement.dataset.square);
-      if (parseInt(selectedSquare) + left == currentSquare ||
-          parseInt(selectedSquare) + right == currentSquare ||
-          parseInt(selectedSquare) + down == currentSquare ||
-          parseInt(selectedSquare) + up == currentSquare ||
-          parseInt(selectedSquare) + downLeft == currentSquare ||
-          parseInt(selectedSquare) + downRight == currentSquare ||
-          parseInt(selectedSquare) + upLeft == currentSquare ||
-          parseInt(selectedSquare) + upRight == currentSquare) {
+      if (parseInt(selectedSquare) + LEFT == currentSquare ||
+          parseInt(selectedSquare) + RIGHT == currentSquare ||
+          parseInt(selectedSquare) + DOWN == currentSquare ||
+          parseInt(selectedSquare) + UP == currentSquare ||
+          parseInt(selectedSquare) + DOWNLEFT == currentSquare ||
+          parseInt(selectedSquare) + DOWNRIGHT == currentSquare ||
+          parseInt(selectedSquare) + UPLEFT == currentSquare ||
+          parseInt(selectedSquare) + UPRIGHT == currentSquare) {
             console.log("this is a valid Move");
             return true;
       }
