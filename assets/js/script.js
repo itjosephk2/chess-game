@@ -1,3 +1,13 @@
+class Piece {
+  constructor(char, hasMoved, color, pieceType) {
+    this.char = char;
+    this.hasMoved = hasMoved;
+    this.color = color;
+    this.pieceType = pieceType;
+  }
+}
+
+
 // Controller
 const chessController = {
   init: function() {
@@ -20,6 +30,9 @@ const chessController = {
     for (let i = 0; i < squares.length; i++) {
       squares[i].setAttribute("data-square", i);
     }
+
+    // const piece = new Piece('K', false, 'black', 'king');
+    // chessboard[4][4] = piece.char;
 
     //  Lets render the pieces to the chessBoard.
     chessView.renderChessboard(chessboard);
@@ -67,14 +80,21 @@ let isPieceSelected = false;
 let selectedPiece = null;
 let isWhiteToMove = true;
 
+/**
+* Get the row of the index given
+*/
 function getRow(squareId) {
   return Math.floor(squareId / 8);
 }
-
+/**
+* Get the column of the index given
+*/
 function getCol(squareId) {
   return squareId % 8;
 }
-
+/**
+* CHeck which direction the piece is moving
+*/
 function getDirection(isDirection, direction) {
   if (isDirection) {
     return direction = direction * -1;
@@ -92,11 +112,15 @@ function resetSelection() {
   isPieceSelected = false;
   selectedPiece = null;
 }
-
+/**
+* Change player
+*/
 function changePlayerTurn() {
   isWhiteToMove = isWhiteToMove ? false : true;
 }
-
+/**
+* This does way too much right now and needs to be refactored
+*/
 function checkifMoveIsLegal(selectedPiece, square, chessboard) {
   let currentSquare = parseInt(selectedPiece.parentElement.dataset.square);
   let selectedSquare = parseInt(square.dataset.square);
@@ -283,10 +307,7 @@ function selectPiece(piece) {
   // Apply styles to indicate the selected piece
   selectedPiece.classList.add("selected");
 
-  // Causing an error why???
   isPieceSelected = true;
-
-  // Stop event propagation
 
   return selectedPiece;
 }
@@ -296,13 +317,13 @@ function selectPiece(piece) {
 */
 function movePiece(square, chessboard, selectedPiece) {
 
-  const selectedPieceOldRow = (Math.floor(selectedPiece.parentElement.dataset.square / 8));
-  const selectedPieceOldCol = (selectedPiece.parentElement.dataset.square % 8);
+  const selectedPieceOldRow = getRow(selectedPiece.parentElement.dataset.square);
+  const selectedPieceOldCol = getCol(selectedPiece.parentElement.dataset.square);
   chessboard[selectedPieceOldRow][selectedPieceOldCol] = 0;
   selectedPiece.remove();
 
-  const row = (Math.floor(square.dataset.square / 8));
-  const col = (square.dataset.square % 8);
+  const row = getRow(square.dataset.square);
+  const col = getCol(square.dataset.square);
   chessboard[row][col] = selectedPiece.dataset.char;
 
   chessView.renderChessboard(chessboard);
@@ -313,7 +334,7 @@ function movePiece(square, chessboard, selectedPiece) {
 function createPieceElement(pieceChar) {
   let color = "white";
   let pieceType;
-  let hasMoved = "false";
+  let hasMoved = false;
   if (pieceChar == pieceChar.toLowerCase()){
     color = "black";
   }
@@ -354,8 +375,8 @@ const chessView = {
     clearBoard(squares);
 
     for (let i = 0; i < squares.length; i++) {
-      const row = Math.floor(i / 8);
-      const col = i % 8;
+      const row = getRow(i);
+      const col = getCol(i);
       // console.log(`[${row}],[${col}]`);
       if (chessboard[row][col] !== 0) {
         const pieceElement = createPieceElement(chessboard[row][col]);
