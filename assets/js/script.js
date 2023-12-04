@@ -1,9 +1,36 @@
+// Class For pieces
 class Piece {
+  // Constructor for setting default parameters
   constructor(char, hasMoved, color, pieceType) {
-    this.char = char;
-    this.hasMoved = hasMoved;
-    this.color = color;
-    this.pieceType = pieceType;
+    this._char = char;
+    this._hasMoved = hasMoved;
+    this._color = color;
+    this._pieceType = pieceType;
+  }
+  // Getter and Setters for variables
+  get char() {
+    return this._char;
+  }
+  set char(char) {
+    this._char = char;
+  }
+
+  get hasMoved() {
+    return this._hasMoved;
+  }
+  set hasMoved(hasMoved) {
+    this._hasMoved = hasMoved;
+  }
+
+  get color() {
+    return this._color;
+  }
+
+  get pieceType() {
+    return this._pieceType;
+  }
+  set pieceType(pieceType) {
+    this._pieceType = pieceType;
   }
 }
 
@@ -11,55 +38,74 @@ class Piece {
 // Controller
 const chessController = {
   init: function() {
-
     // Create a chess board array for controlling logic and movement and then use this to render visuals to the screen. Easy!
     const chessboard = [
-      ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
-      ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+      [new Piece('r', false, "black", "rook"), new Piece('n', false, "black", "knight"), new Piece('b', false, "black", "bishop"), new Piece('q', false, "black", "queen"), new Piece('k', false, "black", "king"), new Piece('b', false, "black", "bishop"), new Piece('n', false, "black", "knight"), new Piece('r', false, "black", "rook")],
+      [new Piece('p', false, "black", "pawn"), new Piece('p', false, "black", "pawn"), new Piece('p', false, "black", "pawn"), new Piece('p', false, "black", "pawn"), new Piece('p', false, "black", "pawn"), new Piece('p', false, "black", "pawn"), new Piece('p', false, "black", "pawn"), new Piece('p', false, "black", "pawn")],
       Array(8).fill(0),
       Array(8).fill(0),
       Array(8).fill(0),
       Array(8).fill(0),
-      ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
-      ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'],
+      [new Piece('P', false, "white", "pawn"), new Piece('P', false, "white", "pawn"), new Piece('P', false, "white", "pawn"), new Piece('P', false, "white", "pawn"), new Piece('P', false, "white", "pawn"), new Piece('P', false, "white", "pawn"), new Piece('P', false, "white", "pawn"), new Piece('P', false, "white", "pawn")],
+      [new Piece('R', false, "white", "rook"), new Piece('N', false, "white", "knight"), new Piece('B', false, "white", "bishop"), new Piece('Q', false, "white", "queen"), new Piece('K', false, "white", "king"), new Piece('B', false, "white", "bishop"), new Piece('N', false, "white", "knight"), new Piece('R', false, "white", "rook")],
     ];
 
+    // create an array of squares on the board called sqaures
     const squares = document.getElementsByClassName("square");
-    // clearBoard(squares);
-
+    // Loop through each square in squares
     for (let i = 0; i < squares.length; i++) {
+      // Assign each square an equivilant data taag to ap it to the array. MIght not need col amd row data tags now
+      // just use square.dataset.square.getRow() etc.
       squares[i].setAttribute("data-square", i);
     }
 
-    // const piece = new Piece('K', false, 'black', 'king');
-    // chessboard[4][4] = piece.char;
-
     //  Lets render the pieces to the chessBoard.
-    chessView.renderChessboard(chessboard);
+    chessView.renderChessboard(chessboard, squares);
 
-    // const squares = document.getElementsByClassName("square");
+    // Event listener for Clicking on a square
     for (let square of squares) {
-    square.addEventListener("click", function () {
+      square.addEventListener("click", function () {
+
+        // If a piece is Selected Then check for moving the selected Piece
         if (isPieceSelected) {
+          // Check for the legality of a move
           let isMoveLegal = checkifMoveIsLegal(selectedPiece, square, chessboard);
+
+          // Move is considered to be legal
           if (isMoveLegal) {
+            // Move the piece
             movePiece(square, chessboard, selectedPiece);
+            // Print the chess board to console for debugging purposes
             for (x of chessboard) {
               console.log(x);
             }
+            // Change the players turn
             changePlayerTurn();
-          } else {
+          }
+          // Illegal move resets pieces selection
+          else {
             resetSelection();
           }
-        } else {
+
+        }
+        // No piece was Previously selected so lets see if we can select one
+        else {
+          // Is there a piece here
           if (square.innerHTML != "") {
+            // Does the piece match the players turn color
             if (isWhiteToMove) {
-              if (square.firstChild.dataset.char != square.firstChild.dataset.char.toLowerCase()) {
+              // yes it does
+              if (chessboard[square.dataset.row][square.dataset.col] != 0 &&) {
                 selectedPiece = selectPiece(square.firstChild);
-              } else {
+              }
+              // No it does not
+              else {
                 console.log("White to move");
               }
-            } else {
+
+            }
+            // Same check if it is black to move
+            else {
               if (square.firstChild.dataset.char == square.firstChild.dataset.char.toLowerCase()) {
                 selectedPiece = selectPiece(square.firstChild);
               } else {
@@ -69,13 +115,14 @@ const chessController = {
 
           }
         }
+
       });
     }
 
   }
 }
 
-// Additional state variables
+// Additional state variables and theyre default values
 let isPieceSelected = false;
 let selectedPiece = null;
 let isWhiteToMove = true;
@@ -331,56 +378,27 @@ function movePiece(square, chessboard, selectedPiece) {
 }
 
 // View
-function createPieceElement(pieceChar) {
-  let color = "white";
-  let pieceType;
-  let hasMoved = false;
-  if (pieceChar == pieceChar.toLowerCase()){
-    color = "black";
-  }
-  switch (pieceChar.toLowerCase()) {
-    case 'p':
-      pieceType = 'pawn';
-      break;
-    case 'r':
-      pieceType = 'rook';
-      break;
-    case 'n':
-      pieceType = 'knight';
-      break;
-    case 'b':
-      pieceType = 'bishop';
-      break;
-    case 'q':
-      pieceType = 'queen';
-      break;
-    case 'k':
-      pieceType = 'king';
-      break;
-    default:
-      break;
-}
+function createPieceElement(piece) {
   const pieceElement = document.createElement("i");
-  pieceElement.classList.add('chess-piece', color + '-piece', 'fa-solid', 'fa-chess-' + pieceType);
-  pieceElement.setAttribute('data-char', pieceChar);
-  pieceElement.setAttribute('data-color', color);
-  pieceElement.setAttribute('data-has-moved', hasMoved);
+  pieceElement.classList.add('chess-piece', piece.color + "-piece", 'fa-solid', 'fa-chess-' + piece.pieceType);
   return pieceElement;
 }
 
+/**
+* Render the chessboard based on the provided array
+*/
 const chessView = {
-  renderChessboard: function (chessboard) {
-    // Render the chessboard based on the provided array
-    const squares = document.getElementsByClassName("square");
+  renderChessboard: function (chessboard, squares) {
+    // Clear the board
     clearBoard(squares);
-
+    // Loop throught the chessboard array
     for (let i = 0; i < squares.length; i++) {
+      // Get rows and colums for each id
       const row = getRow(i);
       const col = getCol(i);
-      // console.log(`[${row}],[${col}]`);
+      // If there is a piece on the square render an html element
       if (chessboard[row][col] !== 0) {
-        const pieceElement = createPieceElement(chessboard[row][col]);
-        squares[i].appendChild(pieceElement);
+        squares[i].appendChild(createPieceElement(chessboard[row][col]);
       }
     }
   }
@@ -389,7 +407,9 @@ const chessView = {
 * Clear existing content in the container
 */
 function clearBoard(squares) {
+  // loop through squares
   for (let square of squares) {
+    // Remove all html from inside the divs of the squares
     square.innerHTML = "";
 
   }
