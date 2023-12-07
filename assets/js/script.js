@@ -117,15 +117,13 @@ const chessController = {
           let isMoveLegal = checkifMoveIsLegal(selectedPiece, square, chessboard);
 
           // Move is considered to be legal
-          if (true) {
+          if (isMoveLegal) {
             // Move the piece
             movePiece(square, chessboard, selectedPiece);
             console.table(chessboard);
             resetSelection(square.firstChild);
             // Print the chess board to console for debugging purposes
-            for (x of chessboard) {
-              console.log(x);
-            }
+            console.table(chessboard);
             // Change the players turn
             changePlayerTurn();
           }
@@ -146,7 +144,7 @@ const chessController = {
             // Does the piece match the players turn color
             if (isWhiteToMove) {
               // yes it does
-              if (chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)] != 0) {
+              if (chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)] != null) {
                 // set selected piece to the equivilant object
                 selectedPiece = chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)];
                 // Decorate the piece to make it selected
@@ -271,7 +269,7 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
       if (square.innerHTML == '' && selectedSquare == currentSquare + UP ||
         // Moving forwards 2 spaces on turn 1
         (square.innerHTML == '' &&
-        chessboard[getRow(currentSquare + UP)][currentSquareCol] == 0 &&
+        chessboard[getRow(currentSquare + UP)][currentSquareCol] == null &&
         selectedPiece.hasMoved == "false" &&
         selectedSquare == currentSquare + (UP * 2)) ||
         // Taking Left
@@ -293,7 +291,7 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
         // MOving 2 spaces on turn 1
         (square.innerHTML == '' &&
         chessboard[Math.floor((selectedSquare - 8) / 8)]
-        [(selectedSquare - 8) % 8] == 0 &&
+        [(selectedSquare - 8) % 8] == null &&
         selectedPiece.hasMoved == "false" &&
         selectedSquare - 16 == currentSquare) ||
 
@@ -413,10 +411,11 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
 * Select square to move to
 */
 function movePiece(square, chessboard, selectedPiece) {
+  console.log("moving a piece");
   console.log(selectedPiece.square);
   const selectedPieceRow = getRow(selectedPiece.square);
   const selectedPieceCol = getCol(selectedPiece.square);
-  chessboard[selectedPieceRow][selectedPieceCol] = 0;
+  chessboard[selectedPieceRow][selectedPieceCol] = null;
   document.querySelectorAll(`[data-square~="${selectedPiece.square}"]`);
 
   const row = getRow(square.dataset.square);
@@ -453,6 +452,9 @@ function selectPiece(piece) {
 const chessView = {
   renderChessboard: function (chessboard, squares) {
     // Clear the board
+    for (let square of squares) {
+      console.log("This works");
+    }
     clearBoard(squares);
     // Loop throught the chessboard array
     for (let i = 0; i < squares.length; i++) {
@@ -460,10 +462,11 @@ const chessView = {
       const row = getRow(i);
       const col = getCol(i);
       // If there is a piece on the square render an html element
-      if (chessboard[row][col] !== 0) {
+      if (chessboard[row][col] !== null) {
         squares[i].appendChild(createPieceElement(chessboard[row][col]));
       }
     }
+    console.table(chessboard);
   }
 };
 /**
@@ -473,6 +476,7 @@ function clearBoard(squares) {
   // loop through squares
   for (let square of squares) {
     // Remove all html from inside the divs of the squares
+    console.log(square);
     square.innerHTML = "";
 
   }
