@@ -1,12 +1,13 @@
 // Class For pieces
 class Piece {
   // Constructor for setting default parameters
-  constructor(char, hasMoved, color, pieceType, square) {
+  constructor(char, color, pieceType, square) {
     this._char = char;
-    this._hasMoved = hasMoved;
+    this._hasMoved = false;
     this._color = color;
     this._pieceType = pieceType;
     this._square = square;
+    this._isSelected = false
   }
   // Getter and Setters for variables
   get char() {
@@ -39,6 +40,12 @@ class Piece {
   set square(square) {
     this._square = square;
   }
+  get isSelected() {
+    return this._isSelected;
+  }
+  set isSelected(isSelected) {
+    this._isSelected = isSelected;
+  }
 }
 
 
@@ -47,14 +54,14 @@ const chessController = {
   init: function() {
     // Create a chess board array for controlling logic and movement and then use this to render visuals to the screen. Easy!
     let chessboard = [
-      [new Piece('r', false, "black", "rook", 0), new Piece('n', false, "black", "knight", 1), new Piece('b', false, "black", "bishop", 2), new Piece('q', false, "black", "queen", 3), new Piece('k', false, "black", "king", 4), new Piece('b', false, "black", "bishop", 5), new Piece('n', false, "black", "knight", 66), new Piece('r', false, "black", "rook", 7)],
-      [new Piece('p', false, "black", "pawn", 8), new Piece('p', false, "black", "pawn", 9), new Piece('p', false, "black", "pawn", 10), new Piece('p', false, "black", "pawn", 11), new Piece('p', false, "black", "pawn", 12), new Piece('p', false, "black", "pawn", 13), new Piece('p', false, "black", "pawn", 14), new Piece('p', false, "black", "pawn", 15)],
+      [new Piece('r', "black", "rook", 0), new Piece('n', "black", "knight", 1), new Piece('b', "black", "bishop", 2), new Piece('q', "black", "queen", 3), new Piece('k', "black", "king", 4), new Piece('b', "black", "bishop", 5), new Piece('n', "black", "knight", 6), new Piece('r', "black", "rook", 7)],
+      [new Piece('p', "black", "pawn", 8), new Piece('p', "black", "pawn", 9), new Piece('p', "black", "pawn", 10), new Piece('p', "black", "pawn", 11), new Piece('p', "black", "pawn", 12), new Piece('p', "black", "pawn", 13), new Piece('p', "black", "pawn", 14), new Piece('p', "black", "pawn", 15)],
       Array(8).fill(0),
       Array(8).fill(0),
       Array(8).fill(0),
       Array(8).fill(0),
-      [new Piece('P', false, "white", "pawn", 49), new Piece('P', false, "white", "pawn", 50), new Piece('P', false, "white", "pawn", 51), new Piece('P', false, "white", "pawn", 51), new Piece('P', false, "white", "pawn", 52), new Piece('P', false, "white", "pawn", 53), new Piece('P', false, "white", "pawn", 54), new Piece('P', false, "white", "pawn", 55)],
-      [new Piece('R', false, "white", "rook", 56), new Piece('N', false, "white", "knight", 57), new Piece('B', false, "white", "bishop", 58), new Piece('Q', false, "white", "queen", 59), new Piece('K', false, "white", "king", 60), new Piece('B', false, "white", "bishop", 61), new Piece('N', false, "white", "knight", 62), new Piece('R', false, "white", "rook", 63)],
+      [new Piece('P', "white", "pawn", 48), new Piece('P', "white", "pawn", 49), new Piece('P', "white", "pawn", 50), new Piece('P', "white", "pawn", 51), new Piece('P', "white", "pawn", 52), new Piece('P', "white", "pawn", 53), new Piece('P', "white", "pawn", 54), new Piece('P', "white", "pawn", 55)],
+      [new Piece('R', "white", "rook", 56), new Piece('N', "white", "knight", 57), new Piece('B', "white", "bishop", 58), new Piece('Q', "white", "queen", 59), new Piece('K', "white", "king", 60), new Piece('B', "white", "bishop", 61), new Piece('N', "white", "knight", 62), new Piece('R', "white", "rook", 63)],
     ];
 
     // create an array of squares on the board called sqaures
@@ -70,42 +77,42 @@ const chessController = {
 
 
 
-    // let list = document.getElementsByTagName('li')
-    //
-    // for (let item of list) {
-    //   item.addEventListener("click", function(){
-    //     if (item.innerHTML == "Theme A") {
-    //       const squares = document.getElementsByClassName("square");
-    //       // Loop through each square in squares
-    //       for (square of squares) {
-    //         // Assign each square an equivilant data taag to ap it to the array.
-    //         if (square.classList.contains("red")) {
-    //           square.classList.remove("red");
-    //           square.classList.add("white")
-    //         }
-    //         if (square.classList.contains("green")) {
-    //           square.classList.remove("green");
-    //           square.classList.add("black");
-    //         }
-    //       }
-    //     }
-    //     if (item.innerHTML == "Theme B") {
-    //       const squares = document.getElementsByClassName("square");
-    //       // Loop through each square in squares
-    //       for (square of squares) {
-    //         // Assign each square an equivilant data taag to ap it to the array.
-    //         if (square.classList.contains("white")) {
-    //           square.classList.remove("white");
-    //           square.classList.add("red")
-    //         }
-    //         if (square.classList.contains("black")) {
-    //           square.classList.remove("black");
-    //           square.classList.add("green")
-    //         }
-    //       }
-    //     }
-    //   });
-    // }
+    let list = document.getElementsByTagName('li')
+
+    for (let item of list) {
+      item.addEventListener("click", function(){
+        if (item.innerHTML == "Theme A") {
+          const squares = document.getElementsByClassName("square");
+          // Loop through each square in squares
+          for (square of squares) {
+            // Assign each square an equivilant data taag to ap it to the array.
+            if (square.classList.contains("red")) {
+              square.classList.remove("red");
+              square.classList.add("white")
+            }
+            if (square.classList.contains("green")) {
+              square.classList.remove("green");
+              square.classList.add("black");
+            }
+          }
+        }
+        if (item.innerHTML == "Theme B") {
+          const squares = document.getElementsByClassName("square");
+          // Loop through each square in squares
+          for (square of squares) {
+            // Assign each square an equivilant data taag to ap it to the array.
+            if (square.classList.contains("white")) {
+              square.classList.remove("white");
+              square.classList.add("red")
+            }
+            if (square.classList.contains("black")) {
+              square.classList.remove("black");
+              square.classList.add("green")
+            }
+          }
+        }
+      });
+    }
 
     // Event listener for Clicking on a square
     for (let square of squares) {
@@ -119,13 +126,16 @@ const chessController = {
           if (isMoveLegal) {
             // Move the piece
             chessboard = movePiece(square, chessboard, selectedPiece);
-            chessView.renderChessboard(chessboard, squares);
-            console.table(chessboard);
-            resetSelection(square.firstChild);
             // Print the chess board to console for debugging purposes
             console.table(chessboard);
+            resetSelection(square.firstChild);
+            console.log(chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)].square);
+            chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)].square = square.dataset.square;
+            chessView.renderChessboard(chessboard, squares);
+
             // Change the players turn
             changePlayerTurn();
+            console.log(isWhiteToMove);
           }
           // Illegal move resets pieces selection
           else {
@@ -137,32 +147,27 @@ const chessController = {
         }
         // No piece was Previously selected so lets see if we can select one
         else {
-          // Is there a piece here
-          if (chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)] != 0) {
-            // Does the piece match the players turn color
-            if (isWhiteToMove) {
-              // yes it does
+          // Is it whites Turn
+          if (isWhiteToMove) {
+            // Is there a white piece here
+            if ( chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)] != 0 && chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)].color == "white") {
               // set selected piece to the equivilant object
               selectedPiece = chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)];
+              selectedPieceElement = square.firstChild;
               // Decorate the piece to make it selected
-              selectPiece(square.firstChild);
-              isPieceSelected = true;
-            }
-            // No it does not
-            else {
-              console.log("White to move");
+              selectPiece(selectedPieceElement);
+              isPieceSelected = true
             }
           }
           // Same check if it is black to move
           else {
-            if (square.firstChild.dataset.char == square.firstChild.dataset.char.toLowerCase()) {
+            if ( chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)] != 0 && chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)].color == "black")  {
               // set selected piece to the equivilant object
               selectedPiece = chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)];
+              selectedPieceElement = square.firstChild;
               // Decorate the piece to make it selected
-              selectPiece(square.firstChild);
-              isPieceSelected = true;
-            } else {
-              console.log("Black to move");
+              selectPiece(selectedPieceElement);
+              isPieceSelected = true
             }
           }
         }
@@ -183,7 +188,7 @@ const chessController = {
 let isPieceSelected = false;
 let selectedPiece = null;
 let isWhiteToMove = true;
-
+let selectedPieceElement = null;
 /**
 * Get the row of the index given
 */
@@ -210,9 +215,7 @@ function getDirection(isDirection, direction) {
 * Reset the piece selection state
 */
 function resetSelection(piece) {
-  if (piece && piece.classList) {
-    piece.classList.remove("selected");
-  }
+  selectedPieceElemenet.classList.remove("selected");
   isPieceSelected = false;
   selectedPiece = null;
 }
@@ -226,6 +229,7 @@ function changePlayerTurn() {
 * This does way too much right now and needs to be refactored
 */
 function checkifMoveIsLegal(selectedPiece, square, chessboard) {
+  console.log(selectedPiece);
   let currentSquare = parseInt(selectedPiece.square);
   let selectedSquare = parseInt(square.dataset.square);
   let squaresMoved = currentSquare - selectedSquare;
@@ -246,9 +250,9 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
     squaresMoved = squaresMoved * -1;
   }
 
-  if (square.innerHTML != "") {
-    if (selectedPiece.color == square.firstChild.dataset.color) {
-      resetSelection();
+  if (chessboard[selectedSquareRow][selectedSquareCol] != 0) {
+    if (selectedPiece.color == chessboard[getRow(parseInt(square.dataset.square))][getCol(parseInt(square.dataset.square))].color) {
+      resetSelection(selectedPiece);
       return false;
     }
   }
@@ -256,20 +260,23 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
   switch (selectedPiece.char) {
 
     case 'P':
-      // moving forward 1 space
-      // console.log(currentSquareRow);
-      // console.log(currentSquareRow - 1);
-      // console.log(chessboard[tmp][currentSquareCol]);
-      if (square.innerHTML == '' && selectedSquare == currentSquare + UP ||
+      console.log("Trying to move pawn");
+      console.log(currentSquare + UP);
+      console.log(selectedSquare);
+      console.log(selectedSquare == currentSquare + UP);
+      if (chessboard[selectedSquareRow][selectedSquareCol] == 0 &&
+        selectedSquare == currentSquare + UP ||
         // Moving forwards 2 spaces on turn 1
-        (square.innerHTML == '' &&
+        (chessboard[selectedSquareRow][selectedSquareCol] == 0 &&
         chessboard[getRow(currentSquare + UP)][currentSquareCol] == 0 &&
-        selectedPiece.hasMoved == "false" &&
+        !selectedPiece.hasMoved &&
         selectedSquare == currentSquare + (UP * 2)) ||
         // Taking Left
-        (square.innerHTML != '' && selectedSquare == currentSquare + UPLEFT) ||
+        (chessboard[selectedSquareRow][selectedSquareCol] != 0 &&
+           selectedSquare == currentSquare + UPLEFT) ||
         // Taking Right
-        (square.innerHTML != '' && selectedSquare == currentSquare + UPRIGHT)
+        (chessboard[selectedSquareRow][selectedSquareCol] != 0
+          && selectedSquare == currentSquare + UPRIGHT)
         ) {
           selectedPiece.hasMoved = true;
           return true;
@@ -280,13 +287,13 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
 
       // moving forward 1 space
       if (square.innerHTML == '' &&
-        selectedSquare -8 == currentSquare ||
+        selectedSquare - 8 == currentSquare ||
 
         // MOving 2 spaces on turn 1
         (square.innerHTML == '' &&
         chessboard[Math.floor((selectedSquare - 8) / 8)]
         [(selectedSquare - 8) % 8] == 0 &&
-        selectedPiece.hasMoved == "false" &&
+        !selectedPiece.hasMoved &&
         selectedSquare - 16 == currentSquare) ||
 
         // Capture Left
@@ -314,6 +321,7 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
 
     case 'n':
     case 'N':
+      console.log("This is a knight");
       if (selectedSquare + 10 == currentSquare ||
           selectedSquare - 10 == currentSquare ||
           selectedSquare + 17 == currentSquare ||
@@ -357,10 +365,11 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
           }
         }
       }
-
-      if (square.dataset.color === selectedPiece.parentElement.dataset.color &&
+      console.log(square.dataset.color);
+      console.log(selectedPieceElement.parentElement.dataset.color);
+      if (square.dataset.color === selectedPieceElement.parentElement.dataset.color &&
       squaresMoved % 7 == 0 ||
-      square.dataset.color === selectedPiece.parentElement.dataset.color &&
+      square.dataset.color === selectedPieceElement.parentElement.dataset.color &&
       squaresMoved % 9 == 0 ) {
 
         return true;
@@ -378,17 +387,17 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
       }
       return false;
 
+    case 'K':
     case 'k':
-    case 'k':
-      console.log(selectedPiece.parentElement.dataset.square);
-      if (parseInt(selectedSquare) + LEFT == currentSquare ||
-          parseInt(selectedSquare) + RIGHT == currentSquare ||
-          parseInt(selectedSquare) + DOWN == currentSquare ||
-          parseInt(selectedSquare) + UP == currentSquare ||
-          parseInt(selectedSquare) + DOWNLEFT == currentSquare ||
-          parseInt(selectedSquare) + DOWNRIGHT == currentSquare ||
-          parseInt(selectedSquare) + UPLEFT == currentSquare ||
-          parseInt(selectedSquare) + UPRIGHT == currentSquare) {
+      console.log(selectedPieceElement.parentElement.dataset.square);
+      if (selectedSquare + LEFT == currentSquare ||
+          selectedSquare + RIGHT == currentSquare ||
+          selectedSquare + DOWN == currentSquare ||
+          selectedSquare + UP == currentSquare ||
+          selectedSquare + DOWNLEFT == currentSquare ||
+          selectedSquare + DOWNRIGHT == currentSquare ||
+          selectedSquare + UPLEFT == currentSquare ||
+          selectedSquare + UPRIGHT == currentSquare) {
             console.log("this is a valid Move");
             return true;
       }
@@ -406,11 +415,7 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
 */
 function movePiece(square, chessboard, selectedPiece) {
   chessboard[getRow(selectedPiece.square)][getCol(selectedPiece.square)] = 0;
-  console.table(chessboard);
-
   chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)] = selectedPiece;
-  console.table(chessboard);
-
   return chessboard;
 }
 
@@ -429,9 +434,10 @@ function createPieceElement(piece) {
 */
 function selectPiece(piece) {
   // Apply styles to indicate the selected piece
-  if (isPieceSelected) {
+  if (isPieceSelected && selectedPieceElement != null) {
     resetSelection(piece);
   }
+  selectedPieceElemenet = piece;
   piece.classList.add("selected");
 }
 
@@ -455,7 +461,6 @@ const chessView = {
         squares[i].appendChild(createPieceElement(chessboard[row][col]));
       }
     }
-    console.table(chessboard);
   }
 };
 /**
