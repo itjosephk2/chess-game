@@ -7,7 +7,7 @@
       this._color = color;
       this._pieceType = pieceType;
       this._square = square;
-      this._isSelected = false
+      this._isSelected = false;
     }
     // Getter and Setters for variables
     get char() {
@@ -77,18 +77,18 @@
 
 
 
-      let list = document.getElementsByTagName('li')
+      const list = document.getElementsByTagName('li');
 
       for (let item of list) {
         item.addEventListener("click", function(){
           if (item.innerHTML == "Theme A") {
-            const squares = document.getElementsByClassName("square");
+            let squares = document.getElementsByClassName("square");
             // Loop through each square in squares
-            for (square of squares) {
+            for (let square of squares) {
               // Assign each square an equivilant data taag to ap it to the array.
               if (square.classList.contains("red")) {
                 square.classList.remove("red");
-                square.classList.add("white")
+                square.classList.add("white");
               }
               if (square.classList.contains("green")) {
                 square.classList.remove("green");
@@ -99,15 +99,15 @@
           if (item.innerHTML == "Theme B") {
             const squares = document.getElementsByClassName("square");
             // Loop through each square in squares
-            for (square of squares) {
+            for (let square of squares) {
               // Assign each square an equivilant data taag to ap it to the array.
               if (square.classList.contains("white")) {
                 square.classList.remove("white");
-                square.classList.add("red")
+                square.classList.add("red");
               }
               if (square.classList.contains("black")) {
                 square.classList.remove("black");
-                square.classList.add("green")
+                square.classList.add("green");
               }
             }
           }
@@ -127,7 +127,7 @@
               // debugger;
               console.log(selectedPiece);
               let isMoveLegal = checkifMoveIsLegal(selectedPiece, square, chessboard);
-              console.log(logselectedPiece);
+              console.log(selectedPiece);
               // Move is considered to be legal
               if (isMoveLegal) {
                 // Move the piece
@@ -163,7 +163,7 @@
                 selectedPieceElement = square.firstChild;
                 // Decorate the piece to make it selected
                 selectPiece(selectedPieceElement);
-                isPieceSelected = true
+                isPieceSelected = true;
               }
               else {
                 alert("It is whites turn");
@@ -177,7 +177,7 @@
                 selectedPieceElement = square.firstChild;
                 // Decorate the piece to make it selected
                 selectPiece(selectedPieceElement);
-                isPieceSelected = true
+                isPieceSelected = true;
               }
               else {
                 alert("It is blacks turn");
@@ -188,7 +188,7 @@
       }
 
     }
-  }
+  };
 
   // Additional state variables and theyre default values
   let isPieceSelected = false;
@@ -212,9 +212,9 @@
   */
   function getDirection(isDirection, direction) {
     if (isDirection) {
-      return direction = direction * -1;
+      return direction * -1;
     }
-    return direction = direction;
+    return direction;
   }
 
   /**
@@ -233,13 +233,13 @@
   }
 
 function isKingInCheck(playerColor, chessboard, squares) {
-  let isLegal
+  let isLegal;
   // Iterate through the entire board
-  for (square of squares) {
+  for (let square of squares) {
     const piece = chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)];
     if (piece.color != playerColor && piece != 0) {
         // Check if this piece can attack the king's position
-        for (square of squares) {
+        for (let square of squares) {
           isLegal = checkifMoveIsLegal(piece, square, chessboard);
           if (isLegal && chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)].pieceType == "king") {
             console.log("You are in check");
@@ -300,8 +300,8 @@ function isKingInCheck(playerColor, chessboard, squares) {
           (chessboard[selectedSquareRow][selectedSquareCol] != 0 &&
              selectedSquare == currentSquare + UPLEFT) ||
           // Taking Right
-          (chessboard[selectedSquareRow][selectedSquareCol] != 0
-            && selectedSquare == currentSquare + UPRIGHT)
+          (chessboard[selectedSquareRow][selectedSquareCol] != 0 &&
+             selectedSquare == currentSquare + UPRIGHT)
           ) {
             selectedPiece.hasMoved = true;
             return true;
@@ -323,13 +323,13 @@ function isKingInCheck(playerColor, chessboard, squares) {
 
           // Capture Left
           (square.innerHTML != '' &&
-            selectedSquare - 7 == currentSquare
-            && square.firstChild.dataset.color != selectedPiece.color) ||
+            selectedSquare - 7 == currentSquare &&
+            square.firstChild.dataset.color != selectedPiece.color) ||
 
           // Capture Right
           (square.innerHTML != '' &&
-            selectedSquare - 9 == currentSquare
-            && square.firstChild.dataset.color != selectedPiece.color)
+            selectedSquare - 9 == currentSquare &&
+            square.firstChild.dataset.color != selectedPiece.color)
           ) {
           selectedPiece.hasMoved = true;
           return true;
@@ -496,7 +496,7 @@ function isKingInCheck(playerColor, chessboard, squares) {
     if (isPieceSelected && selectedPieceElement != null) {
       resetSelection(piece);
     }
-    selectedPieceElemenet = piece;
+    selectedPieceElement = piece;
     piece.classList.add("selected");
   }
 
