@@ -4,91 +4,121 @@
     <meta charset="utf-8">
     <title>Chess</title>
     <link rel="stylesheet" href="assets/css/main.css">
+    <script src="assets/js/script.js"></script>
   </head>
   <body>
-    <div id="chess-board">
-      <div class="row">
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
+    <aside class="side-bar">
+      <ul>
+        <li>Tutorial</li>
+        <li>Player vs Player</li>
+        <li>player vs comp</li>
+        <li>Theme A</li>
+          <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">Themes</button>
+            <div id="myDropdown" class="dropdown-content">
+              <li>Theme A</li>
+              <li>Theme B</li>
+              <li>Theme C</li>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </aside>
+    <div class="game-screen">
+      <div class="wrapper">
+        <div class="text-box">
+          <p>Chess</p>
+        </div>
+        <div id="chess-board">
+          <div class="row">
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+          </div>
+          <div class="row">
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+          </div>
+          <div class="row">
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+          </div>
+          <div class="row">
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+          </div>
+          <div class="row">
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+          </div>
+          <div class="row">
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+          </div>
+          <div class="row">
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+          </div>
+          <div class="row">
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+            <div class="square black" data-color="black"></div>
+            <div class="square white" data-color="white"></div>
+          </div>
+        </div>
+        <div class="text-box">
+          <p>Chess</p>
+        </div>
       </div>
-      <div class="row">
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-      </div>
-      <div class="row">
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-      </div>
-      <div class="row">
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-      </div>
-      <div class="row">
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-      </div>
-      <div class="row">
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-      </div>
-      <div class="row">
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-      </div>
-      <div class="row">
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
-        <div class="square black"></div>
-        <div class="square white"></div>
+      <div class="notation-board">
       </div>
     </div>
+
     <script src="https://kit.fontawesome.com/f8d980d35b.js" crossorigin="anonymous"></script>
-    <script src="assets/js/script.js"></script>
   </body>
 </html>
