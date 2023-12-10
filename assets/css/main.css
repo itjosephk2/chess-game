@@ -5,10 +5,65 @@
 }
 body {
   height: 100vh;
+  width: 100%;
+  background-color: #ccc;
+  display: flex;
+  flex-direction: row;
+}
+.side-bar {
+  width: 220px;
+  height: 100vh;
+  background-color: white;
+  border-right: 1px solid #000;
+}
+.side-bar ul {
+  list-style-type: none;
+}
+.side-bar ul li {
+  font-size: 24px;
+  line-height: 1.5em;
+  letter-spacing: .03em;
+  font-family: arial, sans-serif;
+  cursor: pointer;
+  padding-left: 10px;
+}
+.side-bar ul li:hover {
+  background-color: #ccc;
+}
+.game-screen {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+.notation-board {
+  margin-left: 30px;
   display: flex;
   justify-content: center;
+  align-items:center;
+}
+.wrapper {
+  height: 100vh;
+  width: calc(62 * 8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  background-color: #ccc;
+}
+.text-box {
+  border: 1px solid black;
+  background: white;
+  width: calc(62px * 8);
+  height: 38px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.text-box p {
+  padding: 10px;
+  font-size: 18px;
+  font-family: arial, sans-serif;
 }
 #chess-board {
   display: flex;
@@ -25,15 +80,15 @@ body {
 }
 
 .square {
-  height: 72px;
-  width: 72px;
+  height: 62px;
+  width: 62px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .chess-piece {
   color: #000;
-  font-size: 48px;
+  font-size:48px;
 }
 .white-piece {
   color: #F9F9F9;
@@ -49,6 +104,63 @@ body {
 .black {
   background-color: #B58862;
 }
+.red {
+  background-color: red;
+}
+.green {
+  background-color: green;
+}
 .selected  {
   color: red;
 }
+.notation-board {
+  background: pink;
+  width: 300px;
+  height: calc(8 * 62px);
+}
+
+/* dropdown */
+/* Dropdown Button */
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
