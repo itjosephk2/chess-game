@@ -1,10 +1,10 @@
-# Pianist Portfolio
+# Chess Game
 
-![Pianist Portfolio mockup images](assets/readme-files/mockup-image.png)
+![Chess Game mockup images](assets/readme-files/mockup-image.png)
 
-This is a portfolio website for my own piano career. It aims to display the my talents and reach out to potential clients either as students or for weddings, hotel lounge work and or business functions. I aslo display some clips of me playing in regards to albums I am currently working on and hope to record and release within the coming year. The aim is to advertise my skillsets and give the viewer a means to contact me if they like what they see and would require my services.
+This is a chess game where you can play against another person. It allows you to switch themes. It incorporates the rules and movement of the game of chess into the site so you cannot make any illegal moves. If you wish to learn how to play the game I have linked the tutorial on lichess for the game. I hope to add the tutorial feature directly into the site in the future aswell as the ability to play against a computer.
 
-Visit the deployed website [here](https://itjosephk2.github.io/Joseph-Keane-Piano-Portfolio/)
+Visit the deployed website [here](https://itjosephk2.github.io/chess-game/)
 
 ## Table of Contents
 
