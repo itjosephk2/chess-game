@@ -40,8 +40,19 @@ body {
 .notation-board {
   margin-left: 30px;
   display: flex;
-  justify-content: center;
-  align-items:center;
+  justify-content: flex-start;
+  align-items:flex-start;
+  width: 300px;
+  height: calc(8 * 62px);
+  background: white;
+  font-size: 18px;
+  padding: 10px;
+  font-family: sans-serif;
+  overflow-y: auto;
+}
+.notation-board ul{
+  width: 33%;
+  list-style-type: none;
 }
 .wrapper {
   height: 100vh;
@@ -113,11 +124,7 @@ body {
 .selected  {
   color: red;
 }
-.notation-board {
-  background: pink;
-  width: 300px;
-  height: calc(8 * 62px);
-}
+
 
 /* dropdown */
 /* Dropdown Button */
