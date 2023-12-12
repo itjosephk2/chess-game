@@ -615,10 +615,10 @@ function updateNotation(piece, square, moveCounter) {
   console.log(piece.char);
   if (piece.color == 'white') {
     moves.innerHTML += `<li>${moveCounter}<li>`;
-    whiteMove.innerHTML += `<li>${piece.char}<li>`;
+    whiteMove.innerHTML += `<li>${piece.char}${square.dataset.squareNotation}<li>`;
     return moveCounter;
   }
-  blackMove.innerHTML += `<li>${piece.char}<li>`;
+  blackMove.innerHTML += `<li>${piece.char}${square.dataset.squareNotation}<li>`;
   moveCounter += 1;
   return moveCounter;
 
