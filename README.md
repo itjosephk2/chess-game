@@ -56,19 +56,15 @@ Visit the deployed website [here](https://itjosephk2.github.io/chess-game/)
 
 ### User Requirements
 
-* As a customer, I want to be able to navigate the website intuitively and learn more about the services being offered.
+* As a user, I want to be able to navigate the website intuitively and be able to play chess.
 
-* As a customer, I want to be able to hear examples of the persons playing.
+* As a user, I want to be able to be able to learn how to play the game of chess.
 
-* As a customer, I want to learn more about their teaching style and credibility.
+* As a user, I want to be able to customise my board
 
-* As a customer, I want to learn more bout their playing services that they provide.
+* As a user, I want to see the notation of my game on screen
 
-* As a customer, I want to easily find the contact information for them.
-
-* As a customer, I want to find social media links.
-
-* As a customer, I want to be able to contact them easily in order to inquire about their services.
+* As a user, I want to only be allowed to make legal moves.
 
 
 ### Color Scheme
