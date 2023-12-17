@@ -161,48 +161,28 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 ### Testing User Requirements
 
-* As a customer, I want to be able to navigate the website intuitively and learn more about the services being offered.
+* As a user, I want to be able to navigate the website intuitively and be able to play chess.
   
-    - The website offers a intuitive structure for the customers to navigate and find the information they are looking for.
-  
-    - The navigation bar is clearly presented in all pages for the customers to find with ease and it is easily navigable.
+    - The website offers a intuitive structure for the user to start playing chess immediately.
 
-* As a customer, I want to be able to hear examples of the persons playing.
+* As a user, I want to be able to be able to learn how to play the game of chess.
 
-    - The website offers samples of playing from future albums
- 
-    - It also offers links to social media sites that contain footage and audio of playing.
+    - The website offers a link to lichess where you can play a tutorial to learn to play chess
 
-* As a customer, I want to learn more about their teaching style and credibility.
+* As a user, I want to be able to customise my board
 
-    - Talked about how they approach teaching and the end goal of what a student can gain from learning from them.
+    - The user can change the theme of their board in the preset themes section.
 
-* As a customer, I want to learn more bout their playing services that they provide.
+* As a user, I want to see the notation of my game on screen
 
-    - Gave examples of where they played and what services they can provide for example the types of venues and events they can play for.
+    - If the viewport is large enough the user can see their game notation.
 
-* As a customer, I want to easily find the contact information for them.
-
-    - There is a contact form at the bottom of the page.
-    
-    - There is links to social media plaforms for contacting in the footer.
-
-* As a customer, I want to find social media links.
-    
-    - There is social media links in the footer.
-
-* As a customer, I want to be able to contact them easily in order to inquire about their services.
-
-    - There is a contact form for ease of contact. 
-
-* As a customer, I want to be able to navigate the website intuitively and learn more about the services being offered.
-
-    -  There is a clear path through the website in which all serioces are displayed and explained.
-
+* As a user, I want to only be allowed to make legal moves.
+    - The user can make legal moves only. However due to time constraints not all the legal moves have been impleneted. Also check was not succefully implemented so checkmate does not existsts and kings are free to move as they please and illegal moves that involve a king being in check can be played. I had planned on itterarting through all the opponents pieces and then all tyhe squares that piece can legally move to and checking if any of those squares were your king and if that is true then you are in check. however I could not succesfully implement that withought breaking the game due to the way my check if leggal function works. Ideally I will go back and refactor my code to break that function into smaller parts and be able to utilise it for checking for check without breakinging things. Also double check and moving out of check would have to be accounted for which in heinsight as I think about it now would be as simple as checking fo isInCheck as part of checking if a move is legal. If a move is legal should be a function in the model section which calls numerous controller functions to check for things. That way the flow and functionality are seperate. And any updates to the screen visually should be in visual functions. 
 
 ### Code Validation
 
-* The [W3C Markup Validator](https://validator.w3.org/) and [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) services were used to validate all pages of the project in order to ensure there were no syntax errors.
+* The [W3C Markup Validator](https://validator.w3.org/) and [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) and [JSHint](https://jshint.com/) services were used to validate all pages of the project in order to ensure there were no syntax errors.
 
 
 ### Accessibility
