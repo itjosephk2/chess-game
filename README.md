@@ -335,17 +335,9 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 ## Finished Product
 
-Page | Desktop version | Mobile version
---- | --- | ---
-Header | ![Desktop header section image](assets/readme-files/desktop-header.png) | ![Mobile header section image](assets/readme-files/mobile-header.png)
-Discography | ![Desktop discography section image](assets/readme-files/desktop-discography.png) | ![Mobile discography section image](assets/readme-files/mobile-discography.png)
-Teaching | ![Desktop teaching section image](assets/readme-files/desktop-teaching.png) | ![Mobile teaching section image](assets/readme-files/mobile-teaching.png)
-Lounge Piano | ![Desktop lounge piano Form](assets/readme-files/desktop-lounge-piano.png) | ![Mobile lounge piano image](assets/readme-files/mobile-lounge-piano.png)
-Contact | ![Desktop Contact Form](assets/readme-files/desktop-contact.png) | ![Mobile contact image](assets/readme-files/mobile-contact.png)
-Footer | ![Desktop footer Form](assets/readme-files/desktop-footer.png) | ![Mobile footer image](assets/readme-files/mobile-footer.png)
-404 Error | ![Desktop 404 error page image](assets/readme-files/desktop-404.png) | ![Mobile 404 error page image](assets/readme-files/mobile-404.png)
+![Finished Site](assets/readme-files/image.png)
 
-[Back to top ⇧](#pianist-portfolio)
+[Back to top ⇧](#Chess-Game)
 
 
 ## Deployment
@@ -366,7 +358,7 @@ Footer | ![Desktop footer Form](assets/readme-files/desktop-footer.png) | ![Mobi
 
     5. The page will refresh automatically and generate a link to your website. 
 
-[Back to top ⇧](#pianist-portfolio)
+[Back to top ⇧](#Chess-Game)
 
 
 ## Credits
@@ -377,24 +369,14 @@ Footer | ![Desktop footer Form](assets/readme-files/desktop-footer.png) | ![Mobi
 
 ### Media
 
-* [Gratisography](https://gratisography.com/)
-    - Hero image was gotten from here.
 
-* [Canva](https://www.canva.com/)
-    - Canva was used to create the album images.
- 
-* [Buttons](https://getcssscan.com/css-buttons-examples)
-    - The button no. 48 was utilised to help create the button effect for the form.
- 
-* [Color Pallet ](https://coolors.co/)
-    - Utilised to generate the color pallet picture for this README file.
 
 
 ### Code
 
 * [Youtube](https://youtube.com/) and [W3Schools](https://www.w3schools.com/) were consulted on a regular basis for inspiration and sometimes to be able to better understand the code being implement.
 
-[Back to top ⇧](#pianist-portfolio)
+[Back to top ⇧](#Chess-Game)
 
 
 ## Acknowledgements
