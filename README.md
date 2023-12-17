@@ -1,6 +1,6 @@
 # Chess Game
 
-![Chess Game mockup images](assets/readme-files/mockup-image.png)
+![Chess Game mockup images](assets/readme-files/image.png)
 
 This is a chess game where you can play against another person. It allows you to switch themes. It incorporates the rules and movement of the game of chess into the site so you cannot make any illegal moves. If you wish to learn how to play the game I have linked the tutorial on lichess for the game. I hope to add the tutorial feature directly into the site in the future aswell as the ability to play against a computer.
 
