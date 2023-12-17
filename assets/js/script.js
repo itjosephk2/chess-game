@@ -72,6 +72,10 @@ class Piece {
     this._isSelected = isSelected;
   }
 }
+
+
+
+// dropdown menu function
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
 }
@@ -90,29 +94,29 @@ window.onclick = function(event) {
   }
 }
 
-function initTutorial() {
-  console.log("tutorial");
-  chessboard = [
-    Array(9).fill(0),
-    [new Piece("black", "pawn", 8), new Piece("black", "pawn", 9), new Piece("black", "pawn", 10), new Piece("black", "pawn", 11), new Piece("black", "pawn", 12), new Piece("black", "pawn", 13), new Piece("black", "pawn", 14), new Piece("black", "pawn", 15)],
-    Array(8).fill(0),
-    Array(8).fill(0),
-    Array(8).fill(0),
-    Array(8).fill(0),
-    [new Piece("white", "pawn", 48), new Piece("white", "pawn", 49), new Piece("white", "pawn", 50), new Piece("white", "pawn", 51), new Piece("white", "pawn", 52), new Piece("white", "pawn", 53), new Piece("white", "pawn", 54), new Piece("white", "pawn", 55)],
-    Array(8).fill(0)
-  ];
-  // create an array of squares on the board called sqaures
-  const squares = document.getElementsByClassName("square");
-  // Loop through each square in squares
-  for (let i = 0; i < squares.length; i++) {
-    // Assign each square an equivilant data taag to ap it to the array.
-    squares[i].setAttribute("data-square", i);
-  }
-
-  //  Lets render the pieces to the chessBoard.
-  chessView.renderChessboard(chessboard, squares);
-}
+// function initTutorial() {
+//   console.log("tutorial");
+//   chessboard = [
+//     Array(9).fill(0),
+//     [new Piece("black", "pawn", 8), new Piece("black", "pawn", 9), new Piece("black", "pawn", 10), new Piece("black", "pawn", 11), new Piece("black", "pawn", 12), new Piece("black", "pawn", 13), new Piece("black", "pawn", 14), new Piece("black", "pawn", 15)],
+//     Array(8).fill(0),
+//     Array(8).fill(0),
+//     Array(8).fill(0),
+//     Array(8).fill(0),
+//     [new Piece("white", "pawn", 48), new Piece("white", "pawn", 49), new Piece("white", "pawn", 50), new Piece("white", "pawn", 51), new Piece("white", "pawn", 52), new Piece("white", "pawn", 53), new Piece("white", "pawn", 54), new Piece("white", "pawn", 55)],
+//     Array(8).fill(0)
+//   ];
+//   // create an array of squares on the board called sqaures
+//   const squares = document.getElementsByClassName("square");
+//   // Loop through each square in squares
+//   for (let i = 0; i < squares.length; i++) {
+//     // Assign each square an equivilant data taag to ap it to the array.
+//     squares[i].setAttribute("data-square", i);
+//   }
+//
+//   //  Lets render the pieces to the chessBoard.
+//   chessView.renderChessboard(chessboard, squares);
+// }
 
 // Controller
 const chessController = {
@@ -145,14 +149,14 @@ const chessController = {
     chessView.renderChessboard(chessboard, squares);
 
 
-    const list = document.getElementsByTagName('li');
+    const list = document.getElementsByTagName('a');
 
     for (let item of list) {
       item.addEventListener("click", function(){
         if (item.innerHTML == "Tutorial") {
           initTutorial();
         }
-        if (item.innerHTML == "Theme A") {
+        if (item.innerHTML == "Default") {
           let squares = document.getElementsByClassName("square");
           // Loop through each square in squares
           for (let square of squares) {
@@ -167,7 +171,7 @@ const chessController = {
             }
           }
         }
-        if (item.innerHTML == "Theme B") {
+        if (item.innerHTML == "Red and Green") {
           const squares = document.getElementsByClassName("square");
           // Loop through each square in squares
           for (let square of squares) {
@@ -179,21 +183,6 @@ const chessController = {
             if (square.classList.contains("black")) {
               square.classList.remove("black");
               square.classList.add("green");
-            }
-          }
-        }
-        if (item.innerHTML == "Theme C") {
-          const squares = document.getElementsByClassName("square");
-          // Loop through each square in squares
-          for (let square of squares) {
-            // Assign each square an equivilant data taag to ap it to the array.
-            if (square.classList.contains("red")) {
-              square.classList.remove("red");
-              square.classList.add("white");
-            }
-            if (square.classList.contains("green")) {
-              square.classList.remove("green");
-              square.classList.add("black");
             }
           }
         }
