@@ -80,7 +80,7 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 
 
-[Back to top ⇧](#Chess Game)
+[Back to top ⇧](#Chess-Game)
 
 
 ## Features
