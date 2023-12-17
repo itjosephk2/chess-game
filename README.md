@@ -68,9 +68,7 @@ Visit the deployed website [here](https://itjosephk2.github.io/chess-game/)
 
 
 ### Color Scheme
-![Color scheme image](assets/readme-files/color-scheme.png)
-
-The colours used in the site are Black, White primarily (#000 and #fff), Varying shades of gray or used either directly or to create a blend between white and black. common examples are (#CCC and #333) There is a use of (#EBEBEB) for the button hover effect. These colours are chosen to represent the black and white ivory keys of a piano and also to keep in touch with a minimalist modern design.
+The colors used in this site are primarily based on the black and white of a chessboard. I got the colors from lichess. The user can also change to a somewhat christmas themed board of red and green.
 
 ### Typography
 
@@ -80,27 +78,9 @@ The main font used in the site is Roboto, with Arial then Sans Serif as the fall
 
 Wire frames were drawn by hand to form a rough structural shape of the site and then each section was designed with pen and paper and mocked up with html and css befor implementation.
 
-![Wireframe image 1](assets/readme-files/wireframe-2.jpeg)
 
-![Wireframe image 2](assets/readme-files/wireframe-3.jpeg)
 
-![Wireframe image 3](assets/readme-files/wireframe-4.jpeg)
-
-![Wireframe image 4](assets/readme-files/wireframe-5.jpeg)
-
-![Wireframe image 5](assets/readme-files/wireframe-6.jpeg)
-
-![Wireframe image 6](assets/readme-files/wireframe-7.jpeg)
-
-![Wireframe image 7](assets/readme-files/wireframe-8.jpeg)
-
-![Wireframe image 8](assets/readme-files/wireframe-10.jpeg)
-
-![Wireframe image 9](assets/readme-files/wireframe-12.jpeg)
-
-![Wireframe image 10](assets/readme-files/wireframe-13.jpeg)
-
-[Back to top ⇧](#pianist-portfolio)
+[Back to top ⇧](#Chess Game)
 
 
 ## Features
