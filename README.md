@@ -407,4 +407,4 @@ Footer | ![Desktop footer Form](assets/readme-files/desktop-footer.png) | ![Mobi
 
 * Code Institute and its amazing Slack community for their support and providing me with the necessary knowledge to complete this project.
 
-[Back to top ⇧](#pianist-portfolio)
+[Back to top ⇧](#Chess-Game)
