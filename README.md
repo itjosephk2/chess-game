@@ -126,6 +126,7 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 ### Languages Used
 * [HTML5](https://en.wikipedia.org/wiki/HTML5)
 * [CSS3](https://en.wikipedia.org/wiki/CSS)
+* [JS](https://en.wikipedia.org/wiki/JavaScript)
 
 ### Frameworks, Libraries and Programs Used
 
@@ -153,7 +154,7 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 * [W3C CSS Validator](https://jigsaw.w3.org/css-validator/)
     - W3C CSS Validator was used to validate the CSS code.
 
-[Back to top ⇧](#pianist-portfolio)
+[Back to top ⇧](#Chess-Game)
 
 
 ## Testing
