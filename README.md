@@ -263,74 +263,29 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 ### Common Elements Testing
 
-* Landing page
+* Index Page
 
-    * Hero
+    * Side Bar
 
-        - Hero covers the size of the viewport.
-
-        - Heading box always fits within page leaving a space between it and the border of the viewport.
-
-    * Navigation Bar
-
-        - Hovering on the different navigation bar's links will trigger hover effect, underlning the text.
-
-        - Clicking on the navigation bar's links will scrol to the correct section.
-
-        - Navigation disapears on mobile and a scroll to top arrow appears.
-
-    * Discography
-    
-        - Audio Elements work and play the correct music.
-
-        - Albums change from vertical to horizontal when on desktop
-
-        - Album gets larger on tablet horizontal
-
-
-    * Teaching
-    
-        - Profile image stays round and constant on all device widths.
+        - Tutorial link takes you to a new page
      
-        - content changes from vertical to horiontal on larger screens.
+        - Dropdown menu appears on click and changes color of the board
+          
+    * Chess Board
+
+        - Allows the user to move chess pieces
+        - Highlights the appropriate piece.
+        - deselects a piece if move is illegal allowing users to change the piece they wanted to move withought clicking off the screen.
+        - Pieces have restricted movement to their move set.
+        - Unfortunately due to time constraints, I was unable to implement check, checkmate, castling and en passant.
      
-        - Call to action works and animations work
+    * Notation Board
 
-    * Lounge Piano
-    
-        - Image appears on right due to row reverse on desktop and aligns vertically on top properly.
-     
-        - content changes from vertical to horiontal on larger screens.
-     
-        - Call to action works and animations work
-     
-    * Contact
-    
-        - Contact form appears fully vertcal on smaller devices and groups on larger devices.
-        
-        - Hover effect works on button.
-        
-        - labels move out of the way when clicked and active and also stay out of the way if input is valid.
-
-    * Footer
-
-        - Clicking on the social media links will open the specific website on a new tab.
-
-        - Hover effect works on links and links bring you to a new tab.
-
-        - Footer changes from vertical to horizontal at the appropriate viewport width.
+        - Displays the move made on the screen in the order it happens
+  
           
 
-
-* 404 Error Page
-
-    - Entering an incorrect address into the address bar will bring the customer back to the 404 error page.
-
-    - Hovering on the homepage link will trigger hover effect, underlining the bring me home text.
-
-    - Clicking on the homepage link will bring the customer back to the landing page.
-
-[Back to top ⇧](#pianist-portfolio)
+[Back to top ⇧](#Chess-Game)
 
 
 ## Finished Product
