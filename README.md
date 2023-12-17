@@ -87,147 +87,38 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 ### General
 
-* Responsive design across all device sizes.
+* Chess game for playing with two people
 
-* Similar color scheme and design throughout the website to maintain consistency for the user, categorise and present the information to the customers whilst maintaing a flow of the site on both mobile and desktop.
+### index.html
 
-### Landing Page
+### Side Bar
+![Header image](assets/readme-files/desktop-side-bar.png)
 
-### Header
-![Header image](assets/readme-files/desktop-header.png)
-
-* Hero
+* Tutrorial
     
-    - The hero sets the mood for the page and gives a the user an exact idea of what the portfolio is for.
+    - This links the user to lichess tp learn how to play the game of chess.
 
-    - The logo acts as a link to the top of the page.
+    - UNfortunately due to time constraints I was unable to implement a custom built tutorial. I had planned on just initialising a board with the relevant poieces and checking for the desired move by a text prompt to explain how the pieces moved.
 
-* Navigation
+* Themes
 
-    - The legacy navigation is fixed to the top of the page to enable easy scrolling on desktop.
-      
-    - On mobile I opted for no navigation as its a scroll focused site. However there is a to the top arrow to get home when on mobile.
+    - Allows the user to change the color of their board
 
 
-### Discography
-![Discography Section Image](assets/readme-files/desktop-discography.png)
+### Game Board
+![Discography Section Image](assets/readme-files/desktop-game-board.png)
 
-* General
+* chess Board
 
-  - Conatins an image of future albums, list of pieces that will be in them and a sample of the music.
+  - This is the board with the chess pieces wher the user can play chess
 
-* Desktop
+* Notation Board
 
-  - The background is a gradient.
+  - This updates with the moves of the game in order they occur.
 
-  - There are three albums aligned horrizontaly on the page.         
+  - It dissapears on smaller viewports        
 
-* Mobile
-  
-  - The background is a fixed color.
- 
-  - The albums are vertically aligned and each one has its own container with a gradient background. 
-
-### Teaching
-![Teaching section image](assets/readme-files/desktop-teaching.png)
-
-* General
-
-  - Conatins a temoporary placeholder profile picture, Will get profressional photos taken soon.
-  
-  - A caption on my teaching philosophy.
- 
-  - A breakdown of how that would manifest throughout a students journey getting lessons.
- 
-  - A call to action for contacting me using the form
-
-* Tablet Horizontal/Desktop
-
-  - The background is a gradient.
-
-  - The content is aligned horizzontaly         
-
-* Mobile/Tablet Vertical
-  
-  - The background is a fixed color.
- 
-  - The content is vertically aligned and has its own container with a gradient background. 
-  
-### Lounge Piano
-![Lounge Piano section image](assets/readme-files/desktop-lounge-piano.png)
-
-* General
-
-  - Conatins a temoporary placeholder picture, Waiting on photos back from a wedding I played at recently.
-  
-  - A brief description of what music I play.
- 
-  - A list of the types of veues and events I play at.
- 
-  - A call to action for contacting me using the form
-
-* Desktop
-
-  - The background is a gradient.
-
-  - There content is aligned horrizontaly on the page.         
-
-* Mobile
-  
-  - The background is a fixed color.
- 
-  - The content is vertically aligned and has its own container with a gradient background. 
-
-### Contact From
-![Contact section image](assets/readme-files/desktop-contact.png)
-
-* General
-
-  - Conatins an image of future albums, list of pieces that will be in them and a sample of the music.
-
-* Desktop
-
-  - The background is a gradient.
-
-  - There are three albums aligned horrizontaly on the page.         
-
-* Mobile
-  
-  - The background is a fixed color.
- 
-  - The albums are vertically aligned and each one has its own container with a gradient background. 
-
-### Footer
-![Footer image](assets/readme-files/desktop-footer.png)
-
-* Footer
-
-    - Broken into four sections. Aligned horizontaly on desktop and vertically on mobile.
-  
-    - Section 1 includes links to social media and small about me text.
- 
-    - Section 2 include links to playlists of future unrecorded albums.
- 
-    - Section 3 includes links to reccomended resources for learning improvisation in a classical style on the piano
- 
-    - Section 4 includes links to venues I have and/or currently am playing at.
-
-* Bottom Bar
-  
-    - The bottom bar includes a repeat of the logo and a copyight text.
- 
-    - It helps to end the page.
-
-### Error Pages
-![404 error page image](assets/readme-files/desktop-404.png)
-
-*  404 Error Page
-
-    - This single page is being shown in case the customer enters an incorrect address into the address bar.
- 
-    - It contains a link to the landing page.    
-
-[Back to top ⇧](#pianist-portfolio)
+[Back to top ⇧](#Chess-Game)
 
 
 ## Technologies Used
