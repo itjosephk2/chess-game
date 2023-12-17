@@ -46,13 +46,13 @@ Visit the deployed website [here](https://itjosephk2.github.io/chess-game/)
 
 ### Project Goals
 
-* The website should be straight forward and easy to navigate.
+* The website should ay the very least allow people to move chess pieces on a board and play a game of chess
 
-* Showcase my talents and skillsets in my portfolio.
+* Ideally the rules and legal moves will be built into the game.
 
-* Provide the customer with useful information that gives them a good idea of the services I provide.
+* Supply the user with a link to learn how to play the game.
 
-* Provide customers with the ability tp get in touch with me.
+* Allow the user to change the theme of the chessboard.
 
 ### User Requirements
 
