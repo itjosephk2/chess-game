@@ -204,13 +204,6 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 * The [W3C Markup Validator](https://validator.w3.org/) and [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) services were used to validate all pages of the project in order to ensure there were no syntax errors.
 
-    - W3C Markup Validator found an error concerning the misspelling of target for one of the attributes of a link in the footer.
-
-    - Another error found by W3C was a comment that wasnt correctly removed. This caused an error between The parent audio and child source not being compatible as the trailing end of what was once a comment was treated as the backup text for when audio did not work on the browser.
- 
-    - There was an error where an a tag was closed before its content of an i tag which was easily resolved.
-
-    -  W3C CSS Validator ffound an error of a curly bracket found at the end of the file missing for the final media query.
 
 ### Accessibility
 
@@ -223,14 +216,6 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
     * Landing Page mobile
      
         - ![Lighthouse report for landing page Mobile image](assets/readme-files/mobile-lighthouse-report-1.png)
-    
-    * 404 Error Page Desktop
-
-        - ![Lighthouse report for 404 page desktop image](assets/readme-files/desktop-lighthouse-report-404-1.png)
-    
-    * 404 Error Page mobile
-
-        - ![Lighthouse report for 404 page mobile image](assets/readme-files/mobile-lighthouse-report-404-1.png)
 
 ### Tools Testing
 
