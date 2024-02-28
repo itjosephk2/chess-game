@@ -245,6 +245,22 @@ const chessController = {
   }
 };
 
+
+/**
+*Find the position of the selected king on the board
+*/
+function findKingSquare(playerColor, chessboard) {
+  for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
+      let piece = chessboard[row][col];
+      if (piece !== 0 && piece.color === playerColor && piece.pieceType === 'king') {
+        return row * 8 + col;
+      }
+    }
+  }
+  return -1; // King not found
+}
+
 /**
 * Get the row of the index given
 */
@@ -288,38 +304,20 @@ function changePlayerTurn() {
 
 // This function is not working
 function isKingInCheck(playerColor, chessboard, squares) {
-  let isLegal;
+  let kingSquare = findKingSquare(playerColor, chessboard);
 
-  // Iterate through the entire board
   for (let square of squares) {
-    const piece = chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)];
-    if (piece == 0) {
-      break;
+    let piece = chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)];
+    if (piece !== 0 && piece.color !== playerColor) {
+      if (checkifMoveIsLegal(piece, squares[kingSquare], chessboard)) {
+        alert(playerColor + ": You are in check");
+        return true;
+      }
     }
-    if (piece.color != playerColor) {
-        // Check if this piece can attack the king's position
-
-        for (let square of squares) {
-          if (checkifMoveIsLegal(piece, square, chessboard)){
-
-            if (piece.pieceType == "king") {
-              console.log('\n');
-              console.log(playerColor + ": You are in check");
-              console.log('Move is legal: ' + checkifMoveIsLegal(piece, square, chessboard))
-              console.log(chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)]);
-              console.log(piece.color);
-              console.log(playerColor);
-              console.log('\n')
-              return true;
-            }
-          }
-        }
-    }
-
   }
+
   return false; // King is not in check
 }
-
 /**
 * This does way too much right now and needs to be refactored
 */
@@ -335,10 +333,7 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
 
   let squares = document.getElementsByClassName("square");
 
-  console.log('piece on destination square: ' + chessboard[selectedSquareRow][selectedSquareCol]);
-  console.log('Current Square: ' + currentSquare);
-  console.log('Destination square: ' + selectedSquare);
-  if(currentSquare == square) {
+  if(currentSquare == selectedSquare + 1) {
     return false;
   }
 
@@ -493,21 +488,24 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
       return false;
 
     case 'queen':
-      // let originalType = selectedPiece.pieceType;
-      // selectedPiece.pieceType = 'rook';
-      // if (checkifMoveIsLegal(selectedPiece, square, chessboard)) {
-      //   selectedPiece.pieceType = originalType;
-      //   return true;
-      // }
-      // selectedPiece.pieceType = "bishop";
-      // if (checkifMoveIsLegal(selectedPiece, square, chessboard)) {
-      //   selectedPiece.pieceType = originalType;
-      //   return true;
-      // }
-      // selectedPiece.pieceType = originalType;
+      let originalType = selectedPiece.pieceType;
+      selectedPiece.pieceType = 'rook';
+      if (checkifMoveIsLegal(selectedPiece, square, chessboard)) {
+        selectedPiece.pieceType = originalType;
+        return true;
+      }
+      selectedPiece.pieceType = "bishop";
+      if (checkifMoveIsLegal(selectedPiece, square, chessboard)) {
+        selectedPiece.pieceType = originalType;
+        return true;
+      }
+      selectedPiece.pieceType = originalType;
       return false;
 
     case 'king':
+      if(selectedPiece.color == chessboard[selectedSquareRow][selectedSquareCol].color) {
+        return false;
+      }
       if (selectedSquare + LEFT == currentSquare ||
           selectedSquare + RIGHT == currentSquare ||
           selectedSquare + DOWN == currentSquare ||
