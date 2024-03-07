@@ -348,7 +348,6 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
 
   // checks if pieces are the same colour
   if (isSameColor(currentPiece, selectedPiece)) {
-    console.log('colors equal')
     return false;
   }
 
@@ -358,7 +357,7 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
 
   // check Movement of pieces
   switch (currentPiece.pieceType) {
-
+    //  checking the legality of the pawn move
     case 'pawn':
       // white Moves
       let direction = UP;
@@ -395,7 +394,8 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
         return true;
       }
       return false;
-
+    
+    //  checking the legality of the rook move
     case 'rook':
       if (currentSquareRow < selectedSquareRow) {
         isBackwards = false;
@@ -443,6 +443,7 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
       }
       return false;
 
+    //  checking the legality of the knight move
     case 'knight':
       if (selectedSquare + 10 == currentSquare ||
           selectedSquare - 10 == currentSquare ||
@@ -462,11 +463,10 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
       if (square.dataset.color != squares[selectedPieceElement.square].dataset.color) {
         return false;
       }
-      console.log(squaresMoved % 7);
-      console.log(squaresMoved % 9);
       // not a diagonal move
-      if (squaresMoved % 7 != 0 || squaresMoved % 9 != 0) {
-        
+      console.log(squaresMoved % 7 != 0);
+      console.log(squaresMoved % 9 != 0);
+      if (!squaresMoved % 7 || !squaresMoved % 9) {
         return false;
       }
       // is the piece going backwards
@@ -486,7 +486,8 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
         }
       }
       return true;
-
+    
+    //  checking the legality of the queen move
     case 'queen':
       let originalType = selectedPiece.pieceType;
       selectedPiece.pieceType = 'rook';
@@ -501,7 +502,8 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
       }
       selectedPiece.pieceType = originalType;
       return false;
-
+    
+    //  checking the legality of the king move
     case 'king':
       if (selectedSquare + LEFT == currentSquare ||
           selectedSquare + RIGHT == currentSquare ||
@@ -529,7 +531,6 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
 
 /** checks if square is empty */
 function isSquareEmpty(selectedSquarePiece){
-  console.log(selectedSquarePiece == 0);
   return selectedSquarePiece == 0;
 }
 
