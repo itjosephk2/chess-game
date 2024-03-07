@@ -75,6 +75,7 @@ class Piece {
 
 /**
 * Temporary method to categorise Menu stuff for sorting later
+* This is a mess !!!!
 */
 function menuStuff() {
   // Menu items
@@ -181,10 +182,14 @@ const chessController = {
       square.addEventListener("click", function () {
         // If a piece is Selected Then check for moving the selected Piece
         if (isPieceSelected) {
-            // CHeck if move is legal
-            if (checkifMoveIsLegal(selectedPiece, square, chessboard)) {
+          // CHeck if move is legal
+          if (checkifMoveIsLegal(selectedPiece, square, chessboard)) {
+
               // Move the piece
               chessboard = movePiece(square, chessboard, selectedPiece);
+              // if (!isKingInCheck("white", chessboard, squares)) {
+              //   alert('Not in check');
+              // }
               // update the move counter
               moveCounter = updateNotation(selectedPiece, square, moveCounter);
               // reset the selection of pieces
@@ -193,10 +198,9 @@ const chessController = {
               chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)].square = square.dataset.square;
               // Render the move to the screen
               chessView.renderChessboard(chessboard, squares);
-
               // Change the players turn
               changePlayerTurn();
-            // }
+
           }
           // Illegal move resets pieces selection
           else {
@@ -212,7 +216,7 @@ const chessController = {
           if (isWhiteToMove) {
             // Is there a white piece here
             if ( chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)] != 0 && chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)].color == "white") {
-              isKingInCheck("white", chessboard, squares);
+              // isKingInCheck("white", chessboard, squares);
               // set selected piece to the equivilant object
               selectedPiece = chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)];
               selectedPieceElement = square.firstChild;
@@ -227,7 +231,7 @@ const chessController = {
           // Same check if it is black to move
           else {
             if ( chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)] != 0 && chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)].color == "black")  {
-              isKingInCheck('black', chessboard, squares);
+              // isKingInCheck('black', chessboard, squares);
               // set selected piece to the equivilant object
               selectedPiece = chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)];
               selectedPieceElement = square.firstChild;
@@ -246,9 +250,7 @@ const chessController = {
 };
 
 
-/**
-*Find the position of the selected king on the board
-*/
+/** Find the position of the selected king on the board */
 function findKingSquare(playerColor, chessboard) {
   for (let row = 0; row < 8; row++) {
     for (let col = 0; col < 8; col++) {
@@ -261,23 +263,17 @@ function findKingSquare(playerColor, chessboard) {
   return -1; // King not found
 }
 
-/**
-* Get the row of the index given
-*/
+/** Get the row of the index given */
 function getRow(squareId) {
   return Math.floor(squareId / 8);
 }
 
-/**
-* Get the column of the index given
-*/
+/** Get the column of the index given */
 function getCol(squareId) {
   return squareId % 8;
 }
 
-/**
-* CHeck which direction the piece is moving
-*/
+/** CHeck which direction the piece is moving */
 function getDirection(isDirection, direction) {
   if (isDirection) {
     return direction * -1;
@@ -285,24 +281,19 @@ function getDirection(isDirection, direction) {
   return direction;
 }
 
-/**
-* Reset the piece selection state
-*/
-
+/** Reset the piece selection state */
 function resetSelection(piece) {
   selectedPieceElement.classList.remove("selected");
   isPieceSelected = false;
   selectedPiece = null;
 }
-/**
-* Change player
-*/
 
+/** Change player*/
 function changePlayerTurn() {
   isWhiteToMove = isWhiteToMove ? false : true;
 }
 
-// This function is not working
+/** Checks if the polayer is in check */
 function isKingInCheck(playerColor, chessboard, squares) {
   let kingSquare = findKingSquare(playerColor, chessboard);
 
@@ -321,21 +312,19 @@ function isKingInCheck(playerColor, chessboard, squares) {
 /**
 * This does way too much right now and needs to be refactored
 */
-function checkifMoveIsLegal(selectedPiece, square, chessboard) {
+function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
   // setting variables for current square
-  let currentSquare = parseInt(selectedPiece.square);
+  let currentSquare = parseInt(selectedPieceElement.square);
   let currentSquareRow = getRow(currentSquare);
   let currentSquareCol = getCol(currentSquare);
   // Setting variables for selectedSquare
   let selectedSquare = parseInt(square.dataset.square);
   let selectedSquareRow = getRow(selectedSquare);
   let selectedSquareCol = getCol(selectedSquare);
-
-  let squares = document.getElementsByClassName("square");
-
-  if(currentSquare == selectedSquare + 1) {
-    return false;
-  }
+  // current Piece variables
+  let currentPiece = chessboard[currentSquareRow][currentSquareCol];
+  // selected Piece variables
+  let selectedPiece = chessboard[selectedSquareRow][selectedSquareCol];
 
   // Movement Variables
   const LEFT = -1;
@@ -350,42 +339,61 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
   let isLeft = true;
   let rowChange;
   let colChange;
+  
+  // destination square check
+  let isDestinationSquareEmpty = isSquareEmpty(selectedPiece);
 
-  // Squares Moved
-  let squaresMoved = currentSquare - selectedSquare;
-  if (squaresMoved < 0) {
-    squaresMoved = squaresMoved * -1;
+  // Squares array
+  let squares = document.getElementsByClassName("square");
+
+  // checks if pieces are the same colour
+  if (isSameColor(currentPiece, selectedPiece)) {
+    console.log('colors equal')
+    return false;
   }
 
+  // Squares Moved
+  let squaresMoved = getSquaresMoved(currentSquare, selectedSquare);
+
+
   // check Movement of pieces
-  switch (selectedPiece.pieceType) {
+  switch (currentPiece.pieceType) {
 
     case 'pawn':
-    let direction = UP;
-    let takeLeft = UPLEFT;
-    let takeRight = UPRIGHT;
-      if (selectedPiece.color == 'black') {
+      // white Moves
+      let direction = UP;
+      let takeLeft = UPLEFT;
+      let takeRight = UPRIGHT;
+      // black Moves
+      if (currentPiece.color == 'black') {
         direction = DOWN;
         takeLeft = DOWNLEFT;
         takeRight = DOWNRIGHT;
       }
-      if (chessboard[selectedSquareRow][selectedSquareCol] == 0 &&
-        selectedSquare == currentSquare + direction ||
-        // Moving forwards 2 spaces on turn 1
-        (chessboard[selectedSquareRow][selectedSquareCol] == 0 &&
-        chessboard[getRow(currentSquare + direction)][currentSquareCol] == 0 &&
-        !selectedPiece.hasMoved &&
-        selectedSquare == currentSquare + (direction * 2)) ||
-        // Taking Left
-        (chessboard[selectedSquareRow][selectedSquareCol] != 0 &&
-           selectedSquare == currentSquare + takeLeft) ||
-        // Taking Right
-        (chessboard[selectedSquareRow][selectedSquareCol] != 0 &&
-           selectedSquare == currentSquare + takeRight)
-        ) {
-          selectedPiece.hasMoved = true;
+      // Destination squaer is Empty
+      if (isDestinationSquareEmpty) {
+        // normal Move
+        if (selectedSquare == currentSquare + direction) {
           return true;
         }
+        // If piece has moved they only have a normal move left
+        if (currentPiece.hasMoved) {
+
+          return false;
+        }
+        // Moving forwards 2 spaces if has not moved 
+        if (selectedSquare == currentSquare + (direction * 2)) {
+          return true;
+        }
+      } 
+      // destination Square is not empty
+      // Taking Left
+      if (selectedSquare == currentSquare + takeLeft) {
+        return true;
+      }
+      else if (selectedSquare == currentSquare + takeRight) {
+        return true;
+      }
       return false;
 
     case 'rook':
@@ -429,10 +437,8 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
           }
         }
       }
-      if ((selectedSquareRow == currentSquareRow ||
-        selectedSquareCol == currentSquareCol)  &&
-        (selectedPiece.color != chessboard[selectedSquareRow][selectedSquareCol].color)
-      ) {
+      if (selectedSquareRow == currentSquareRow ||
+        selectedSquareCol == currentSquareCol) {
         return true;
       }
       return false;
@@ -452,6 +458,17 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
 
     //  checking the legality of the bishop move
     case 'bishop':
+      // not the same color square
+      if (square.dataset.color != squares[selectedPieceElement.square].dataset.color) {
+        return false;
+      }
+      console.log(squaresMoved % 7);
+      console.log(squaresMoved % 9);
+      // not a diagonal move
+      if (squaresMoved % 7 != 0 || squaresMoved % 9 != 0) {
+        
+        return false;
+      }
       // is the piece going backwards
       if (currentSquareRow < selectedSquareRow) {
         isBackwards = false;
@@ -460,42 +477,25 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
       if (currentSquareCol < selectedSquareCol) {
         isLeft = false;
       }
-      // what the fuck did I do here
-      if (squaresMoved % 7 == 0) {
-        for (let i = 1; i < squaresMoved / 7; i++) {
-          rowChange = getDirection(isBackwards, i);
-          colChange = getDirection(isLeft, i);
-          if (chessboard[currentSquareRow + rowChange][currentSquareCol + colChange] != 0) {
-            return false;
-          }
+      // checks for pieces inbetween the moving piece and destination square
+      for (let i = 1; i < squaresMoved / 7 || i < squaresMoved / 9; i++) {
+        rowChange = getDirection(isBackwards, i);
+        colChange = getDirection(isLeft, i);
+        if (chessboard[currentSquareRow + rowChange][currentSquareCol + colChange] != 0) {
+          return false;
         }
       }
-      if (squaresMoved % 9 == 0) {
-        for (let i = 1; i < squaresMoved / 9; i++) {
-          rowChange = getDirection(isBackwards, i);
-          colChange = getDirection(isLeft, i);
-          if (chessboard[currentSquareRow + rowChange][currentSquareCol + colChange] != 0) {
-            return false;
-          }
-        }
-      }
-      if ((square.dataset.color == squares[selectedPiece.square].dataset.color &&
-      squaresMoved % 7 == 0) ||
-      (square.dataset.color == squares[selectedPiece.square].dataset.color &&
-      squaresMoved % 9 == 0) ) {
-        return true;
-      }
-      return false;
+      return true;
 
     case 'queen':
       let originalType = selectedPiece.pieceType;
       selectedPiece.pieceType = 'rook';
-      if (checkifMoveIsLegal(selectedPiece, square, chessboard)) {
+      if (checkifMoveIsLegal(selectedPieceElement, square, chessboard)) {
         selectedPiece.pieceType = originalType;
         return true;
       }
       selectedPiece.pieceType = "bishop";
-      if (checkifMoveIsLegal(selectedPiece, square, chessboard)) {
+      if (checkifMoveIsLegal(selectedPieceElemenet, square, chessboard)) {
         selectedPiece.pieceType = originalType;
         return true;
       }
@@ -503,9 +503,6 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
       return false;
 
     case 'king':
-      if(selectedPiece.color == chessboard[selectedSquareRow][selectedSquareCol].color) {
-        return false;
-      }
       if (selectedSquare + LEFT == currentSquare ||
           selectedSquare + RIGHT == currentSquare ||
           selectedSquare + DOWN == currentSquare ||
@@ -516,6 +513,7 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
           selectedSquare + UPRIGHT == currentSquare) {
             return true;
       }
+      // not working 
       else if (selectedPiece.color == 'white' &&
       selectedSquare - (LEFT * 2) == currentSquare &&
       !selectPiece.hasMoved &&
@@ -526,16 +524,27 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
     default:
       break;
   }
-  //Reset selected piece if selecting your own piece
-  if (chessboard[selectedSquareRow][selectedSquareCol] != 0 &&
-  selectedPiece.color == chessboard[selectedSquareRow][selectedSquareCol].color) {
-    resetSelection(selectedPiece);
-    return false;
-  }
   return true;
 }
 
+/** checks if square is empty */
+function isSquareEmpty(selectedSquarePiece){
+  console.log(selectedSquarePiece == 0);
+  return selectedSquarePiece == 0;
+}
 
+/** checks if the pieces are the same color */
+function isSameColor(currentPiece, selectedPiece) {
+  return currentPiece.color == selectedPiece.color;
+}
+
+function getSquaresMoved(currentSquare, selectedSquare) {
+  let squaresMoved = currentSquare - selectedSquare;
+  if (squaresMoved < 0) {
+    squaresMoved = squaresMoved * -1;
+  }
+  return squaresMoved;
+}
 
 /**
 * Select square to move to
@@ -543,6 +552,7 @@ function checkifMoveIsLegal(selectedPiece, square, chessboard) {
 function movePiece(square, chessboard, selectedPiece) {
   chessboard[getRow(selectedPiece.square)][getCol(selectedPiece.square)] = 0;
   chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)] = selectedPiece;
+  selectedPiece.hasMoved = true;
   return chessboard;
 }
 
