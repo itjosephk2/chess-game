@@ -183,12 +183,20 @@ const chessController = {
         // If a piece is Selected Then check for moving the selected Piece
         if (isPieceSelected) {
           // Check if move is legal
+          let preMoveChessboard = chessboard.map(function(arr) {
+            return arr.slice();
+          });
+          console.log('Pre Move chessBoard');
+          console.table(preMoveChessboard);
+          
           if (checkifMoveIsLegal(selectedPiece, square, chessboard)) {
             if (isWhiteToMove) {
               if (isKingInCheck('white', movePiece(square, chessboard, selectedPiece), squares)) {
                 if(isPieceSelected) {
                   resetSelection(square.firstChild);
                 }
+                chessboard = preMoveChessboard;
+                console.table(preMoveChessboard);
                 return;
               }
             }
@@ -197,9 +205,13 @@ const chessController = {
                 if(isPieceSelected) {
                   resetSelection(square.firstChild);
                 }
+                chessboard = preMoveChessboard;
+                console.table(preMoveChessboard);
                 return;
               }
             }
+            console.log('Currenr ChessBoard');
+            console.table(chessboard);
             // Move the piece
             chessboard = movePiece(square, chessboard, selectedPiece);
             // update the move counter
