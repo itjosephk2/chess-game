@@ -186,32 +186,28 @@ const chessController = {
           let preMoveChessboard = chessboard.map(function(arr) {
             return arr.slice();
           });
-          console.log('Pre Move chessBoard');
-          console.table(preMoveChessboard);
           
           if (checkifMoveIsLegal(selectedPiece, square, chessboard)) {
             if (isWhiteToMove) {
               if (isKingInCheck('white', movePiece(square, chessboard, selectedPiece), squares)) {
+                isCheckMate('white', movePiece(square, chessboard, selectedPiece), squares);
                 if(isPieceSelected) {
                   resetSelection(square.firstChild);
                 }
                 chessboard = preMoveChessboard;
-                console.table(preMoveChessboard);
                 return;
               }
             }
             else {
               if (isKingInCheck('black', movePiece(square, chessboard, selectedPiece), squares)) {
+                isCheckMate('white', movePiece(square, chessboard, selectedPiece), squares);
                 if(isPieceSelected) {
                   resetSelection(square.firstChild);
                 }
                 chessboard = preMoveChessboard;
-                console.table(preMoveChessboard);
                 return;
               }
             }
-            console.log('Currenr ChessBoard');
-            console.table(chessboard);
             // Move the piece
             chessboard = movePiece(square, chessboard, selectedPiece);
             // update the move counter
@@ -329,6 +325,28 @@ function isKingInCheck(playerColor, chessboard, squares) {
 
   return false; // King is not in check
 }
+
+/** Checks if the polayer is in check */
+function isCheckMate(playerColor, chessboard, squares) {
+  // Check all the squares
+  for (let square of squares) {
+    // create piece objected currently selecetd
+    let piece = chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)];
+    // check piece is not an empty square and that is the same color as the current player
+    if (piece !== 0 && piece.color == playerColor) {
+      // check if the move is legal 
+      if (checkifMoveIsLegal(piece, square, chessboard)) {
+        if (isKingInCheck('white', movePiece(square, chessboard, selectedPiece), squares)) {
+          console.log('Valid move');
+          return false;
+        }
+      }
+    }
+  }
+  alert('Checkmate');
+  return true; 
+}
+
 /**
 * This does way too much right now and needs to be refactored
 */
