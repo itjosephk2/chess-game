@@ -190,11 +190,11 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
     * Landing Page Desktop
     
-        - ![Lighthouse report for landing page Desktop image](assets/readme-files/desktop-lighthouse-report-1.png)
+        - ![Lighthouse report for landing page Desktop image](assets/readme-files/desktop-lighthouse.png)
    
     * Landing Page mobile
      
-        - ![Lighthouse report for landing page Mobile image](assets/readme-files/mobile-lighthouse-report-1.png)
+        - ![Lighthouse report for landing page Mobile image](assets/readme-files/mobile-lighthouse.png)
 
 ### Tools Testing
 
