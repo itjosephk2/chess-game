@@ -88,7 +88,7 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 ### index.html
 
 ### Side Bar
-![Header image](assets/readme-files/side-bar.png)
+![Side Bar image](assets/readme-files/side-bar.png)
 
 * Tutrorial
     
@@ -102,34 +102,23 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 
 ### Game Board
-![Discography Section Image](assets/readme-files/game-board.png)
+![Game Board Image](assets/readme-files/game-board.png)
 
 * chess Board
 
   - This is the board with the chess pieces wher the user can play chess
+       
+
+### Notation Board
+![Notation image](assets/readme-files/notation-bar.png)
 
 * Notation Board
 
   - This updates with the moves of the game in order they occur.
 
-  - It dissapears on smaller viewports        
-
+  - It dissapears on smaller viewports
+ 
 [Back to top ⇧](#Chess-Game)
-
-
-### Notatio Board
-![Header image](assets/readme-files/notation-bar.png)
-
-* Tutrorial
-    
-    - This links the user to lichess tp learn how to play the game of chess.
-
-    - UNfortunately due to time constraints I was unable to implement a custom built tutorial. I had planned on just initialising a board with the relevant poieces and checking for the desired move by a text prompt to explain how the pieces moved.
-
-* Themes
-
-    - Allows the user to change the color of their board
-
 
 ## Technologies Used
 
