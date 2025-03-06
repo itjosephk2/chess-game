@@ -1,346 +1,217 @@
-# Chess Game
+# Team Tracker
 
-![Chess Game mockup images](assets/readme-files/image.png)
 
-This is a chess game where you can play against another person. It allows you to switch themes. It incorporates the rules and movement of the game of chess into the site so you cannot make any illegal moves. If you wish to learn how to play the game I have linked the tutorial on lichess for the game. I hope to add the tutorial feature directly into the site in the future aswell as the ability to play against a computer.
-
-Visit the deployed website [here](https://itjosephk2.github.io/chess-game/)
+Team Tracker is a full-stack web application designed to manage employee records, roles, and permissions efficiently. It provides **role-based access control (RBAC)**, enabling HR admins to manage employees while allowing managers and employees access to relevant data.
 
 ## Table of Contents
 
 1. [User Experience (UX)](#user-experience-ux)
-    1. [Project Goals](#project-goals)
-    2. [User Requirements](#user-requirements)
-    3. [Color Scheme](#color-scheme)
-    4. [Typography](#typography)
-    5. [Wireframes](#wireframes)
-2. [Features](#features)
-    1. [General](#general)
-    2. [Side Bar](#side-bar)
-    3. [Game Board](#game-board)
- 3. [Technologies Used](#technologies-used)
-    1. [Languages Used](#languages-used)
-    2. [Frameworks, Libraries and Programs Used](#frameworks-libraries-and-programs-used)
-4. [Testing](#testing)
-    1. [Testing User Stories](#testing-user-stories)
-    2. [Code Validation](#code-validation)
-    3. [Accessibility](#accessibility)
-    4. [Tools Testing](#tools-testing)
-    5. [Browser compatibility](#browser-compatibility)
-5. [Finished Product](#finished-product)
-6. [Deployment](#deployment)
-    1. [GitHub Pages](#github-pages)
-7. [Credits](#credits)
-    1. [Content](#content)
-    2. [Media](#media)
-    3. [Code](#code)
-8. [Acknowledgements](#acknowledgements)
+2. [Agile Methodology](#agile-methodology)
+3. [Features](#features)
+4. [Technologies Used](#technologies-used)
+5. [Installation & Setup](#installation-setup)
+6. [Testing](#testing)
+7. [Troubleshooting Common Errors](#troubleshooting-common-errors)
+8. [Deployment](#deployment)
+9. [Known Issues & Future Improvements](#known-issues--future-improvements)
+10. [Acknowledgments](#acknowledgments)
 
-***
+---
 
 ## User Experience (UX)
 
-### Project Goals
+### **Project Goals**
 
-* The website should ay the very least allow people to move chess pieces on a board and play a game of chess
+- **Efficient Employee Management:** Maintain accurate records of employees, contracts, and roles.
+- **Role-Based Permissions:** Ensure users only access relevant information.
+- **Secure Authentication:** Enforce login protection and access control.
+- **Responsive & User-Friendly Interface:** Accessible across different devices.
 
-* Ideally the rules and legal moves will be built into the game.
+### **User Roles & Goals**
 
-* Supply the user with a link to learn how to play the game.
+| Role     | Goals                                  |
+| -------- | -------------------------------------- |
+| HR Admin | Manage all employees and assign roles. |
+| Manager  | View and manage team members.          |
+| Employee | View personal details and contracts.   |
 
-* Allow the user to change the theme of the chessboard.
+---
 
-### User Requirements
+## Agile Methodology
 
-* As a user, I want to be able to navigate the website intuitively and be able to play chess.
+Team Tracker was developed using Agile methodology. The project followed iterative development cycles with continuous feedback and improvements.
 
-* As a user, I want to be able to be able to learn how to play the game of chess.
+### **User Stories**
+1. As an HR Admin, I want to add employees so I can manage the workforce.
+2. As an HR Admin, I want to assign roles so employees have correct access.
+3. As a Manager, I want to view my team members so I can track their details.
+4. As an Employee, I want to view my personal details so I can check my contract status.
+5. As an HR Admin, I want to restrict permissions so sensitive data is protected.
 
-* As a user, I want to be able to customise my board
+### **Task Tracking**
+- **GitHub Projects was used for task tracking** ([View Here](https://github.com/itjosephk2/team_tracker/projects?query=is%3Aopen)).
+- Features were divided into milestones with clear goals.
+- User stories and sprint progress were documented within GitHub Projects.
+- Pull requests followed structured code reviews before merging.
 
-* As a user, I want to see the notation of my game on screen
-
-* As a user, I want to only be allowed to make legal moves.
-
-
-### Color Scheme
-The colors used in this site are primarily based on the black and white of a chessboard. I got the colors from lichess. The user can also change to a somewhat christmas themed board of red and green.
-
-### Typography
-
-The main font used in the site is Roboto, with Arial then Sans Serif as the fallback fonts in Roboto is not being imported correctly. 
-
-### Wireframes
-
-Wire frames were drawn by hand to form a rough structural shape of the site and then each section was designed with pen and paper and mocked up with html and css befor implementation.
-
-
-
-[Back to top ⇧](#Chess-Game)
-
+---
 
 ## Features
 
-### General
+- **User Authentication & Authorization**
+  - Secure login and logout functionality.
+  - Role-based permissions to control access.
+- **Employee Management**
+  - Create, update, and delete employee records.
+  - Assign managers to employees.
+- **Contract Management**
+  - Add employment contracts with job titles, start/end dates, and salary information.
+- **Role-Based Access Control (RBAC)**
+  - Assign permissions based on roles.
+  - Prevent unauthorized access to sensitive data.
+- **Dashboard Overview**
+  - Summary of employees and active contracts.
+- **Search & Filtering**
+  - Easily locate employees and contracts.
 
-* Chess game for playing with two people
-
-### index.html
-
-### Side Bar
-![Side Bar image](assets/readme-files/side-bar.png)
-
-* Tutrorial
-    
-    - This links the user to lichess tp learn how to play the game of chess.
-
-    - UNfortunately due to time constraints I was unable to implement a custom built tutorial. I had planned on just initialising a board with the relevant poieces and checking for the desired move by a text prompt to explain how the pieces moved.
-
-* Themes
-
-    - Allows the user to change the color of their board
-
-
-### Game Board
-![Game Board Image](assets/readme-files/game-board.png)
-
-* chess Board
-
-  - This is the board with the chess pieces wher the user can play chess
-       
-
-### Notation Board
-![Notation image](assets/readme-files/notation-bar.png)
-
-* Notation Board
-
-  - This updates with the moves of the game in order they occur.
-
-  - It dissapears on smaller viewports
- 
-[Back to top ⇧](#Chess-Game)
+---
 
 ## Technologies Used
 
-### Languages Used
-* [HTML5](https://en.wikipedia.org/wiki/HTML5)
-* [CSS3](https://en.wikipedia.org/wiki/CSS)
-* [JS](https://en.wikipedia.org/wiki/JavaScript)
+### **Languages & Frameworks**
 
-### Frameworks, Libraries and Programs Used
+- **Backend:** Django (Python)
+- **Frontend:** Django Templates, HTML, CSS
+- **Database:** SQLite (for development), PostgreSQL (for production)
+- **Version Control:** Git & GitHub
+- **Deployment:** (To be added - Heroku, Railway, or other cloud platforms)
 
-* [Google Fonts](https://fonts.google.com/)
-    - Google Fonts was used to import the fonts Roboto into the style.css file.
+---
 
-* [Font Awesome](https://fontawesome.com/)
-     - Font Awesome was used throughout all pages to add icons in order to create a better visual experience for UX purposes.
+## Installation & Setup
 
-* [GitHub](https://github.com/)
-     - GitHub was used to store the project after pushing.
+### **Prerequisites**
 
-* [Am I Responsive?](http://ami.responsivedesign.is/#)
-    - Am I Responsive was used in order to create the mockup image.
+Ensure you have the following installed:
 
-* [Firefox Dev edition](https://www.mozilla.org/en-US/firefox/developer/)
-    - Firefox dev tools was used for everything. Checking the website as I developed it. Learning the exact implications of css properties and how it effected the layout and design of an element. Checking for responsivity throughout the design to ensure it worked on all sized devices.
- 
-* [Google Chrome Developer Tools](https://developer.chrome.com/docs/devtools/)
-    - Google Developer tools was used for generating the lighthouse report and further reccomended documentation was utilised to increase the score.
+- Python 3.9+
+- pip
+- virtualenv
 
-* [W3C Markup Validator](https://validator.w3.org/)
-    - W3C Markup Validator was used to validate the HTML code.
+### **Setup Steps**
 
-* [W3C CSS Validator](https://jigsaw.w3.org/css-validator/)
-    - W3C CSS Validator was used to validate the CSS code.
+1. **Clone the Repository:**
 
-[Back to top ⇧](#Chess-Game)
+   ```bash
+   git clone https://github.com/itjosephk2/team_tracker.git
+   cd team_tracker
+   ```
 
+2. **Create a Virtual Environment:**
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use: venv\Scripts\activate
+   ```
+
+3. **Install Dependencies:**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run Migrations:**
+
+   ```bash
+   python manage.py makemigrations security people_management
+   python manage.py migrate
+   ```
+
+5. **Create a Superuser (Admin Account):**
+
+   ```bash
+   python manage.py createsuperuser
+   ```
+
+6. **Run the Server:**
+
+   ```bash
+   python manage.py runserver
+   ```
+
+   Access the application at `http://127.0.0.1:8000/`
+
+---
 
 ## Testing
 
-### Testing User Requirements
+- **Unit Tests:** Located in `tests.py` files within each app.
+- **Run Tests:**
+  ```bash
+  python manage.py test
+  ```
+- **Example Test Case:**
+  ```python
+  from django.test import TestCase
+  from people_management.models import Person
 
-* As a user, I want to be able to navigate the website intuitively and be able to play chess.
-  
-    - The website offers a intuitive structure for the user to start playing chess immediately.
+  class PersonModelTest(TestCase):
+      def test_create_person(self):
+          person = Person.objects.create(first_name="John", last_name="Doe")
+          self.assertEqual(person.first_name, "John")
+  ```
+- **Manual Testing:**
+  - Verify login, role-based access, CRUD functionality.
+  - Test edge cases (invalid logins, unauthorized access attempts).
 
-* As a user, I want to be able to be able to learn how to play the game of chess.
+---
 
-    - The website offers a link to lichess where you can play a tutorial to learn to play chess
+## Troubleshooting Common Errors
 
-* As a user, I want to be able to customise my board
+### **Database Errors During Testing**
+**Error:** `django.db.utils.ProgrammingError: relation "security_permissiondefinition" does not exist`
 
-    - The user can change the theme of their board in the preset themes section.
+**Solution:** Ensure migrations are properly applied before running tests:
+```bash
+python manage.py makemigrations security people_management
+python manage.py migrate
+```
+If the error persists, try resetting the test database:
+```bash
+python manage.py flush
+```
+Then, rerun:
+```bash
+python manage.py test
+```
 
-* As a user, I want to see the notation of my game on screen
-
-    - If the viewport is large enough the user can see their game notation.
-
-* As a user, I want to only be allowed to make legal moves.
-    - The user can make legal moves only. However due to time constraints not all the legal moves have been impleneted. Also check was not succefully implemented so checkmate does not existsts and kings are free to move as they please and illegal moves that involve a king being in check can be played. I had planned on itterarting through all the opponents pieces and then all tyhe squares that piece can legally move to and checking if any of those squares were your king and if that is true then you are in check. however I could not succesfully implement that withought breaking the game due to the way my check if leggal function works. Ideally I will go back and refactor my code to break that function into smaller parts and be able to utilise it for checking for check without breakinging things. Also double check and moving out of check would have to be accounted for which in heinsight as I think about it now would be as simple as checking fo isInCheck as part of checking if a move is legal. If a move is legal should be a function in the model section which calls numerous controller functions to check for things. That way the flow and functionality are seperate. And any updates to the screen visually should be in visual functions. 
-
-### Code Validation
-
-* The [W3C Markup Validator](https://validator.w3.org/) and [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) and [JSHint](https://jshint.com/) services were used to validate all pages of the project in order to ensure there were no syntax errors.
-
-
-### Accessibility
-
-* Lighthouse reports
-
-    * Landing Page Desktop
-    
-        - ![Lighthouse report for landing page Desktop image](assets/readme-files/desktop-lighthouse.png)
-   
-    * Landing Page mobile
-     
-        - ![Lighthouse report for landing page Mobile image](assets/readme-files/mobile-lighthouse.png)
-
-### Tools Testing
-
-* [Firefox Developer Edition](https://www.mozilla.org/en-US/firefox/developer/)
-
-    - Firefox dev tools was used during the development process to test, explore and modify HTML elements and CSS styles used in the project.
-
-* Responsiveness
-
-    - [Firefox Developer Edition](https://www.mozilla.org/en-US/firefox/developer/) was used to check responsivity throughout the project.
- 
-* Accesibility
-    - [Google Chrome Developer Tools](https://developer.chrome.com/docs/devtools/) was used for generating the lighthouse report and further reccomended documentation was utilised to increase the score.
-
-
-### Browser Compatibility
-
-
-* Goolgle Chrome
-
-    - No appearance, responsiveness nor functionality issues.
-
-* Safari
-
-    - No appearance, responsiveness nor functionality issues.
-
-* Mozilla Firefox
-
-    - No responsiveness nor functionality issues.
-
-* Microsoft Edge
-
-    - Footer titles were white on a white background and thus invisible. Not a microsoft edge issue due to a general h2 test I did else where.
-
-### Device compatibility
-
-* MacBook Pro 13.3"
-
-    No appearance, responsiveness nor functionality issues.
-
-* Dell P2417Hc 24″ Monitor
-
-    No appearance, responsiveness nor functionality issues.
-
-* Xiaomi Redmi 9
-
-    Audio element is too small. Will create my own with javascript in the future.
-
-* Samsung A3
-
-    Audio element is too small. Will create my own with javascript in the future.
-
-* Samsung A54
-
-    Audio element is too small. Will create my own with javascript in the future.
-
-* Steam Deck
-
-    No appearance, responsiveness nor functionality issues.
-
-* Imac
-
-    No appearance, responsiveness nor functionality issues.
-
-
-### Common Elements Testing
-
-* Index Page
-
-    * Side Bar
-
-        - Tutorial link takes you to a new page
-     
-        - Dropdown menu appears on click and changes color of the board
-          
-    * Chess Board
-
-        - Allows the user to move chess pieces
-        - Highlights the appropriate piece.
-        - deselects a piece if move is illegal allowing users to change the piece they wanted to move withought clicking off the screen.
-        - Pieces have restricted movement to their move set.
-        - Unfortunately due to time constraints, I was unable to implement check, checkmate, castling and en passant.
-     
-    * Notation Board
-
-        - Displays the move made on the screen in the order it happens
-  
-          
-
-[Back to top ⇧](#Chess-Game)
-
-
-## Finished Product
-
-![Finished Site](assets/readme-files/image.png)
-
-[Back to top ⇧](#Chess-Game)
-
+---
 
 ## Deployment
 
-* This website was developed using atom and then used condeanywhere to push use the git commits in the terminal. had issues getting github linked to atom due to a token that wouldn't work. Hope to fix this for the future to keep development in the one IDE.  
+(Once deployment is complete, add specific details here.)
 
-### GitHub Pages
+### **Deployment Steps**
 
-* Here are the steps to deploy this website to GitHub Pages from its GitHub repository:
+- Deploy the application using **Heroku/Railway**.
+- Set up environment variables for security (`DEBUG=False`).
+- Configure database settings for PostgreSQL.
 
-    1. Log in to GitHub and locate the [GitHub Repository](https://github.com/).
+---
 
-    2. At the top of the Repository, locate the Settings button on the menu.
+## Known Issues & Future Improvements
 
-    3. Scroll down the Settings page until you locate the Pages section.
+- **Add Automated Testing:** Improve test coverage.
+- **Enhance Frontend UI:** Make forms and dashboard more user-friendly.
+- **Implement Email Notifications:** Notify users about contract updates.
 
-    4. Under Source, click the dropdown called None and select Master Branch.
+---
 
-    5. The page will refresh automatically and generate a link to your website. 
+## Acknowledgments
 
-[Back to top ⇧](#Chess-Game)
+- Special thanks to **Django documentation** and **Stack Overflow** for troubleshooting support.
+- Project inspired by modern HR management tools.
 
+---
 
-## Credits
-
-### Content
-
-- All content was written by the developer.
-
-### Media
-
-
-
-
-### Code
-
-* [Youtube](https://youtube.com/) and [W3Schools](https://www.w3schools.com/) were consulted on a regular basis for inspiration and sometimes to be able to better understand the code being implement.
-
-[Back to top ⇧](#Chess-Game)
-
-
-## Acknowledgements
-
-* My mento, Marcel, for his genuine interest in my best end result and invaluable support and guidance. Truly would not have done it without him.
-
-* My friend and piano tuner for his support and feedback throughout the project.
-
-* My friends, for their valuable opinions and and critic during the design and development process.
-
-* Code Institute and its amazing Slack community for their support and providing me with the necessary knowledge to complete this project.
-
-[Back to top ⇧](#Chess-Game)
+**Project Repository:** [GitHub](https://github.com/itjosephk2/team_tracker)
