@@ -435,36 +435,36 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
     
     //  checking the legality of the rook move
     case 'rook':
-  // Move must be either in the same row or same column
-  if (selectedSquareRow !== currentSquareRow && selectedSquareCol !== currentSquareCol) {
-    return false;
-  }
-
-  // Horizontal move
-  if (selectedSquareRow === currentSquareRow) {
-    let start = Math.min(currentSquareCol, selectedSquareCol) + 1;
-    let end = Math.max(currentSquareCol, selectedSquareCol);
-    for (let col = start; col < end; col++) {
-      if (!isSquareEmpty(chessboard[currentSquareRow][col])) {
+      // Move must be either in the same row or same column
+      if (selectedSquareRow !== currentSquareRow && selectedSquareCol !== currentSquareCol) {
         return false;
       }
-    }
-    return true;
-  }
 
-  // Vertical move
-  if (selectedSquareCol === currentSquareCol) {
-    let start = Math.min(currentSquareRow, selectedSquareRow) + 1;
-    let end = Math.max(currentSquareRow, selectedSquareRow);
-    for (let row = start; row < end; row++) {
-      if (!isSquareEmpty(chessboard[row][currentSquareCol])) {
-        return false;
+      // Horizontal move
+      if (selectedSquareRow === currentSquareRow) {
+        let start = Math.min(currentSquareCol, selectedSquareCol) + 1;
+        let end = Math.max(currentSquareCol, selectedSquareCol);
+        for (let col = start; col < end; col++) {
+          if (!isSquareEmpty(chessboard[currentSquareRow][col])) {
+            return false;
+          }
+        }
+        return true;
       }
-    }
-    return true;
-  }
 
-  return false;
+      // Vertical move
+      if (selectedSquareCol === currentSquareCol) {
+        let start = Math.min(currentSquareRow, selectedSquareRow) + 1;
+        let end = Math.max(currentSquareRow, selectedSquareRow);
+        for (let row = start; row < end; row++) {
+          if (!isSquareEmpty(chessboard[row][currentSquareCol])) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      return false;
 
 
     //  checking the legality of the knight move
@@ -483,42 +483,29 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
 
     //  checking the legality of the bishop move
     case 'bishop':
-      // not the same color square
-      if (square.dataset.color != squares[selectedPieceElement.square].dataset.color) {
+      let rowDiff = Math.abs(currentSquareRow - selectedSquareRow);
+      let colDiff = Math.abs(currentSquareCol - selectedSquareCol);
+
+      // Diagonal check: row and col diffs must be equal
+      if (rowDiff !== colDiff) {
         return false;
       }
-      // not a diagonal move
-      if (!squaresMoved % 7 && !squaresMoved % 9) {
-        return false;
-      }
-      // is the piece going backwards
-      if (currentSquareRow < selectedSquareRow) {
-        isBackwards = false;
-      }
-      // is the piece going left
-      if (currentSquareCol < selectedSquareCol) {
-        isLeft = false;
-      }
-      // checks for pieces inbetween the moving piece and destination square
-      if (squaresMoved % 7 == 0) {
-        for (let i = 1; i < squaresMoved / 7; i++) {
-          rowChange = getDirection(isBackwards, i);
-          colChange = getDirection(isLeft, i);
-          if (!isSquareEmpty(chessboard[currentSquareRow + rowChange][currentSquareCol + colChange])) {
-            return false;
-          }
+
+      // Determine direction
+      let rowStep = selectedSquareRow > currentSquareRow ? 1 : -1;
+      let colStep = selectedSquareCol > currentSquareCol ? 1 : -1;
+
+      // Check each square between current and target
+      for (let i = 1; i < rowDiff; i++) {
+        let row = currentSquareRow + i * rowStep;
+        let col = currentSquareCol + i * colStep;
+        if (!isSquareEmpty(chessboard[row][col])) {
+          return false;
         }
       }
-      else {
-        for (let i = 1; i < squaresMoved / 9; i++) {
-          rowChange = getDirection(isBackwards, i);
-          colChange = getDirection(isLeft, i);
-          if (!isSquareEmpty(chessboard[currentSquareRow + rowChange][currentSquareCol + colChange])) {
-            return false;
-          }
-        }
-      }
+
       return true;
+
     
     //  checking the legality of the queen move
     case 'queen':
