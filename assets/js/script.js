@@ -435,48 +435,37 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
     
     //  checking the legality of the rook move
     case 'rook':
-      if (selectedSquareRow != currentSquareRow &&
-        selectedSquareCol != currentSquareCol) {
+  // Move must be either in the same row or same column
+  if (selectedSquareRow !== currentSquareRow && selectedSquareCol !== currentSquareCol) {
+    return false;
+  }
+
+  // Horizontal move
+  if (selectedSquareRow === currentSquareRow) {
+    let start = Math.min(currentSquareCol, selectedSquareCol) + 1;
+    let end = Math.max(currentSquareCol, selectedSquareCol);
+    for (let col = start; col < end; col++) {
+      if (!isSquareEmpty(chessboard[currentSquareRow][col])) {
         return false;
       }
-      // is piece going backwards or fowrads
-      if (currentSquareRow < selectedSquareRow) {
-        isBackwards = false;
+    }
+    return true;
+  }
+
+  // Vertical move
+  if (selectedSquareCol === currentSquareCol) {
+    let start = Math.min(currentSquareRow, selectedSquareRow) + 1;
+    let end = Math.max(currentSquareRow, selectedSquareRow);
+    for (let row = start; row < end; row++) {
+      if (!isSquareEmpty(chessboard[row][currentSquareCol])) {
+        return false;
       }
-      // is piece going left or right 
-      if (currentSquareCol < selectedSquareCol) {
-        isLeft = false;
-      }
-      // CHeck for piece in the way
-      if (selectedSquareRow == currentSquareRow) {
-        for (let i = 1; i < squaresMoved; i++) {
-          if (isLeft) {
-            if (!isSquareEmpty(chessboard[currentSquareRow][parseInt(currentSquareCol - 1)])) {
-              return false;
-            }
-          }
-          else {
-            if (!isSquareEmpty(chessboard[currentSquareRow][parseInt(currentSquareCol + 1)])) {
-              return false;
-            }
-          }
-        }
-      }
-      if (selectedSquareRow == currentSquareRow || selectedSquareCol == currentSquareCol) {
-        for (let i = 1; i < (squaresMoved/8); i++) {
-          if (!isBackwards) {
-            if (!isSquareEmpty(chessboard[parseInt(currentSquareRow) + i][currentSquareCol])) {
-              return false;
-            }
-          }
-          else {
-            if (!isSquareEmpty(chessboard[parseInt(currentSquareRow) - i][currentSquareCol])) {
-              return false;
-            }
-          }
-        }
-      }
-      return true;
+    }
+    return true;
+  }
+
+  return false;
+
 
     //  checking the legality of the knight move
     case 'knight':
