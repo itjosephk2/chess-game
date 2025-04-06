@@ -511,73 +511,12 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
     
     //  checking the legality of the queen move
     case 'queen':
-      // Not a vertical, horizontal or diagonal move
-      if (selectedSquareRow != currentSquareRow &&
-        selectedSquareCol != currentSquareCol && 
-        !squaresMoved % 7 && 
-        !squaresMoved % 9) {
-        return false;
-      }
-      // is piece going backwards or fowrads
-      if (currentSquareRow < selectedSquareRow) {
-        isBackwards = false;
-      }
-      // is piece going left or right 
-      if (currentSquareCol < selectedSquareCol) {
-        isLeft = false;
-      }
-      // CHeck for piece in the way
-      // Rook like move
-      if (selectedSquareRow == currentSquareRow) {
-        for (let i = 1; i < squaresMoved; i++) {
-          if (isLeft) {
-            if (!isSquareEmpty(chessboard[currentSquareRow][parseInt(currentSquareCol - 1)])) {
-              return false;
-            }
-          }
-          else {
-            if (!isSquareEmpty(chessboard[currentSquareRow][parseInt(currentSquareCol + 1)])) {
-              return false;
-            }
-          }
-        }
-      }
-      if (selectedSquareRow == currentSquareRow || selectedSquareCol == currentSquareCol) {
-        for (let i = 1; i < (squaresMoved/8); i++) {
-          if (!isBackwards) {
-            if (!isSquareEmpty(chessboard[parseInt(currentSquareRow) + i][currentSquareCol])) {
-              return false;
-            }
-          }
-          else {
-            if (!isSquareEmpty(chessboard[parseInt(currentSquareRow) - i][currentSquareCol])) {
-              return false;
-            }
-          }
-        }
-      }
-      // Bishop like move
-      else {
-        if (squaresMoved % 7 == 0) {
-          for (let i = 1; i < squaresMoved / 7; i++) {
-            rowChange = getDirection(isBackwards, i);
-            colChange = getDirection(isLeft, i);
-            if (!isSquareEmpty(chessboard[currentSquareRow + rowChange][currentSquareCol + colChange])) {
-              return false;
-            }
-          }
-        }
-        else {
-          for (let i = 1; i < squaresMoved / 9; i++) {
-            rowChange = getDirection(isBackwards, i);
-            colChange = getDirection(isLeft, i);
-            if (!isSquareEmpty(chessboard[currentSquareRow + rowChange][currentSquareCol + colChange])) {
-              return false;
-            }
-          }
-        }
-      }
-      return true;
+      // A queen move is valid if it's a valid rook move or bishop move
+      return (
+        checkRookMove(currentSquareRow, currentSquareCol, selectedSquareRow, selectedSquareCol, chessboard) ||
+        checkBishopMove(currentSquareRow, currentSquareCol, selectedSquareRow, selectedSquareCol, chessboard)
+      );
+
     
     //  checking the legality of the king move
     case 'king':
@@ -695,11 +634,11 @@ function updateNotation(piece, square, moveCounter) {
   let whiteMove = document.getElementById('white-move');
   let blackMove = document.getElementById('black-move');
   if (piece.color == 'white') {
-    moves.innerHTML += `<li>${moveCounter}<li>`;
-    whiteMove.innerHTML += `<li>${piece.char}${square.dataset.squareNotation}<li>`;
+    moves.innerHTML += `<li>${moveCounter}</li>`;
+    whiteMove.innerHTML += `<li>${piece.char}${square.dataset.squareNotation}</li>`;
     return moveCounter;
   }
-  blackMove.innerHTML += `<li>${piece.char}${square.dataset.squareNotation}<li>`;
+  blackMove.innerHTML += `<li>${piece.char}${square.dataset.squareNotation}</li>`;
   moveCounter += 1;
   return moveCounter;
 
