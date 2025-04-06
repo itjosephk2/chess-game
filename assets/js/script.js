@@ -73,73 +73,6 @@ class Piece {
   }
 }
 
-/**
-* Temporary method to categorise Menu stuff for sorting later
-* This is a mess !!!!
-*/
-function menuStuff() {
-  // Menu items
-  const list = document.getElementsByTagName('a');
-
-  for (let item of list) {
-    item.addEventListener("click", function(){
-      if (item.innerHTML == "Tutorial") {
-        initTutorial();
-      }
-      if (item.innerHTML == "Default") {
-        let squares = document.getElementsByClassName("square");
-        // Loop through each square in squares
-        for (let square of squares) {
-          // Assign each square an equivilant data taag to ap it to the array.
-          if (square.classList.contains("red")) {
-            square.classList.remove("red");
-            square.classList.add("white");
-          }
-          if (square.classList.contains("green")) {
-            square.classList.remove("green");
-            square.classList.add("black");
-          }
-        }
-      }
-      if (item.innerHTML == "Red and Green") {
-        const squares = document.getElementsByClassName("square");
-        // Loop through each square in squares
-        for (let square of squares) {
-          // Assign each square an equivilant data taag to ap it to the array.
-          if (square.classList.contains("white")) {
-            square.classList.remove("white");
-            square.classList.add("red");
-          }
-          if (square.classList.contains("black")) {
-            square.classList.remove("black");
-            square.classList.add("green");
-          }
-        }
-      }
-    });
-  }
-
-  // dropdown menu function
-  function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  }
-
-  // Close the dropdown menu if the user clicks outside of it
-  window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
-        }
-      }
-    }
-  }
-}
-
-
 // Additional state variables and theyre default values
 let isPieceSelected = false;
 let selectedPiece = null;
@@ -230,36 +163,8 @@ const chessController = {
         }
         // No piece was Previously selected so lets see if we can select one
         else {
-          // Is it whites Turn
-          if (isWhiteToMove) {
-            // Is there a white piece here
-            if ( chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)] != 0 && chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)].color == "white") {
-              // set selected piece to the equivilant object
-              selectedPiece = chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)];
-              selectedPieceElement = square.firstChild;
-              // Decorate the piece to make it selected
-              selectPiece(selectedPieceElement);
-              isPieceSelected = true;
-            }
-            else {
-              alert("It is whites turn");
-            }
-          }
-          // Same check if it is black to move
-          else {
-            if ( chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)] != 0 && chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)].color == "black")  {
-              // set selected piece to the equivilant object
-              selectedPiece = chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)];
-              selectedPieceElement = square.firstChild;
-              // Decorate the piece to make it selected
-              selectPiece(selectedPieceElement);
-              isPieceSelected = true;
-            }
-            else {
-              alert("It is blacks turn");
-            }
-          }
-        }
+          trySelectPiece(square, chessboard);
+        }        
       });
     }
   }
@@ -663,3 +568,21 @@ document.addEventListener("DOMContentLoaded", function() {
   // initialise the game
   chessController.init();
 });
+
+function trySelectPiece(square, chessboard) {
+  const squareIndex = parseInt(square.dataset.square);
+  const piece = chessboard[getRow(squareIndex)][getCol(squareIndex)];
+
+  if (piece === 0) return false;
+
+  if ((isWhiteToMove && piece.color === 'white') || (!isWhiteToMove && piece.color === 'black')) {
+    selectedPiece = piece;
+    selectedPieceElement = square.firstChild;
+    selectPiece(selectedPieceElement);
+    isPieceSelected = true;
+    return true;
+  }
+
+  alert(`It is ${isWhiteToMove ? 'white' : 'black'}'s turn`);
+  return false;
+}
