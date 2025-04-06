@@ -469,14 +469,16 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
 
     //  checking the legality of the knight move
     case 'knight':
-      if (selectedSquare + 10 == currentSquare ||
-          selectedSquare - 10 == currentSquare ||
-          selectedSquare + 17 == currentSquare ||
-          selectedSquare - 17 == currentSquare ||
-          selectedSquare + 15 == currentSquare ||
-          selectedSquare - 15 == currentSquare ||
-          selectedSquare + 6 == currentSquare ||
-          selectedSquare - 6 == currentSquare) {
+      if (
+        currentSquare + 10 === selectedSquare ||
+        currentSquare - 10 === selectedSquare ||
+        currentSquare + 17 === selectedSquare ||
+        currentSquare - 17 === selectedSquare ||
+        currentSquare + 15 === selectedSquare ||
+        currentSquare - 15 === selectedSquare ||
+        currentSquare + 6 === selectedSquare ||
+        currentSquare - 6 === selectedSquare
+      ) {
         return true;
       }
       return false;
