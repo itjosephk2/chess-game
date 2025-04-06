@@ -32,7 +32,7 @@ class Piece {
     this._square = square;
     this._isSelected = false;
     this._row = getRow(this._square);
-    this._col = getCol(this._col);
+    this._col = getCol(this._square);
   }
   // Getter and Setters for variables
   get char() {
@@ -592,7 +592,7 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
       // not working 
       else if (selectedPiece.color == 'white' &&
       selectedSquare - (LEFT * 2) == currentSquare &&
-      !selectPiece.hasMoved &&
+      !currentPiece.hasMoved &&
       !chessboard[7][0].hasMoved) {
         return true;
       }
