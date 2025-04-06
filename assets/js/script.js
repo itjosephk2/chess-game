@@ -511,11 +511,25 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
     
     //  checking the legality of the queen move
     case 'queen':
-      // A queen move is valid if it's a valid rook move or bishop move
-      return (
-        checkRookMove(currentSquareRow, currentSquareCol, selectedSquareRow, selectedSquareCol, chessboard) ||
-        checkBishopMove(currentSquareRow, currentSquareCol, selectedSquareRow, selectedSquareCol, chessboard)
-      );
+      let originalType = currentPiece.pieceType;
+
+      // Try rook move
+      currentPiece.pieceType = 'rook';
+      if (checkifMoveIsLegal(selectedPieceElement, square, chessboard)) {
+        currentPiece.pieceType = originalType;
+        return true;
+      }
+
+      // Try bishop move
+      currentPiece.pieceType = 'bishop';
+      if (checkifMoveIsLegal(selectedPieceElement, square, chessboard)) {
+        currentPiece.pieceType = originalType;
+        return true;
+      }
+
+      // Restore and fail
+      currentPiece.pieceType = originalType;
+      return false;
 
     
     //  checking the legality of the king move
