@@ -96,6 +96,11 @@ function resetBoard() {
     selectedPiece = null;
     currentTurn = 'white'; // or however you're tracking turns
 
+    // Clear notation board
+    document.getElementById('moves').innerHTML = '';
+    document.getElementById('white-move').innerHTML = '';
+    document.getElementById('black-move').innerHTML = '';
+
     setupBoard()
 }
 
