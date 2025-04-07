@@ -130,7 +130,7 @@ const chessController = {
 
     /* When the user clicks on the button,
     toggle between hiding and showing the dropdown content */
-    
+    const squares = document.getElementsByClassName("square");
     setupBoard()
 
     // Event listener for Clicking on a square
