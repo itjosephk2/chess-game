@@ -133,7 +133,7 @@ const chessController = {
             }
             else {
               if (isKingInCheck('black', movePiece(square, chessboard, selectedPiece), squares)) {
-                isCheckMate('white', movePiece(square, chessboard, selectedPiece), squares);
+                isCheckMate('black', movePiece(square, chessboard, selectedPiece), squares);
                 if(isPieceSelected) {
                   resetSelection(square.firstChild);
                 }
@@ -151,6 +151,8 @@ const chessController = {
             chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)].square = square.dataset.square;
             // Render the move to the screen
             chessView.renderChessboard(chessboard, squares);
+            // check for Check Mate
+
             // Change the players turn
             changePlayerTurn();
           }
@@ -222,7 +224,6 @@ function isKingInCheck(playerColor, chessboard, squares) {
     let piece = chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)];
     if (piece !== 0 && piece.color !== playerColor) {
       if (checkifMoveIsLegal(piece, squares[kingSquare], chessboard)) {
-        alert(playerColor + ": You are in check");
         return true;
       }
     }
