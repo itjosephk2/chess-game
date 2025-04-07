@@ -359,15 +359,17 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
         }
       } 
       // destination Square is not empty
-      // Taking Left
-      if (selectedSquare == currentSquare + takeLeft) {
-        return true;
+      else {
+        // Taking Left
+        if (selectedSquare == currentSquare + takeLeft) {
+          return true;
+        }
+        else if (selectedSquare == currentSquare + takeRight) {
+          return true;
+        }
+        return false;
       }
-      else if (selectedSquare == currentSquare + takeRight) {
-        return true;
-      }
-      return false;
-    
+      
     //  checking the legality of the rook move
     case 'rook':
       // Move must be either in the same row or same column
