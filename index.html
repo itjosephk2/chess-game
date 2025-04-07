@@ -1,365 +1,406 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-	<head>
-		<meta charset="utf-8" />
-		<title>Chess</title>
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<script src="assets/js/script.js"></script>
-	</head>
-	<body>
-		<div class="game-screen">
-			<div class="wrapper">
-				<div id="chess-board">
-					<div class="row">
-						<div
+  <head>
+    <meta charset="utf-8" />
+    <title>Chess</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <script src="assets/js/script.js" defer></script>
+  </head>
+
+  <body class="d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Chess Game</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container my-4 flex-grow-1">
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="game-screen">
+					<div class="wrapper">
+						<div id="chess-board">
+							<div class="row">
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="h1"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="h2"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
-							data-square-notation="h3"
-						></div>
-						<div
+							data-square-notation="h3"	
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="h4"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="h5"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="h6"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="h7"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="h8"
-						></div>
-					</div>
-					<div class="row">
-						<div
+							></div>
+							</div>
+							<div class="row">
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="g1"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="g2"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="g3"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="g3"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="g4"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="g5"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="g6"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="g7"
-						></div>
-					</div>
-					<div class="row">
-						<div
+							></div>
+							</div>
+							<div class="row">
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="f1"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="f2"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="f3"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="f4"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="f5"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="f6"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="f7"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="f8"
-						></div>
-					</div>
-					<div class="row">
-						<div
+							></div>
+							</div>
+							<div class="row">
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="e1"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="e2"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="e3"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="e4"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="e5"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="e6"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="e7"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="e8"
-						></div>
-					</div>
-					<div class="row">
-						<div
+							></div>
+							</div>
+							<div class="row">
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="d1"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="d2"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="d3"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="d4"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="d5"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="d6"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="d7"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="d8"
-						></div>
-					</div>
-					<div class="row">
-						<div
+							></div>
+							</div>
+							<div class="row">
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="c1"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="c2"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="c3"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="c4"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="c5"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="c6"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="c7"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="c8"
-						></div>
-					</div>
-					<div class="row">
-						<div
+							></div>
+							</div>
+							<div class="row">
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="b1"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="b2"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="b3"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="b4"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="b5"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="b6"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="b7"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="b8"
-						></div>
-					</div>
-					<div class="row">
-						<div
+							></div>
+							</div>
+							<div class="row">
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="a8"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="a7"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="a6"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="a5"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="a4"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="a3"
-						></div>
-						<div
+							></div>
+							<div
 							class="square black"
 							data-color="black"
 							data-square-notation="a2"
-						></div>
-						<div
+							></div>
+							<div
 							class="square white"
 							data-color="white"
 							data-square-notation="a1"
-						></div>
+							></div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
+	  		</div>
+		</div>
+		<div class="col-lg-4">
 			<div class="notation-board">
-				<ul id="moves"></ul>
-				<ul id="white-move"></ul>
-				<ul id="black-move"></ul>
+				<h5>Moves</h5>
+				<ul id="moves" class="list-group mb-2"></ul>
+				<h6>White Moves</h6>
+				<ul id="white-move" class="list-group mb-2"></ul>
+				<h6>Black Moves</h6>
+				<ul id="black-move" class="list-group mb-2"></ul>
 			</div>
 		</div>
+	</div>
 
-		<button id="restart-btn">Restart</button>
+	<!-- Refresh Button -->
+	<div class="text-center mt-4">
+		<button id="restart-btn" class="btn btn-primary">
+		<i class="fas fa-sync-alt"></i> Restart
+		</button>
+	</div>
+</main>
 
-		<script
-			src="https://kit.fontawesome.com/f8d980d35b.js"
-			crossorigin="anonymous"
-		></script>
-	</body>
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+  <small>© 2025 Chess Game. Built by Joseph Keane.</small>
+</footer>
+
+<!-- Scripts -->
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+<script
+  src="https://kit.fontawesome.com/f8d980d35b.js"
+  crossorigin="anonymous"
+></script>
+</body>
 </html>
