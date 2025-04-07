@@ -14,18 +14,23 @@ body {
   width: 100%;
 }
 .notation-board {
-  margin-left: 30px;
+  margin-left: 16px;
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
-  align-items:flex-start;
+  align-items: flex-start;
   width: 250px;
-  height: calc(8 * 62px);
+  max-width: 100%;
+  height: calc(62px * 8);
   background: white;
-  font-size: 18px;
+  font-size: 16px;
   padding: 10px;
   font-family: sans-serif;
   overflow-y: auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
 }
+
 .notation-board ul{
   width: 33%;
   list-style-type: none;
