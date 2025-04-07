@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (restartBtn) {
         restartBtn.addEventListener('click', () => {
             resetBoard();
+            isWhiteToMove = true;
         });
     }
 });
