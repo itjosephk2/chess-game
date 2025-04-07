@@ -173,7 +173,8 @@ const chessController = {
             // Move the piece
             chessboard = movePiece(square, chessboard, selectedPiece);
             // update the move counter
-            moveCounter = updateNotation(selectedPiece, square, moveCounter);
+            const squareIndex = parseInt(square.dataset.square);
+            moveCounter = updateNotation(selectedPiece, squareIndex, moveCounter);
             // reset the selection of pieces
             resetSelection(square.firstChild);
             // update the datset to represent the movement of teh piece on the html end
@@ -580,20 +581,29 @@ function clearBoard(squares) {
 /**
 * Adds last move to the notation board
 */
-function updateNotation(piece, square, moveCounter) {
-  let moves = document.getElementById('moves');
-  let whiteMove = document.getElementById('white-move');
-  let blackMove = document.getElementById('black-move');
-  if (piece.color == 'white') {
+function updateNotation(piece, squareIndex, moveCounter) {
+  const file = "abcdefgh"[squareIndex % 8];
+  const rank = 8 - Math.floor(squareIndex / 8);
+  const notation = `${file}${rank}`;
+
+  // Only show a character if it's NOT a pawn
+  const pieceLabel = piece.pieceType === "pawn" ? "" : piece.char;
+
+  const moves = document.getElementById('moves');
+  const whiteMove = document.getElementById('white-move');
+  const blackMove = document.getElementById('black-move');
+
+  if (piece.color === 'white') {
     moves.innerHTML += `<li>${moveCounter}</li>`;
-    whiteMove.innerHTML += `<li>${piece.char}${square.dataset.squareNotation}</li>`;
+    whiteMove.innerHTML += `<li>${pieceLabel}${notation}</li>`;
     return moveCounter;
   }
-  blackMove.innerHTML += `<li>${piece.char}${square.dataset.squareNotation}</li>`;
-  moveCounter += 1;
-  return moveCounter;
 
+  blackMove.innerHTML += `<li>${pieceLabel}${notation}</li>`;
+  return moveCounter + 1;
 }
+
+
 
 // Model, Controller Initialization
 document.addEventListener("DOMContentLoaded", function() {
