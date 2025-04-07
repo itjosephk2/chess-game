@@ -96,6 +96,7 @@ function resetBoard() {
     selectedPiece = null;
     currentTurn = 'white'; // or however you're tracking turns
 
+    setupBoard()
 }
 
 function setupBoard() {
