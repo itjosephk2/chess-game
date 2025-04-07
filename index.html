@@ -369,16 +369,27 @@
 				</div>
 	  		</div>
 		
-			<div class="col-lg-3 col-md-5 col-sm-12">
+			  <div class="col-lg-5 col-md-5 col-sm-12">
 				<div class="notation-board">
-					<h5>Moves</h5>
-					<ul id="moves" class="list-group mb-2"></ul>
-					<h6>White Moves</h6>
-					<ul id="white-move" class="list-group mb-2"></ul>
-					<h6>Black Moves</h6>
-					<ul id="black-move" class="list-group mb-2"></ul>
+				  <h5 class="mb-2">Moves</h5>
+			  
+				  <!-- Column Headers -->
+				  <div class="d-flex gap-2 px-1 notation-header">
+					<small class="notation-heading text-muted flex-fill">#</small>
+					<small class="notation-heading text-muted flex-fill">White</small>
+					<small class="notation-heading text-muted flex-fill">Black</small>
+				  </div>
+				  
+			  
+				  <!-- 3 Lists Side by Side -->
+				  <div class="d-flex notation-lists">
+					<ul id="moves" class="notation-list mb-2"></ul>
+					<ul id="white-move" class="notation-list mb-2"></ul>
+					<ul id="black-move" class="notation-list mb-2"></ul>
+				  </div>
 				</div>
-			</div>
+			  </div>
+			  
 		</div>
 	</div>
 

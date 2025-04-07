@@ -30,10 +30,25 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
 }
-
-.notation-board ul{
+.notation-header {
+  width: 100%;
+  justify-content: space-between;
+}
+.notation-heading {
   width: 33%;
-  list-style-type: none;
+}
+.notation-lists {
+  justify-content: space-between;
+  width: 100%;
+}
+.notation-list {
+  width: 33%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.notation-list li{
+  width: 33%;
 }
 .wrapper {
   height: auto;
