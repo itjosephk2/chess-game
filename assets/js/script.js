@@ -79,6 +79,28 @@ let selectedPiece = null;
 let isWhiteToMove = true;
 let selectedPieceElement = null;
 
+document.addEventListener('DOMContentLoaded', () => {
+    const restartBtn = document.getElementById('restart-btn');
+    if (restartBtn) {
+        restartBtn.addEventListener('click', () => {
+            resetBoard();
+        });
+    }
+});
+
+function resetBoard() {
+    // Clear the board visually
+    clearBoard();
+
+    // Reset any game state variables (like selected piece, turn, etc.)
+    selectedPiece = null;
+    currentTurn = 'white'; // or however you're tracking turns
+
+    // Re-initialize the board
+    setupBoard();
+}
+
+
 // Controller
 const chessController = {
   init: function() {
