@@ -90,14 +90,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function resetBoard() {
     // Clear the board visually
-    clearBoard();
+    clearBoard(document.getElementsByClassName("square"));
 
     // Reset any game state variables (like selected piece, turn, etc.)
     selectedPiece = null;
     currentTurn = 'white'; // or however you're tracking turns
 
-    // Re-initialize the board
-    setupBoard();
+}
+
+function setupBoard() {
+    // Step 1: Rebuild the logical chessboard array
+    chessboard = [
+        [new Piece("black", "rook", 0), new Piece("black", "knight", 1), new Piece("black", "bishop", 2), new Piece("black", "queen", 3), new Piece("black", "king", 4), new Piece("black", "bishop", 5), new Piece("black", "knight", 6), new Piece("black", "rook", 7)],
+        [new Piece("black", "pawn", 8), new Piece("black", "pawn", 9), new Piece("black", "pawn", 10), new Piece("black", "pawn", 11), new Piece("black", "pawn", 12), new Piece("black", "pawn", 13), new Piece("black", "pawn", 14), new Piece("black", "pawn", 15)],
+        Array(8).fill(0),
+        Array(8).fill(0),
+        Array(8).fill(0),
+        Array(8).fill(0),
+        [new Piece("white", "pawn", 48), new Piece("white", "pawn", 49), new Piece("white", "pawn", 50), new Piece("white", "pawn", 51), new Piece("white", "pawn", 52), new Piece("white", "pawn", 53), new Piece("white", "pawn", 54), new Piece("white", "pawn", 55)],
+        [new Piece("white", "rook", 56), new Piece("white", "knight", 57), new Piece("white", "bishop", 58), new Piece("white", "queen", 59), new Piece("white", "king", 60), new Piece("white", "bishop", 61), new Piece("white", "knight", 62), new Piece("white", "rook", 63)],
+    ];
+
+    moveCounter = 1;
+
+    // Step 2: Reassign square data attributes
+    const squares = document.getElementsByClassName("square");
+    for (let i = 0; i < squares.length; i++) {
+        squares[i].setAttribute("data-square", i);
+    }
+
+    // Step 3: Render the new board state visually
+    chessView.renderChessboard(chessboard, squares);
 }
 
 
@@ -107,30 +130,8 @@ const chessController = {
 
     /* When the user clicks on the button,
     toggle between hiding and showing the dropdown content */
-
-    // Create a chess board array for controlling logic and movement and then use this to render visuals to the screen. Easy!
-    let chessboard = [
-      [new Piece("black", "rook", 0), new Piece("black", "knight", 1), new Piece("black", "bishop", 2), new Piece("black", "queen", 3), new Piece("black", "king", 4), new Piece("black", "bishop", 5), new Piece("black", "knight", 6), new Piece("black", "rook", 7)],
-      [new Piece("black", "pawn", 8), new Piece("black", "pawn", 9), new Piece("black", "pawn", 10), new Piece("black", "pawn", 11), new Piece("black", "pawn", 12), new Piece("black", "pawn", 13), new Piece("black", "pawn", 14), new Piece("black", "pawn", 15)],
-      Array(8).fill(0),
-      Array(8).fill(0),
-      Array(8).fill(0),
-      Array(8).fill(0),
-      [new Piece("white", "pawn", 48), new Piece("white", "pawn", 49), new Piece("white", "pawn", 50), new Piece("white", "pawn", 51), new Piece("white", "pawn", 52), new Piece("white", "pawn", 53), new Piece("white", "pawn", 54), new Piece("white", "pawn", 55)],
-      [new Piece("white", "rook", 56), new Piece("white", "knight", 57), new Piece("white", "bishop", 58), new Piece("white", "queen", 59), new Piece("white", "king", 60), new Piece("white", "bishop", 61), new Piece("white", "knight", 62), new Piece("white", "rook", 63)],
-    ];
-    let moveCounter = 1;
-
-    // create an array of squares on the board called sqaures
-    const squares = document.getElementsByClassName("square");
-    // Loop through each square in squares
-    for (let i = 0; i < squares.length; i++) {
-      // Assign each square an equivilant data tag to coorelate it to the array.
-      squares[i].setAttribute("data-square", i);
-    }
-
-    //  Lets render the pieces to the chessBoard.
-    chessView.renderChessboard(chessboard, squares);
+    
+    setupBoard()
 
     // Event listener for Clicking on a square
     for (let square of squares) {
