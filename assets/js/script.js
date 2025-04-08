@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (restartBtn) {
         restartBtn.addEventListener('click', () => {
             resetBoard();
-            isWhiteToMove = true;
+            
         });
     }
 });
@@ -103,6 +103,8 @@ function resetBoard() {
     document.getElementById('black-move').innerHTML = '';
 
     setupBoard()
+
+    isWhiteToMove = true;
 }
 
 function setupBoard() {
@@ -184,6 +186,11 @@ const chessController = {
             chessView.renderChessboard(chessboard, squares);
             // check for Check Mate
 
+            // is stalemate check
+            if (checkForStalemate(isWhiteToMove ? 'black' : 'white')) {
+              alert('Stalemate! The game is a draw.');
+              return;
+            }
             // Change the players turn
             changePlayerTurn();
           }
@@ -283,6 +290,22 @@ function isCheckMate(playerColor, chessboard, squares) {
   alert('Checkmate');
   return true; 
 }
+
+function checkForStalemate(playerColor) {
+  let squares = document.getElementsByClassName("square");
+
+  // If the player is in check, it's not stalemate
+  if (isKingInCheck(playerColor, chessboard, squares)) {
+    return false;
+  }
+
+  // Loop through all pieces of this color and check if they have legal moves
+
+
+  // No legal moves and not in check
+  return true;
+}
+
 
 /**
 * This does way too much right now and needs to be refactored
