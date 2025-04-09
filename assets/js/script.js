@@ -189,7 +189,6 @@ const chessController = {
             // is stalemate check
             if (checkForStalemate(isWhiteToMove ? 'black' : 'white')) {
               alert('Stalemate! The game is a draw.');
-              return;
             }
             // Change the players turn
             changePlayerTurn();
