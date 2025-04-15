@@ -111,15 +111,15 @@ function setupStalemateTestBoard() {
   moveCounter = 1;
 
   const whiteKing = new Piece('white', 'king', 0);
-  const whiteQueen = new Piece('black', 'queen', 10); 
+  const blackQueen = new Piece('black', 'queen', 10); 
   const blackKing = new Piece('black', 'king', 20); 
 
   chessboard[0][0] = whiteKing;
-  chessboard[1][6] = whiteQueen;
-  chessboard[1][1] = blackKing; 
+  chessboard[1][2] = blackQueen;
+  chessboard[1][7] = blackKing; 
 
   whiteKing.square = 0;
-  whiteQueen.square = 14;
+  blackQueen.square = 14;
   blackKing.square = 9;
 
   isWhiteToMove = false;
