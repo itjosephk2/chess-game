@@ -106,23 +106,22 @@ function resetBoard() {
 
     isWhiteToMove = true;
 }
+
 function setupStalemateTestBoard() {
   chessboard = Array(8).fill(null).map(() => Array(8).fill(0));
   moveCounter = 1;
 
   const whiteKing = new Piece('white', 'king', 0);
   const blackQueen = new Piece('black', 'queen', 10); 
-  const blackKing = new Piece('black', 'king', 20); 
+  const blackKing = new Piece('black', 'king', 15); 
+
+  console.log(whiteKing);
 
   chessboard[0][0] = whiteKing;
   chessboard[1][2] = blackQueen;
   chessboard[1][7] = blackKing; 
-
-  whiteKing.square = 0;
-  blackQueen.square = 14;
-  blackKing.square = 9;
-
-  isWhiteToMove = false;
+  
+  isWhiteToMove = true;
 
   const squares = document.getElementsByClassName("square");
   for (let i = 0; i < squares.length; i++) {
@@ -130,7 +129,7 @@ function setupStalemateTestBoard() {
   }
   chessView.renderChessboard(chessboard, squares);
 
-  if (checkForStalemate('black')) {
+  if (checkForStalemate('white')) {
     alert('Stalemate detected on game start!');
   }
 }
@@ -169,7 +168,7 @@ const chessController = {
     /* When the user clicks on the button,
     toggle between hiding and showing the dropdown content */
     const squares = document.getElementsByClassName("square");
-    // setupBoard();
+    setupBoard();
     setupStalemateTestBoard();
     // Event listener for Clicking on a square
     for (let square of squares) {
@@ -320,6 +319,7 @@ function isCheckMate(playerColor, chessboard, squares) {
 }
 
 function checkForStalemate(playerColor) {
+  console.log('sanity check');
   const squares = document.getElementsByClassName("square");
 
   // If the player is in check, it's not stalemate
@@ -332,11 +332,13 @@ function checkForStalemate(playerColor) {
     for (let col = 0; col < 8; col++) {
       const piece = chessboard[row][col];
 
+      // Check if square is not empty and the piece on the square is the same as the player whos turn it is
       if (piece !== 0 && piece.color === playerColor) {
         const fromSquareIndex = row * 8 + col;
 
         // Try moving this piece to every square on the board
         for (let targetIndex = 0; targetIndex < 64; targetIndex++) {
+          
           const toRow = getRow(targetIndex);
           const toCol = getCol(targetIndex);
           const targetSquare = squares[targetIndex];
@@ -346,6 +348,7 @@ function checkForStalemate(playerColor) {
 
           // Check if the move is legal
           if (checkifMoveIsLegal(piece, targetSquare, chessboard)) {
+            console.log(`Before sim: ${piece.type} at [${row}, ${col}] color: ${piece.color}`);
             // Simulate the move
             const originalPiece = chessboard[toRow][toCol];
             const oldSquare = piece.square;
@@ -361,9 +364,13 @@ function checkForStalemate(playerColor) {
             piece.square = oldSquare;
             chessboard[row][col] = piece;
             chessboard[toRow][toCol] = originalPiece;
+            console.log(`After sim: ${piece.type} at [${toRow}, ${toCol}] color: ${piece.color}`);
+
 
             // If the king is NOT in check after this move, it's not stalemate
             if (!stillInCheck) {
+              console.log(`Legal move found for ${piece.type} at ${row},${col} -> ${toRow},${toCol}`);
+              chessView.renderChessboard(chessboard, squares);
               return false;
             }
           }
@@ -371,7 +378,7 @@ function checkForStalemate(playerColor) {
       }
     }
   }
-
+  chessView.renderChessboard(chessboard, squares);
   // No legal moves found and not in check = stalemate
   return true;
 }
