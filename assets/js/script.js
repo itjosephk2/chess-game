@@ -110,13 +110,13 @@ function setupStalemateTestBoard() {
   chessboard = Array(8).fill(null).map(() => Array(8).fill(0));
   moveCounter = 1;
 
-  const whiteKing = new Piece('white', 'king', 0);    // a8
-  const whiteQueen = new Piece('black', 'queen', 10); // g7
-  const blackKing = new Piece('black', 'king', 20);    // b7
+  const whiteKing = new Piece('white', 'king', 0);
+  const whiteQueen = new Piece('black', 'queen', 10); 
+  const blackKing = new Piece('black', 'king', 20); 
 
-  chessboard[0][0] = whiteKing;    // a8
-  chessboard[1][6] = whiteQueen;   // g7
-  chessboard[1][1] = blackKing;    // b7
+  chessboard[0][0] = whiteKing;
+  chessboard[1][6] = whiteQueen;
+  chessboard[1][1] = blackKing; 
 
   whiteKing.square = 0;
   whiteQueen.square = 14;
