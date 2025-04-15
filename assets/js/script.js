@@ -108,6 +108,7 @@ function resetBoard() {
 }
 
 function setupStalemateTestBoard() {
+
   chessboard = Array(8).fill(null).map(() => Array(8).fill(0));
   moveCounter = 1;
 
@@ -319,6 +320,17 @@ function isCheckMate(playerColor, chessboard, squares) {
 }
 
 function checkForStalemate(playerColor) {
+  // Quick draw check: only two kings left
+  const allPieces = chessboard.flat().filter(p => p !== 0);
+  const onlyKingsLeft = allPieces.length === 2 && allPieces.every(p => p.type === 'king');
+  const singleMinorPiece = allPieces.length === 3 && allPieces.some(p => p.type === 'bishop' || p.type === 'knight') && allPieces.filter(p => p.type !== 'king').length === 1;
+  const doubleKnightDraw = allPieces.length === 4 && allPieces.filter(p => p.type === 'knight').length === 2 && allPieces.filter(p => p.type === 'king').length === 2;
+
+  if (onlyKingsLeft || singleMinorPiece || doubleKnightDraw) {
+    console.log("Draw: insufficient material");
+    return true;
+  }
+
   console.log('sanity check');
   const squares = document.getElementsByClassName("square");
 
