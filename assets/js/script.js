@@ -106,6 +106,35 @@ function resetBoard() {
 
     isWhiteToMove = true;
 }
+function setupStalemateTestBoard() {
+  chessboard = Array(8).fill(null).map(() => Array(8).fill(0));
+  moveCounter = 1;
+
+  const whiteKing = new Piece('white', 'king', 0);    // a8
+  const whiteQueen = new Piece('black', 'queen', 10); // g7
+  const blackKing = new Piece('black', 'king', 20);    // b7
+
+  chessboard[0][0] = whiteKing;    // a8
+  chessboard[1][6] = whiteQueen;   // g7
+  chessboard[1][1] = blackKing;    // b7
+
+  whiteKing.square = 0;
+  whiteQueen.square = 14;
+  blackKing.square = 9;
+
+  isWhiteToMove = false;
+
+  const squares = document.getElementsByClassName("square");
+  for (let i = 0; i < squares.length; i++) {
+    squares[i].setAttribute("data-square", i);
+  }
+  chessView.renderChessboard(chessboard, squares);
+
+  if (checkForStalemate('black')) {
+    alert('Stalemate detected on game start!');
+  }
+}
+
 
 function setupBoard() {
     // Step 1: Rebuild the logical chessboard array
@@ -140,8 +169,8 @@ const chessController = {
     /* When the user clicks on the button,
     toggle between hiding and showing the dropdown content */
     const squares = document.getElementsByClassName("square");
-    setupBoard()
-
+    // setupBoard();
+    setupStalemateTestBoard();
     // Event listener for Clicking on a square
     for (let square of squares) {
       square.addEventListener("click", function () {
@@ -291,19 +320,62 @@ function isCheckMate(playerColor, chessboard, squares) {
 }
 
 function checkForStalemate(playerColor) {
-  let squares = document.getElementsByClassName("square");
+  const squares = document.getElementsByClassName("square");
 
   // If the player is in check, it's not stalemate
   if (isKingInCheck(playerColor, chessboard, squares)) {
     return false;
   }
 
-  // Loop through all pieces of this color and check if they have legal moves
+  // Loop through all pieces of the given color
+  for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
+      const piece = chessboard[row][col];
 
+      if (piece !== 0 && piece.color === playerColor) {
+        const fromSquareIndex = row * 8 + col;
 
-  // No legal moves and not in check
+        // Try moving this piece to every square on the board
+        for (let targetIndex = 0; targetIndex < 64; targetIndex++) {
+          const toRow = getRow(targetIndex);
+          const toCol = getCol(targetIndex);
+          const targetSquare = squares[targetIndex];
+
+          // Skip if it's the same square
+          if (fromSquareIndex === targetIndex) continue;
+
+          // Check if the move is legal
+          if (checkifMoveIsLegal(piece, targetSquare, chessboard)) {
+            // Simulate the move
+            const originalPiece = chessboard[toRow][toCol];
+            const oldSquare = piece.square;
+
+            // Make the move
+            chessboard[toRow][toCol] = piece;
+            chessboard[row][col] = 0;
+            piece.square = targetIndex;
+
+            const stillInCheck = isKingInCheck(playerColor, chessboard, squares);
+
+            // Undo the move
+            piece.square = oldSquare;
+            chessboard[row][col] = piece;
+            chessboard[toRow][toCol] = originalPiece;
+
+            // If the king is NOT in check after this move, it's not stalemate
+            if (!stillInCheck) {
+              return false;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // No legal moves found and not in check = stalemate
   return true;
 }
+
 
 
 /**
