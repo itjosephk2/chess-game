@@ -393,13 +393,54 @@
 		</div>
 	</div>
 
-	<!-- Refresh Button -->
+
 	<div class="mt-4">
+		<!-- Refresh Button -->
 		<button id="restart-btn" class="btn btn-primary">
 			<i class="fas fa-sync-alt"></i> Restart
 		</button>
-	</div>	  
+		<!-- Rules Button -->
+		<button type="button" class="btn btn-info txt-white" data-bs-toggle="modal" data-bs-target="#rulesModal">
+			<i class="fas fa-clipboard"></i> Rules
+		</button>
+	</div>
 </main>
+
+
+
+<!-- Rules Modal -->
+<div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rulesModalLabel">Chess Rules</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Objective:</strong> The goal is to checkmate your opponent's king.</p>
+        <ul>
+          <li><strong>Pawn:</strong> Moves forward 1 square (2 on first move), captures diagonally.</li>
+          <li><strong>Rook:</strong> Moves horizontally or vertically any number of squares.</li>
+          <li><strong>Knight:</strong> Moves in an “L” shape. Can jump over pieces.</li>
+          <li><strong>Bishop:</strong> Moves diagonally any number of squares.</li>
+          <li><strong>Queen:</strong> Combines rook and bishop movements.</li>
+          <li><strong>King:</strong> Moves 1 square in any direction.</li>
+        </ul>
+        <p><strong>Special Moves:</strong></p>
+        <ul>
+          <li><strong>Castling:</strong> King and rook move at the same time under specific conditions.</li>
+          <li><strong>En Passant:</strong> Special pawn capture under certain conditions.</li>
+          <li><strong>Promotion:</strong> When a pawn reaches the far end, it becomes another piece.</li>
+        </ul>
+        <p><strong>Winning:</strong> You win by checkmating the opponent’s king or if they resign.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div
+
 
 <!-- Footer -->
 <footer class="bg-dark text-white text-center py-3">
