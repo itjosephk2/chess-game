@@ -113,14 +113,16 @@ function setupStalemateTestBoard() {
   moveCounter = 1;
 
   const whiteKing = new Piece('white', 'king', 0);
-  const blackQueen = new Piece('black', 'queen', 10); 
   const blackKing = new Piece('black', 'king', 15); 
+  const blackknight = new Piece('black', 'knight', 18);
+  const blackKnight_2 = new Piece('black', 'knight', 19);
 
   console.log(whiteKing);
 
   chessboard[0][0] = whiteKing;
-  chessboard[1][2] = blackQueen;
   chessboard[1][7] = blackKing; 
+  chessboard[2][2] = blackknight;
+  chessboard[2][3] = blackKnight_2;
   
   isWhiteToMove = true;
 
@@ -169,8 +171,8 @@ const chessController = {
     /* When the user clicks on the button,
     toggle between hiding and showing the dropdown content */
     const squares = document.getElementsByClassName("square");
-    setupBoard();
-    // setupStalemateTestBoard();
+    // setupBoard();
+    setupStalemateTestBoard();
     // Event listener for Clicking on a square
     for (let square of squares) {
       square.addEventListener("click", function () {
@@ -322,16 +324,16 @@ function isCheckMate(playerColor, chessboard, squares) {
 function checkForStalemate(playerColor) {
   // Quick draw check: only two kings left
   const allPieces = chessboard.flat().filter(p => p !== 0);
-  const onlyKingsLeft = allPieces.length === 2 && allPieces.every(p => p.type === 'king');
-  const singleMinorPiece = allPieces.length === 3 && allPieces.some(p => p.type === 'bishop' || p.type === 'knight') && allPieces.filter(p => p.type !== 'king').length === 1;
-  const doubleKnightDraw = allPieces.length === 4 && allPieces.filter(p => p.type === 'knight').length === 2 && allPieces.filter(p => p.type === 'king').length === 2;
+  console.log(allPieces);
+  const onlyKingsLeft = allPieces.length === 2;
+  const singleMinorPiece = allPieces.length === 3 && allPieces.filter(p => p.pieceType !== 'king').length === 1 && allPieces.some(p => (p.pieceType === 'bishop' || p.tpieceTypeype === 'knight'));
+  const doubleKnightDraw = allPieces.length === 4 && allPieces.filter(p => p.pieceType === 'knight').length === 2 && allPieces.filter(p => p.pieceType === 'king').length === 2;
 
   if (onlyKingsLeft || singleMinorPiece || doubleKnightDraw) {
     console.log("Draw: insufficient material");
     return true;
   }
 
-  console.log('sanity check');
   const squares = document.getElementsByClassName("square");
 
   // If the player is in check, it's not stalemate
@@ -360,7 +362,6 @@ function checkForStalemate(playerColor) {
 
           // Check if the move is legal
           if (checkifMoveIsLegal(piece, targetSquare, chessboard)) {
-            console.log(`Before sim: ${piece.type} at [${row}, ${col}] color: ${piece.color}`);
             // Simulate the move
             const originalPiece = chessboard[toRow][toCol];
             const oldSquare = piece.square;
@@ -376,8 +377,6 @@ function checkForStalemate(playerColor) {
             piece.square = oldSquare;
             chessboard[row][col] = piece;
             chessboard[toRow][toCol] = originalPiece;
-            console.log(`After sim: ${piece.type} at [${toRow}, ${toCol}] color: ${piece.color}`);
-
 
             // If the king is NOT in check after this move, it's not stalemate
             if (!stillInCheck) {
