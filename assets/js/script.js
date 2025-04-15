@@ -169,7 +169,7 @@ const chessController = {
     toggle between hiding and showing the dropdown content */
     const squares = document.getElementsByClassName("square");
     setupBoard();
-    setupStalemateTestBoard();
+    // setupStalemateTestBoard();
     // Event listener for Clicking on a square
     for (let square of squares) {
       square.addEventListener("click", function () {
