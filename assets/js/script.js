@@ -117,8 +117,6 @@ function setupStalemateTestBoard() {
   const blackknight = new Piece('black', 'knight', 18);
   const blackKnight_2 = new Piece('black', 'knight', 19);
 
-  console.log(whiteKing);
-
   chessboard[0][0] = whiteKing;
   chessboard[1][7] = blackKing; 
   chessboard[2][2] = blackknight;
@@ -216,13 +214,21 @@ const chessController = {
             // Render the move to the screen
             chessView.renderChessboard(chessboard, squares);
             // check for Check Mate
-
             // is stalemate check
             if (checkForStalemate(isWhiteToMove ? 'black' : 'white')) {
               alert('Stalemate! The game is a draw.');
             }
             // Change the players turn
             changePlayerTurn();
+            const currentPlayer = isWhiteToMove ? 'white' : 'black';
+
+            if (isKingInCheck(currentPlayer, chessboard, squares)) {
+              if (isCheckMate(currentPlayer, chessboard, squares)) {
+                const winner = isWhiteToMove ? 'White' : 'Black';
+                showWinModal(winner);
+                return;
+              }
+            }
           }
           // Illegal move resets pieces selection
           else {
@@ -311,26 +317,25 @@ function isCheckMate(playerColor, chessboard, squares) {
       // check if the move is legal 
       if (checkifMoveIsLegal(piece, square, chessboard)) {
         if (isKingInCheck('white', movePiece(square, chessboard, selectedPiece), squares)) {
-          console.log('Valid move');
           return false;
         }
       }
     }
   }
-  alert('Checkmate');
+  const winner = isWhiteToMove ? "Black" : "White";
+  console.log('winner');
+  showWinModal(winner);
   return true; 
 }
 
 function checkForStalemate(playerColor) {
   // Quick draw check: only two kings left
   const allPieces = chessboard.flat().filter(p => p !== 0);
-  console.log(allPieces);
   const onlyKingsLeft = allPieces.length === 2;
   const singleMinorPiece = allPieces.length === 3 && allPieces.filter(p => p.pieceType !== 'king').length === 1 && allPieces.some(p => (p.pieceType === 'bishop' || p.tpieceTypeype === 'knight'));
   const doubleKnightDraw = allPieces.length === 4 && allPieces.filter(p => p.pieceType === 'knight').length === 2 && allPieces.filter(p => p.pieceType === 'king').length === 2;
 
   if (onlyKingsLeft || singleMinorPiece || doubleKnightDraw) {
-    console.log("Draw: insufficient material");
     return true;
   }
 
@@ -380,7 +385,6 @@ function checkForStalemate(playerColor) {
 
             // If the king is NOT in check after this move, it's not stalemate
             if (!stillInCheck) {
-              console.log(`Legal move found for ${piece.type} at ${row},${col} -> ${toRow},${toCol}`);
               chessView.renderChessboard(chessboard, squares);
               return false;
             }
@@ -690,6 +694,14 @@ function clearBoard(squares) {
 
   }
 }
+
+// Show win modal
+function showWinModal(winner) {
+  document.getElementById("modalMessage").textContent = `${winner} wins!`;
+  const winModal = new bootstrap.Modal(document.getElementById('winModal'));
+  winModal.show();
+}
+
 
 /**
 * Adds last move to the notation board
