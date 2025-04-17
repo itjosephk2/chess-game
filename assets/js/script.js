@@ -107,35 +107,6 @@ function resetBoard() {
     isWhiteToMove = true;
 }
 
-// test function
-function setupStalemateTestBoard() {
-
-  chessboard = Array(8).fill(null).map(() => Array(8).fill(0));
-  moveCounter = 1;
-
-  const whiteKing = new Piece('white', 'king', 0);
-  const blackKing = new Piece('black', 'king', 15); 
-  const blackknight = new Piece('black', 'knight', 18);
-  const blackKnight_2 = new Piece('black', 'knight', 19);
-
-  chessboard[0][0] = whiteKing;
-  chessboard[1][7] = blackKing; 
-  chessboard[2][2] = blackknight;
-  chessboard[2][3] = blackKnight_2;
-  
-  isWhiteToMove = true;
-
-  const squares = document.getElementsByClassName("square");
-  for (let i = 0; i < squares.length; i++) {
-    squares[i].setAttribute("data-square", i);
-  }
-  chessView.renderChessboard(chessboard, squares);
-
-  if (checkForStalemate('white')) {
-    alert('Stalemate detected on game start!');
-  }
-}
-
 function setupBoard() {
     // Step 1: Rebuild the logical chessboard array
     chessboard = [
@@ -168,8 +139,7 @@ const chessController = {
     /* When the user clicks on the button,
     toggle between hiding and showing the dropdown content */
     const squares = document.getElementsByClassName("square");
-    // setupBoard();
-    setupStalemateTestBoard();
+    setupBoard();
     // Event listener for Clicking on a square
     for (let square of squares) {
       square.addEventListener("click", function () {
@@ -220,9 +190,7 @@ const chessController = {
             // Change the players turn
             changePlayerTurn();
             const currentPlayer = isWhiteToMove ? 'white' : 'black';
-            alert(currentPlayer)
             if (isKingInCheck(currentPlayer, chessboard, squares)) {
-              alert('this is check')
               if (isCheckMate(currentPlayer, chessboard, squares)) {
                 showWinModal(winner);
                 return;
@@ -792,7 +760,5 @@ function trySelectPiece(square, chessboard) {
     isPieceSelected = true;
     return true;
   }
-
-  alert(`It is ${isWhiteToMove ? 'white' : 'black'}'s turn`);
   return false;
 }
