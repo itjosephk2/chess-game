@@ -89,6 +89,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+function setupStalemateTestBoard() {
+ 
+  chessboard = Array(8).fill(null).map(() => Array(8).fill(0));
+  moveCounter = 1;
+
+  const whiteKing = new Piece('white', 'king', 0);
+  const blackKing = new Piece('black', 'king', 15); 
+  const blackknight = new Piece('black', 'knight', 18);
+  const blackKnight_2 = new Piece('black', 'knight', 19);
+
+  chessboard[0][0] = whiteKing;
+  chessboard[1][7] = blackKing; 
+  chessboard[2][2] = blackknight;
+  chessboard[2][3] = blackKnight_2;
+
+  isWhiteToMove = true;
+
+  const squares = document.getElementsByClassName("square");
+  for (let i = 0; i < squares.length; i++) {
+    squares[i].setAttribute("data-square", i);
+  }
+  chessView.renderChessboard(chessboard, squares);
+
+  if (checkForStalemate('white')) {
+    
+  }
+}
+
+
 function resetBoard() {
     // Clear the board visually
     clearBoard(document.getElementsByClassName("square"));
