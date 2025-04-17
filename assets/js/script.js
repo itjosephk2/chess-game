@@ -771,6 +771,12 @@ function updateNotation(piece, squareIndex, moveCounter) {
 document.addEventListener("DOMContentLoaded", function() {
   // initialise the game
   chessController.init();
+  
+  // Reset the board when the win modal is closed
+  const winModalElement = document.getElementById('winModal');
+  winModalElement.addEventListener('hidden.bs.modal', function () {
+    resetBoard();
+  });
 });
 
 function trySelectPiece(square, chessboard) {
