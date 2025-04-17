@@ -113,7 +113,7 @@ function setupStalemateTestBoard() {
   chessView.renderChessboard(chessboard, squares);
 
   if (checkForStalemate('white')) {
-    
+    showStalemateModal();
   }
 }
 
@@ -169,6 +169,7 @@ const chessController = {
     toggle between hiding and showing the dropdown content */
     const squares = document.getElementsByClassName("square");
     setupBoard();
+    setupStalemateTestBoard()
     // Event listener for Clicking on a square
     for (let square of squares) {
       square.addEventListener("click", function () {
