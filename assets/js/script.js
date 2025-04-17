@@ -769,11 +769,13 @@ document.addEventListener("DOMContentLoaded", function() {
   // initialise the game
   chessController.init();
   
-  // Checkmate modal: reset on close
-  const winModalElement = document.getElementById('winModal');
-  winModalElement.addEventListener('hidden.bs.modal', function () {
-    resetBoard();
-  });
+ // Checkmate modal: reset on "Play Again" button click
+ const winPlayAgainBtn = document.getElementById('winPlayAgainBtn');
+ winPlayAgainBtn.addEventListener('click', () => {
+   const winModal = bootstrap.Modal.getInstance(document.getElementById('winModal'));
+   winModal.hide();
+   resetBoard();
+ });
 
   // Stalemate modal: reset when "Play Again" is clicked
   const stalematePlayAgainBtn = document.getElementById('stalematePlayAgainBtn');
