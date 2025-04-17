@@ -107,6 +107,7 @@ function resetBoard() {
     isWhiteToMove = true;
 }
 
+// test function
 function setupStalemateTestBoard() {
 
   chessboard = Array(8).fill(null).map(() => Array(8).fill(0));
@@ -135,7 +136,6 @@ function setupStalemateTestBoard() {
   }
 }
 
-
 function setupBoard() {
     // Step 1: Rebuild the logical chessboard array
     chessboard = [
@@ -160,7 +160,6 @@ function setupBoard() {
     // Step 3: Render the new board state visually
     chessView.renderChessboard(chessboard, squares);
 }
-
 
 // Controller
 const chessController = {
@@ -312,25 +311,32 @@ function isCheckMate(playerColor, chessboard, squares) {
     return false; // Not checkmate if the king isn't in check
   }
 
+  // Loop through all pieces of the given color
   for (let row = 0; row < 8; row++) {
     for (let col = 0; col < 8; col++) {
       const piece = chessboard[row][col];
 
+      // Check if square is not empty and the piece on the square is the same as the player whos turn it is
       if (piece !== 0 && piece.color === playerColor) {
         const fromSquareIndex = row * 8 + col;
 
+        // Try moving this piece to every square on the board
         for (let targetIndex = 0; targetIndex < 64; targetIndex++) {
+          
           const toRow = getRow(targetIndex);
           const toCol = getCol(targetIndex);
           const targetSquare = squares[targetIndex];
 
+          // Skip if it's the same square
           if (fromSquareIndex === targetIndex) continue;
 
+          // Check if the move is legal
           if (checkifMoveIsLegal(piece, targetSquare, chessboard)) {
             // Simulate the move
             const originalPiece = chessboard[toRow][toCol];
             const oldSquare = piece.square;
 
+            // Make the move
             chessboard[toRow][toCol] = piece;
             chessboard[row][col] = 0;
             piece.square = targetIndex;
@@ -342,8 +348,10 @@ function isCheckMate(playerColor, chessboard, squares) {
             chessboard[row][col] = piece;
             chessboard[toRow][toCol] = originalPiece;
 
+            // If the king is NOT in check after this move, it's not stalemate
             if (!stillInCheck) {
-              return false; // At least one move escapes check
+              chessView.renderChessboard(chessboard, squares);
+              return false;
             }
           }
         }
