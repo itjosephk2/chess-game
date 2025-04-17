@@ -78,6 +78,7 @@ let isPieceSelected = false;
 let selectedPiece = null;
 let isWhiteToMove = true;
 let selectedPieceElement = null;
+let gameOver = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     const restartBtn = document.getElementById('restart-btn');
@@ -124,6 +125,11 @@ function resetBoard() {
 
     // Reset any game state variables (like selected piece, turn, etc.)
     selectedPiece = null;
+    currentTurn = 'white';
+    isWhiteToMove = true;
+    isPieceSelected = false;
+    selectedPieceElement = null;
+    gameOver = false;
     currentTurn = 'white'; // or however you're tracking turns
 
     // Clear notation board
@@ -359,6 +365,7 @@ function isCheckMate(playerColor, chessboard, squares) {
 
   const winner = isWhiteToMove ? "Black" : "White";
   showWinModal(winner);
+  gameOver = true;
   return true; // No escape = checkmate
 }
 
@@ -430,6 +437,7 @@ function checkForStalemate(playerColor) {
   }
   chessView.renderChessboard(chessboard, squares);
   // No legal moves found and not in check = stalemate
+  gameOver = true;
   return true;
 }
 
