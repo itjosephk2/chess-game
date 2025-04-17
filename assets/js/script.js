@@ -765,20 +765,25 @@ function updateNotation(piece, squareIndex, moveCounter) {
 
 
 
-// Model, Controller Initialization
 document.addEventListener("DOMContentLoaded", function() {
   // initialise the game
   chessController.init();
   
-  // Reset the board when the win modal is closed
+  // Checkmate modal: reset on close
   const winModalElement = document.getElementById('winModal');
   winModalElement.addEventListener('hidden.bs.modal', function () {
     resetBoard();
   });
-  document.getElementById('stalemateModal').addEventListener('hidden.bs.modal', () => {
+
+  // Stalemate modal: reset when "Play Again" is clicked
+  const stalematePlayAgainBtn = document.getElementById('stalematePlayAgainBtn');
+  stalematePlayAgainBtn.addEventListener('click', () => {
+    const stalemateModal = bootstrap.Modal.getInstance(document.getElementById('stalemateModal'));
+    stalemateModal.hide();
     resetBoard();
   });
 });
+
 
 function trySelectPiece(square, chessboard) {
   const squareIndex = parseInt(square.dataset.square);
