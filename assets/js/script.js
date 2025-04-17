@@ -179,6 +179,10 @@ const chessController = {
     // Event listener for Clicking on a square
     for (let square of squares) {
       square.addEventListener("click", function () {
+        if (gameOver) {
+          alert("The game is over! Please click 'Play Again' to start a new game.");
+          return;
+        }
         // If a piece is Selected Then check for moving the selected Piece
         if (isPieceSelected) {
           // Check if move is legal
