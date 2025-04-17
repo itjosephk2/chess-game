@@ -221,10 +221,10 @@ const chessController = {
             // Change the players turn
             changePlayerTurn();
             const currentPlayer = isWhiteToMove ? 'white' : 'black';
-
+            alert(currentPlayer)
             if (isKingInCheck(currentPlayer, chessboard, squares)) {
+              alert('this is check')
               if (isCheckMate(currentPlayer, chessboard, squares)) {
-                const winner = isWhiteToMove ? 'White' : 'Black';
                 showWinModal(winner);
                 return;
               }
@@ -308,25 +308,54 @@ function isKingInCheck(playerColor, chessboard, squares) {
 
 /** Checks if the polayer is in check */
 function isCheckMate(playerColor, chessboard, squares) {
-  // Check all the squares
-  for (let square of squares) {
-    // create piece objected currently selecetd
-    let piece = chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)];
-    // check piece is not an empty square and that is the same color as the current player
-    if (piece !== 0 && piece.color == playerColor) {
-      // check if the move is legal 
-      if (checkifMoveIsLegal(piece, square, chessboard)) {
-        if (isKingInCheck('white', movePiece(square, chessboard, selectedPiece), squares)) {
-          return false;
+  if (!isKingInCheck(playerColor, chessboard, squares)) {
+    return false; // Not checkmate if the king isn't in check
+  }
+
+  for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
+      const piece = chessboard[row][col];
+
+      if (piece !== 0 && piece.color === playerColor) {
+        const fromSquareIndex = row * 8 + col;
+
+        for (let targetIndex = 0; targetIndex < 64; targetIndex++) {
+          const toRow = getRow(targetIndex);
+          const toCol = getCol(targetIndex);
+          const targetSquare = squares[targetIndex];
+
+          if (fromSquareIndex === targetIndex) continue;
+
+          if (checkifMoveIsLegal(piece, targetSquare, chessboard)) {
+            // Simulate the move
+            const originalPiece = chessboard[toRow][toCol];
+            const oldSquare = piece.square;
+
+            chessboard[toRow][toCol] = piece;
+            chessboard[row][col] = 0;
+            piece.square = targetIndex;
+
+            const stillInCheck = isKingInCheck(playerColor, chessboard, squares);
+
+            // Undo the move
+            piece.square = oldSquare;
+            chessboard[row][col] = piece;
+            chessboard[toRow][toCol] = originalPiece;
+
+            if (!stillInCheck) {
+              return false; // At least one move escapes check
+            }
+          }
         }
       }
     }
   }
+
   const winner = isWhiteToMove ? "Black" : "White";
-  console.log('winner');
   showWinModal(winner);
-  return true; 
+  return true; // No escape = checkmate
 }
+
 
 function checkForStalemate(playerColor) {
   // Quick draw check: only two kings left
