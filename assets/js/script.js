@@ -185,7 +185,7 @@ const chessController = {
             // check for Check Mate
             // is stalemate check
             if (checkForStalemate(isWhiteToMove ? 'black' : 'white')) {
-              alert('Stalemate! The game is a draw.');
+              showStalemateModal();
             }
             // Change the players turn
             changePlayerTurn();
@@ -745,6 +745,9 @@ document.addEventListener("DOMContentLoaded", function() {
   winModalElement.addEventListener('hidden.bs.modal', function () {
     resetBoard();
   });
+  document.getElementById('stalemateModal').addEventListener('hidden.bs.modal', () => {
+    resetBoard();
+  });
 });
 
 function trySelectPiece(square, chessboard) {
@@ -762,3 +765,9 @@ function trySelectPiece(square, chessboard) {
   }
   return false;
 }
+
+function showStalemateModal() {
+  const stalemateModal = new bootstrap.Modal(document.getElementById('stalemateModal'));
+  stalemateModal.show();
+}
+
