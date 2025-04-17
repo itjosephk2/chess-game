@@ -17,7 +17,6 @@ Visit the deployed website [here](https://itjosephk2.github.io/chess-game/)
     5. [Wireframes](#wireframes)
 2. [Features](#features)
     1. [General](#general)
-    2. [Side Bar](#side-bar)
     3. [Game Board](#game-board)
  3. [Technologies Used](#technologies-used)
     1. [Languages Used](#languages-used)
@@ -87,20 +86,6 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 * Chess game for playing with two people
 
 ### index.html
-
-### Side Bar
-![Side Bar image](assets/readme-files/side-bar.png)
-
-* Tutrorial
-    
-    - This links the user to lichess tp learn how to play the game of chess.
-
-    - UNfortunately due to time constraints I was unable to implement a custom built tutorial. I had planned on just initialising a board with the relevant poieces and checking for the desired move by a text prompt to explain how the pieces moved.
-
-* Themes
-
-    - Allows the user to change the color of their board
-
 
 ### Game Board
 ![Game Board Image](assets/readme-files/game-board.png)
@@ -264,12 +249,6 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 ### Common Elements Testing
 
 * Index Page
-
-    * Side Bar
-
-        - Tutorial link takes you to a new page
-     
-        - Dropdown menu appears on click and changes color of the board
           
     * Chess Board
 
