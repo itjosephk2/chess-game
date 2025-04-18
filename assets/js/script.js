@@ -169,89 +169,86 @@ function setupBoard() {
 
 // Controller
 const chessController = {
-  init: function() {
-
-    /* When the user clicks on the button,
-    toggle between hiding and showing the dropdown content */
+  init: function () {
     const squares = document.getElementsByClassName("square");
+
     setupBoard();
-    setupStalemateTestBoard()
-    // Event listener for Clicking on a square
+    setupStalemateTestBoard();
+
+    // Event listener for clicking on a square
     for (let square of squares) {
       square.addEventListener("click", function () {
         if (gameOver) {
           alert("The game is over! Please click 'Play Again' to start a new game.");
           return;
         }
-        // If a piece is Selected Then check for moving the selected Piece
+
         if (isPieceSelected) {
-          // Check if move is legal
-          let preMoveChessboard = chessboard.map(function(arr) {
-            return arr.slice();
-          });
-          
           if (checkifMoveIsLegal(selectedPiece, square, chessboard)) {
-            if (isWhiteToMove) {
-              if (isKingInCheck('white', movePiece(square, chessboard, selectedPiece), squares)) {
-                isCheckMate('white', movePiece(square, chessboard, selectedPiece), squares);
-                if(isPieceSelected) {
-                  resetSelection(square.firstChild);
-                }
-                chessboard = preMoveChessboard;
-                return;
-              }
+            // Save from/to info
+            const fromRow = getRow(selectedPiece.square);
+            const fromCol = getCol(selectedPiece.square);
+            const toRow = getRow(square.dataset.square);
+            const toCol = getCol(square.dataset.square);
+            const capturedPiece = chessboard[toRow][toCol];
+            const originalSquare = selectedPiece.square;
+
+            // Try the move (manually)
+            chessboard[toRow][toCol] = selectedPiece;
+            chessboard[fromRow][fromCol] = 0;
+            selectedPiece.square = square.dataset.square;
+
+            // Check if the king is still in check after move
+            if (isKingInCheck(isWhiteToMove ? 'white' : 'black', chessboard, squares)) {
+              alert("You are in Check!");
+
+              // Undo move
+              chessboard[fromRow][fromCol] = selectedPiece;
+              chessboard[toRow][toCol] = capturedPiece;
+              selectedPiece.square = originalSquare;
+
+              resetSelection(square.firstChild);
+              return;
             }
-            else {
-              if (isKingInCheck('black', movePiece(square, chessboard, selectedPiece), squares)) {
-                isCheckMate('black', movePiece(square, chessboard, selectedPiece), squares);
-                if(isPieceSelected) {
-                  resetSelection(square.firstChild);
-                }
-                chessboard = preMoveChessboard;
-                return;
-              }
-            }
-            // Move the piece
-            chessboard = movePiece(square, chessboard, selectedPiece);
-            // update the move counter
+
+            // Move is legal — continue as normal
+            selectedPiece.hasMoved = true;
             const squareIndex = parseInt(square.dataset.square);
             moveCounter = updateNotation(selectedPiece, squareIndex, moveCounter);
-            // reset the selection of pieces
             resetSelection(square.firstChild);
-            // update the datset to represent the movement of teh piece on the html end
-            chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)].square = square.dataset.square;
-            // Render the move to the screen
             chessView.renderChessboard(chessboard, squares);
-            // check for Check Mate
-            // is stalemate check
+
+            // Check for stalemate
             if (checkForStalemate(isWhiteToMove ? 'black' : 'white')) {
               showStalemateModal();
+              return;
             }
-            // Change the players turn
+
+            // Switch turns
             changePlayerTurn();
+
+            // Check if the next player is in check or checkmate
             const currentPlayer = isWhiteToMove ? 'white' : 'black';
             if (isKingInCheck(currentPlayer, chessboard, squares)) {
               if (isCheckMate(currentPlayer, chessboard, squares)) {
+                const winner = isWhiteToMove ? "Black" : "White";
                 showWinModal(winner);
                 return;
               }
             }
+          } else {
+            // Illegal move — reset selection
+            resetSelection(square.firstChild);
           }
-          // Illegal move resets pieces selection
-          else {
-            if(isPieceSelected) {
-              resetSelection(square.firstChild);
-            }
-          }
-        }
-        // No piece was Previously selected so lets see if we can select one
-        else {
+        } else {
+          // No piece selected yet — try selecting
           trySelectPiece(square, chessboard);
-        }        
+        }
       });
     }
   }
 };
+
 
 
 /** Find the position of the selected king on the board */
