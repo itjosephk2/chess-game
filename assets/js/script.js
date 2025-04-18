@@ -243,11 +243,7 @@ const chessController = {
             }
 
             // Set the en passant target to the square the pawn just moved to (if a pawn moved 2 squares)
-            if (movedPiece.pieceType === 'pawn' && !movedPiece.hasMoved) {
-              const twoStepsForward = currentSquare + (direction * 2);
-              enPassantTarget = twoStepsForward; 
-              console.log('En Passant Target Set: ', enPassantTarget);
-            }
+
 
             // Check for promotion
             if (movedPiece.pieceType === 'pawn') {
