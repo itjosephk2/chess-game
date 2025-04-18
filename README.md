@@ -3,7 +3,18 @@
 
 ![Chess Game mockup images](assets/readme-files/image.png)
 
-This is a chess game where you can play against another person. It allows you to switch themes. It incorporates the rules and movement of the game of chess into the site so you cannot make any illegal moves. If you wish to learn how to play the game I have linked the tutorial on lichess for the game. I hope to add the tutorial feature directly into the site in the future aswell as the ability to play against a computer.
+This is a local two-player chess game with basic rule enforcement to prevent most illegal moves. A built-in rules modal offers a quick overview of how each piece moves and the objective of the game.
+
+### Current Limitations
+- Castling is not yet supported  
+- En passant is not implemented  
+- Pawns do not promote  
+
+### Planned Features
+- Full rule support  
+- Computer opponents  
+- A more interactive experience for new players  
+
 
 Visit the deployed website [here](https://itjosephk2.github.io/chess-game/)
 
