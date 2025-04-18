@@ -79,6 +79,7 @@ let selectedPiece = null;
 let isWhiteToMove = true;
 let selectedPieceElement = null;
 let gameOver = false;
+let enPassantTarget = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const restartBtn = document.getElementById('restart-btn');
@@ -239,6 +240,13 @@ const chessController = {
                 showWinModal(winner);
                 return;
               }
+            }
+
+            // Set the en passant target to the square the pawn just moved to (if a pawn moved 2 squares)
+            if (movedPiece.pieceType === 'pawn' && !movedPiece.hasMoved) {
+              const twoStepsForward = currentSquare + (direction * 2);
+              enPassantTarget = twoStepsForward; 
+              console.log('En Passant Target Set: ', enPassantTarget);
             }
 
             // Check for promotion
@@ -523,6 +531,23 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
       }
       // Destination squaer is Empty
       if (isDestinationSquareEmpty) {
+        // If the pawn is trying to capture an adjacent pawn using en passant
+      if (selectedSquare === enPassantTarget) {
+        const targetRow = getRow(enPassantTarget);
+        const targetCol = getCol(enPassantTarget);
+        const adjacentPiece = chessboard[targetRow][targetCol];
+
+        // Check if the adjacent piece is an opponent's pawn that just moved
+        if (adjacentPiece && adjacentPiece.pieceType === 'pawn' && adjacentPiece.color !== currentPiece.color) {
+          // En passant capture
+          chessboard[toRow][toCol] = selectedPiece;
+          chessboard[targetRow][targetCol] = 0;  // Remove the captured pawn
+          selectedPiece.square = selectedSquare; // Update the captured pawn's square
+          enPassantTarget = null;  // Reset the en passant target after the capture
+          return true;
+        }
+      }
+
         // normal Move
         if (selectedSquare == currentSquare + direction) {
           return true;
@@ -533,9 +558,15 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
           return false;
         }
         // Moving forwards 2 spaces if has not moved 
-        if (selectedSquare == currentSquare + (direction * 2)) {
+        const oneStepForward = currentSquare + direction;
+        const twoStepsForward = currentSquare + (direction * 2);
+        if (
+          selectedSquare === twoStepsForward &&
+          isSquareEmpty(chessboard[getRow(oneStepForward)][getCol(oneStepForward)]) 
+        ) {
           return true;
         }
+
         // After moving the piece
       } 
       // destination Square is not empty
