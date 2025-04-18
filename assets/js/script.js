@@ -201,7 +201,6 @@ const chessController = {
 
             // Check if the king is still in check after move
             if (isKingInCheck(isWhiteToMove ? 'white' : 'black', chessboard, squares)) {
-              
               alert('Check');
 
               // Undo move
@@ -219,6 +218,9 @@ const chessController = {
             moveCounter = updateNotation(selectedPiece, squareIndex, moveCounter);
             resetSelection(square.firstChild);
             chessView.renderChessboard(chessboard, squares);
+
+            // ✅ Get reference to the moved piece
+            const movedPiece = chessboard[toRow][toCol];
 
             // Check for stalemate
             if (checkForStalemate(isWhiteToMove ? 'black' : 'white')) {
@@ -238,6 +240,18 @@ const chessController = {
                 return;
               }
             }
+
+            // ✅ Check for promotion
+            if (movedPiece.pieceType === 'pawn') {
+              const promotionRank = movedPiece.color === 'white' ? 0 : 7;
+              if (toRow === promotionRank) {
+                movedPiece.pieceType = 'queen';
+                movedPiece.promoted = true; 
+                console.log('Pawn promoted!');
+                chessView.renderChessboard(chessboard, squares); // re-render to show queen
+              }
+            }
+
           } else {
             // Illegal move — reset selection
             resetSelection(square.firstChild);
@@ -250,6 +264,7 @@ const chessController = {
     }
   }
 };
+
 
 
 
@@ -519,6 +534,7 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
         if (selectedSquare == currentSquare + (direction * 2)) {
           return true;
         }
+        // After moving the piece
       } 
       // destination Square is not empty
       else {
@@ -531,6 +547,7 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
         }
         return false;
       }
+    
       
     //  checking the legality of the rook move
     case 'rook':
