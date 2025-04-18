@@ -79,8 +79,6 @@ let selectedPiece = null;
 let isWhiteToMove = true;
 let selectedPieceElement = null;
 let gameOver = false;
-let checkMessage = null;
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const restartBtn = document.getElementById('restart-btn');
@@ -203,7 +201,8 @@ const chessController = {
 
             // Check if the king is still in check after move
             if (isKingInCheck(isWhiteToMove ? 'white' : 'black', chessboard, squares)) {
-              alert("You are in Check!");
+              
+              alert('Check');
 
               // Undo move
               chessboard[fromRow][fromCol] = selectedPiece;
