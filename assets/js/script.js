@@ -79,6 +79,8 @@ let selectedPiece = null;
 let isWhiteToMove = true;
 let selectedPieceElement = null;
 let gameOver = false;
+let checkMessage = null;
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const restartBtn = document.getElementById('restart-btn');
@@ -130,7 +132,8 @@ function resetBoard() {
     isPieceSelected = false;
     selectedPieceElement = null;
     gameOver = false;
-    currentTurn = 'white'; // or however you're tracking turns
+    checkMessage = null;
+    currentTurn = 'white'; 
 
     // Clear notation board
     document.getElementById('moves').innerHTML = '';
