@@ -369,7 +369,6 @@ function isCheckMate(playerColor, chessboard, squares) {
 
   const winner = isWhiteToMove ? "Black" : "White";
   showWinModal(winner);
-  gameOver = true;
   return true; // No escape = checkmate
 }
 
@@ -441,7 +440,6 @@ function checkForStalemate(playerColor) {
   }
   chessView.renderChessboard(chessboard, squares);
   // No legal moves found and not in check = stalemate
-  gameOver = true;
   return true;
 }
 
@@ -746,6 +744,7 @@ function clearBoard(squares) {
 function showWinModal(winner) {
   document.getElementById("modalMessage").textContent = `${winner} wins!`;
   const winModal = new bootstrap.Modal(document.getElementById('winModal'));
+  gameOver = true;
   winModal.show();
 }
 
@@ -817,6 +816,7 @@ function trySelectPiece(square, chessboard) {
 
 function showStalemateModal() {
   const stalemateModal = new bootstrap.Modal(document.getElementById('stalemateModal'));
+  gameOver = true;
   stalemateModal.show();
 }
 
