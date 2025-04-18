@@ -241,16 +241,18 @@ const chessController = {
               }
             }
 
-            // ✅ Check for promotion
+            // Check for promotion
             if (movedPiece.pieceType === 'pawn') {
               const promotionRank = movedPiece.color === 'white' ? 0 : 7;
               if (toRow === promotionRank) {
-                movedPiece.pieceType = 'queen';
-                movedPiece.promoted = true; 
-                console.log('Pawn promoted!');
-                chessView.renderChessboard(chessboard, squares); // re-render to show queen
+                showPromotionModal((choice) => {
+                  movedPiece.pieceType = choice;
+                  movedPiece.promoted = true;
+                  chessView.renderChessboard(chessboard, squares);
+                });
               }
             }
+            
 
           } else {
             // Illegal move — reset selection
@@ -834,5 +836,21 @@ function showStalemateModal() {
   const stalemateModal = new bootstrap.Modal(document.getElementById('stalemateModal'));
   gameOver = true;
   stalemateModal.show();
+}
+
+function showPromotionModal(callback) {
+  const promotionModal = new bootstrap.Modal(document.getElementById('promotionModal'));
+  promotionModal.show();
+
+  const buttons = document.querySelectorAll('#promotionModal button');
+
+  const handleClick = (e) => {
+    const choice = e.target.getAttribute('data-piece');
+    promotionModal.hide();
+    buttons.forEach(btn => btn.removeEventListener('click', handleClick));
+    callback(choice);
+  };
+
+  buttons.forEach(btn => btn.addEventListener('click', handleClick));
 }
 
