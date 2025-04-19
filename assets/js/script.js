@@ -79,7 +79,6 @@ let selectedPiece = null;
 let isWhiteToMove = true;
 let selectedPieceElement = null;
 let gameOver = false;
-let enPassantTarget = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const restartBtn = document.getElementById('restart-btn');
@@ -220,7 +219,7 @@ const chessController = {
             resetSelection(square.firstChild);
             chessView.renderChessboard(chessboard, squares);
 
-            // ✅ Get reference to the moved piece
+            // Get reference to the moved piece
             const movedPiece = chessboard[toRow][toCol];
 
             // Check for stalemate
@@ -241,10 +240,7 @@ const chessController = {
                 return;
               }
             }
-
-            // Set the en passant target to the square the pawn just moved to (if a pawn moved 2 squares)
-
-
+            
             // Check for promotion
             if (movedPiece.pieceType === 'pawn') {
               const promotionRank = movedPiece.color === 'white' ? 0 : 7;
@@ -389,7 +385,7 @@ function isCheckMate(playerColor, chessboard, squares) {
 
   const winner = isWhiteToMove ? "Black" : "White";
   showWinModal(winner);
-  return true; // No escape = checkmate
+  return true;
 }
 
 
@@ -527,42 +523,24 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
       }
       // Destination squaer is Empty
       if (isDestinationSquareEmpty) {
-        // If the pawn is trying to capture an adjacent pawn using en passant
-      if (selectedSquare === enPassantTarget) {
-        const targetRow = getRow(enPassantTarget);
-        const targetCol = getCol(enPassantTarget);
-        const adjacentPiece = chessboard[targetRow][targetCol];
-
-        // Check if the adjacent piece is an opponent's pawn that just moved
-        if (adjacentPiece && adjacentPiece.pieceType === 'pawn' && adjacentPiece.color !== currentPiece.color) {
-          // En passant capture
-          chessboard[toRow][toCol] = selectedPiece;
-          chessboard[targetRow][targetCol] = 0;  // Remove the captured pawn
-          selectedPiece.square = selectedSquare; // Update the captured pawn's square
-          enPassantTarget = null;  // Reset the en passant target after the capture
-          return true;
-        }
-      }
-
         // normal Move
-        if (selectedSquare == currentSquare + direction) {
+        if (selectedSquare == currentSquare + direction ) {
           return true;
         }
         // If piece has moved they only have a normal move left
         if (currentPiece.hasMoved) {
-
           return false;
         }
         // Moving forwards 2 spaces if has not moved 
         const oneStepForward = currentSquare + direction;
         const twoStepsForward = currentSquare + (direction * 2);
+
         if (
           selectedSquare === twoStepsForward &&
           isSquareEmpty(chessboard[getRow(oneStepForward)][getCol(oneStepForward)]) 
         ) {
           return true;
         }
-
         // After moving the piece
       } 
       // destination Square is not empty
@@ -576,7 +554,8 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
         }
         return false;
       }
-    
+      return false;
+      
       
     //  checking the legality of the rook move
     case 'rook':
