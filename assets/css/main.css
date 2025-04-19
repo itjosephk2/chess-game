@@ -131,8 +131,8 @@ body {
     display: none;
   }
   .square {
-    max-width: 40px;
-    max-height: 40px;
+    width: 40px;
+    height: 40px;
   }
   .chess-board {
     max-height: 100vh;
@@ -140,6 +140,15 @@ body {
   .chess-piece {
     color: #000;
     font-size: 2em;
+  }
+  .white-piece {
+    color: #F9F9F9;
+  }
+  .button-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 }
 @media (max-width: 991.98px) {
