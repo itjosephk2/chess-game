@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Chess</title>
-
+	<meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -24,7 +24,7 @@
     <!-- Main Content -->
     <main class="container my-4 flex-grow-1">
 		<div class="row">
-			<div class="col-lg-5 col-md-7 col-sm-12">
+			<div class="col-md-auto col-sm-12">
 				<div class="game-screen">
 					<div class="wrapper">
 						<div id="chess-board">
@@ -369,7 +369,7 @@
 				</div>
 	  		</div>
 		
-			  <div class="col-lg-5 col-md-5 col-sm-12">
+			  <div class="col-md-5 notation-board-wrapper">
 				<div class="notation-board">
 				  <h5 class="mb-2">Moves</h5>
 			  
@@ -404,113 +404,113 @@
 			<i class="fas fa-clipboard"></i> Rules
 		</button>
 	</div>
-</main>
+	</main>
 
 
 
-<!-- Rules Modal -->
-<div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="rulesModalLabel">Chess Rules</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-
-      <div class="modal-body">
-		<p><strong>Objective:</strong> The goal is to checkmate your opponent's king.</p>
-		<ul>
-		  <li><strong>Pawn:</strong> Moves forward 1 square (2 on first move), captures diagonally.</li>
-		  <li><strong>Rook:</strong> Moves horizontally or vertically any number of squares.</li>
-		  <li><strong>Knight:</strong> Moves in an “L” shape. Can jump over pieces.</li>
-		  <li><strong>Bishop:</strong> Moves diagonally any number of squares.</li>
-		  <li><strong>Queen:</strong> Combines rook and bishop movements.</li>
-		  <li><strong>King:</strong> Moves 1 square in any direction.</li>
-		</ul>
-		<p><strong>Special Moves:</strong></p>
-		<ul>
-		  <li><strong>Promotion:</strong> <i class="fas fa-check-circle text-success"></i> – When a pawn reaches the far end, you can choose to promote it to a queen, rook, bishop, or knight.</li>
-		  <li><strong>Castling:</strong> <i class="fas fa-times-circle text-danger"></i> – A special move where the king and rook move at the same time under specific conditions.</li>
-		  <li><strong>En Passant:</strong> <i class="fas fa-times-circle text-danger"></i> – A special pawn capture available immediately after an opponent moves a pawn two squares forward.</li>
-		</ul>
-		<p><strong>Winning:</strong> You win by checkmating the opponent’s king or if they resign.</p>
-	  </div>
-	  
-	  
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Win Modal -->
-<div class="modal fade" id="winModal" tabindex="-1" aria-labelledby="winModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center">
-      <div class="modal-header">
-        <h5 class="modal-title" id="winModalLabel">Checkmate!</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p id="modalMessage">White wins!</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="winPlayAgainBtn">Play Again</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- stalemate modal -->
-<div class="modal fade" id="stalemateModal" tabindex="-1" aria-labelledby="stalemateModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-	  <div class="modal-content">
+	<!-- Rules Modal -->
+	<div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal-content">
 		<div class="modal-header">
-		  <h5 class="modal-title" id="stalemateModalLabel">Draw</h5>
-		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			<h5 class="modal-title" id="rulesModalLabel">Chess Rules</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+
+		<div class="modal-body">
+			<p><strong>Objective:</strong> The goal is to checkmate your opponent's king.</p>
+			<ul>
+			<li><strong>Pawn:</strong> Moves forward 1 square (2 on first move), captures diagonally.</li>
+			<li><strong>Rook:</strong> Moves horizontally or vertically any number of squares.</li>
+			<li><strong>Knight:</strong> Moves in an “L” shape. Can jump over pieces.</li>
+			<li><strong>Bishop:</strong> Moves diagonally any number of squares.</li>
+			<li><strong>Queen:</strong> Combines rook and bishop movements.</li>
+			<li><strong>King:</strong> Moves 1 square in any direction.</li>
+			</ul>
+			<p><strong>Special Moves:</strong></p>
+			<ul>
+			<li><strong>Promotion:</strong> <i class="fas fa-check-circle text-success"></i> – When a pawn reaches the far end, you can choose to promote it to a queen, rook, bishop, or knight.</li>
+			<li><strong>Castling:</strong> <i class="fas fa-times-circle text-danger"></i> – A special move where the king and rook move at the same time under specific conditions.</li>
+			<li><strong>En Passant:</strong> <i class="fas fa-times-circle text-danger"></i> – A special pawn capture available immediately after an opponent moves a pawn two squares forward.</li>
+			</ul>
+			<p><strong>Winning:</strong> You win by checkmating the opponent’s king or if they resign.</p>
+		</div>
+		
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		</div>
+		</div>
+	</div>
+	</div>
+
+	<!-- Win Modal -->
+	<div class="modal fade" id="winModal" tabindex="-1" aria-labelledby="winModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content text-center">
+		<div class="modal-header">
+			<h5 class="modal-title" id="winModalLabel">Checkmate!</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		</div>
 		<div class="modal-body">
-		  The game ended in a stalemate. It's a draw!
+			<p id="modalMessage">White wins!</p>
 		</div>
 		<div class="modal-footer">
-		  <button type="button" class="btn btn-primary" id="stalematePlayAgainBtn">Play Again</button>
+			<button type="button" class="btn btn-primary" id="winPlayAgainBtn">Play Again</button>
 		</div>
-	  </div>
+		</div>
 	</div>
-  </div>
-  
-<!-- Promotion Modal -->
-<div class="modal fade" id="promotionModal" tabindex="-1" aria-labelledby="promotionModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-	  <div class="modal-content text-center">
-		<div class="modal-header">
-		  <h5 class="modal-title" id="promotionModalLabel">Choose Promotion</h5>
-		</div>
-		<div class="modal-body">
-		  <button class="btn btn-outline-dark m-2" data-piece="queen">Queen ♛</button>
-		  <button class="btn btn-outline-dark m-2" data-piece="rook">Rook ♜</button>
-		  <button class="btn btn-outline-dark m-2" data-piece="bishop">Bishop ♝</button>
-		  <button class="btn btn-outline-dark m-2" data-piece="knight">Knight ♞</button>
-		</div>
-	  </div>
 	</div>
-  </div>
-  
-  
 
-<!-- Footer -->
-<footer class="bg-dark text-white text-center py-3">
-  <small>© 2025 Chess Game. Built by Joseph Keane.</small>
-</footer>
+	<!-- stalemate modal -->
+	<div class="modal fade" id="stalemateModal" tabindex="-1" aria-labelledby="stalemateModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title" id="stalemateModalLabel">Draw</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+			The game ended in a stalemate. It's a draw!
+			</div>
+			<div class="modal-footer">
+			<button type="button" class="btn btn-primary" id="stalematePlayAgainBtn">Play Again</button>
+			</div>
+		</div>
+		</div>
+	</div>
+	
+	<!-- Promotion Modal -->
+	<div class="modal fade" id="promotionModal" tabindex="-1" aria-labelledby="promotionModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content text-center">
+			<div class="modal-header">
+			<h5 class="modal-title" id="promotionModalLabel">Choose Promotion</h5>
+			</div>
+			<div class="modal-body">
+			<button class="btn btn-outline-dark m-2" data-piece="queen">Queen ♛</button>
+			<button class="btn btn-outline-dark m-2" data-piece="rook">Rook ♜</button>
+			<button class="btn btn-outline-dark m-2" data-piece="bishop">Bishop ♝</button>
+			<button class="btn btn-outline-dark m-2" data-piece="knight">Knight ♞</button>
+			</div>
+		</div>
+		</div>
+	</div>
+	
+	
 
-<!-- Scripts -->
-<script
-  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-></script>
-<script
-  src="https://kit.fontawesome.com/f8d980d35b.js"
-  crossorigin="anonymous"
-></script>
+	<!-- Footer -->
+	<footer class="bg-dark text-white text-center py-3">
+	<small>© 2025 Chess Game. Built by Joseph Keane.</small>
+	</footer>
+
+	<!-- Scripts -->
+	<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+	></script>
+	<script
+	src="https://kit.fontawesome.com/f8d980d35b.js"
+	crossorigin="anonymous"
+	></script>
 </body>
 </html>
