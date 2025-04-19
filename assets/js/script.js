@@ -83,7 +83,7 @@ let gameOver = false;
 document.addEventListener('DOMContentLoaded', () => {
     const restartBtn = document.getElementById('restart-btn');
     if (restartBtn) {
-        restartBtn.addEventListener('click', () => {
+        restartBtn.addEventListener('pointerup', () => {
             resetBoard();
             
         });
@@ -806,7 +806,7 @@ document.addEventListener("DOMContentLoaded", function() {
   
  // Checkmate modal: reset on "Play Again" button click
  const winPlayAgainBtn = document.getElementById('winPlayAgainBtn');
- winPlayAgainBtn.addEventListener('click', () => {
+ winPlayAgainBtn.addEventListener('pointerup', () => {
    const winModal = bootstrap.Modal.getInstance(document.getElementById('winModal'));
    winModal.hide();
    resetBoard();
@@ -814,7 +814,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Stalemate modal: reset when "Play Again" is clicked
   const stalematePlayAgainBtn = document.getElementById('stalematePlayAgainBtn');
-  stalematePlayAgainBtn.addEventListener('click', () => {
+  stalematePlayAgainBtn.addEventListener('pointerup', () => {
     const stalemateModal = bootstrap.Modal.getInstance(document.getElementById('stalemateModal'));
     stalemateModal.hide();
     resetBoard();
@@ -853,10 +853,10 @@ function showPromotionModal(callback) {
   const handleClick = (e) => {
     const choice = e.target.getAttribute('data-piece');
     promotionModal.hide();
-    buttons.forEach(btn => btn.removeEventListener('click', handleClick));
+    buttons.forEach(btn => btn.removeEventListener('pointerup', handleClick));
     callback(choice);
   };
 
-  buttons.forEach(btn => btn.addEventListener('click', handleClick));
+  buttons.forEach(btn => btn.addEventListener('pointerup', handleClick));
 }
 
