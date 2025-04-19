@@ -90,35 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// function setupStalemateTestBoard() {
- 
-//   chessboard = Array(8).fill(null).map(() => Array(8).fill(0));
-//   moveCounter = 1;
-
-//   const whiteKing = new Piece('white', 'king', 0);
-//   const blackKing = new Piece('black', 'king', 15); 
-//   const blackknight = new Piece('black', 'knight', 18);
-//   const blackKnight_2 = new Piece('black', 'knight', 19);
-
-//   chessboard[0][0] = whiteKing;
-//   chessboard[1][7] = blackKing; 
-//   chessboard[2][2] = blackknight;
-//   chessboard[2][3] = blackKnight_2;
-
-//   isWhiteToMove = true;
-
-//   const squares = document.getElementsByClassName("square");
-//   for (let i = 0; i < squares.length; i++) {
-//     squares[i].setAttribute("data-square", i);
-//   }
-//   chessView.renderChessboard(chessboard, squares);
-
-//   if (checkForStalemate('white')) {
-//     showStalemateModal();
-//   }
-// }
-
-
 function resetBoard() {
     // Clear the board visually
     clearBoard(document.getElementsByClassName("square"));
@@ -280,7 +251,7 @@ function findKingSquare(playerColor, chessboard) {
       }
     }
   }
-  return -1; // King not found
+  return -1;
 }
 
 /** Get the row of the index given */
@@ -326,13 +297,13 @@ function isKingInCheck(playerColor, chessboard, squares) {
     }
   }
 
-  return false; // King is not in check
+  return false;
 }
 
 /** Checks if the polayer is in check */
 function isCheckMate(playerColor, chessboard, squares) {
   if (!isKingInCheck(playerColor, chessboard, squares)) {
-    return false; // Not checkmate if the king isn't in check
+    return false;
   }
 
   // Loop through all pieces of the given color
@@ -667,13 +638,6 @@ function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
           selectedSquare + UPLEFT == currentSquare ||
           selectedSquare + UPRIGHT == currentSquare) {
             return true;
-      }
-      // not working 
-      else if (selectedPiece.color == 'white' &&
-      selectedSquare - (LEFT * 2) == currentSquare &&
-      !currentPiece.hasMoved &&
-      !chessboard[7][0].hasMoved) {
-        return true;
       }
       return false;
     default:
