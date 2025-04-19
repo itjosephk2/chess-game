@@ -19,32 +19,34 @@ Visit the deployed website [here](https://itjosephk2.github.io/chess-game/)
 
 ## Table of Contents
 
-1. [User Experience (UX)](#user-experience-ux)
-    1. [Project Goals](#project-goals)
-    2. [User Requirements](#user-requirements)
-    3. [Color Scheme](#color-scheme)
-    4. [Typography](#typography)
-    5. [Wireframes](#wireframes)
-2. [Features](#features)
-    1. [General](#general)
-    3. [Game Board](#game-board)
- 3. [Technologies Used](#technologies-used)
-    1. [Languages Used](#languages-used)
-    2. [Frameworks, Libraries and Programs Used](#frameworks-libraries-and-programs-used)
-4. [Testing](#testing)
-    1. [Testing User Stories](#testing-user-stories)
-    2. [Code Validation](#code-validation)
-    3. [Accessibility](#accessibility)
-    4. [Tools Testing](#tools-testing)
-    5. [Browser compatibility](#browser-compatibility)
-5. [Finished Product](#finished-product)
-6. [Deployment](#deployment)
-    1. [GitHub Pages](#github-pages)
-7. [Credits](#credits)
-    1. [Content](#content)
-    2. [Media](#media)
-    3. [Code](#code)
-8. [Acknowledgements](#acknowledgements)
+1. [User Experience (UX)](#user-experience-ux)  
+    1. [Project Goals](#project-goals)  
+    2. [User Requirements](#user-requirements)  
+    3. [Color Scheme](#color-scheme)  
+    4. [Typography](#typography)  
+    5. [Wireframes](#wireframes)  
+2. [Features](#features)  
+    1. [General](#general)  
+    2. [Game Board](#game-board)  
+    3. [Notation Board](#notation-board)  
+3. [Technologies Used](#technologies-used)  
+    1. [Languages Used](#languages-used)  
+    2. [Frameworks, Libraries and Programs Used](#frameworks-libraries-and-programs-used)  
+4. [Testing](#testing)  
+    1. [Testing User Stories](#testing-user-stories)  
+    2. [Code Validation](#code-validation)  
+    3. [Accessibility](#accessibility)  
+    4. [Tools Testing](#tools-testing)  
+    5. [Browser Compatibility](#browser-compatibility)  
+5. [Finished Product](#finished-product)  
+6. [Deployment](#deployment)  
+    1. [GitHub Pages](#github-pages)  
+7. [Credits](#credits)  
+    1. [Content](#content)  
+    2. [Media](#media)  
+    3. [Code](#code)  
+8. [Acknowledgements](#acknowledgements)  
+
 
 ***
 
@@ -302,6 +304,25 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 
 ## Credits
+
+### Content
+
+- The game rules summary was written based on standard chess movement rules, cross-checked with resources like [Wikipedia - Rules of Chess](https://en.wikipedia.org/wiki/Rules_of_chess) and [Chess.com](https://www.chess.com/learn-how-to-play-chess).
+- Descriptions and guidance text throughout the site were written by me with clarity and accessibility in mind.
+
+### Media
+
+- All wireframes and mockups were created by me using hand-drawn designs and browser tools.
+- Screenshots used in the README were captured from the live deployed site using developer tools.
+
+### Code
+
+- Code was written by me, with regular consultation of the following resources for guidance and solutions:
+  - [YouTube](https://youtube.com/) – tutorials and chess logic examples.
+  - [W3Schools](https://www.w3schools.com/) – syntax references and CSS layout help.
+  - [Stack Overflow](https://stackoverflow.com/) – for debugging help and JavaScript logic clarification.
+  - [MDN Web Docs](https://developer.mozilla.org/en-US/) – for JavaScript behavior and DOM manipulation explanations.
+
 
 
 
