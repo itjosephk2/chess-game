@@ -103,19 +103,11 @@ body {
 .black-piece {
   color: #000;
 }
-
 .white {
   background-color: #F0D9B5;
 }
-
 .black {
   background-color: #B58862;
-}
-.red {
-  background-color: red;
-}
-.green {
-  background-color: green;
 }
 .selected  {
   color: yellow;
@@ -139,6 +131,9 @@ body {
   }
   .white-piece {
     color: #F9F9F9;
+  }
+  .selected  {
+    color: yellow;
   }
 }
 @media (max-width: 991.98px) {
