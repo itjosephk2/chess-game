@@ -8,12 +8,11 @@ This is a local two-player chess game with basic rule enforcement to prevent mos
 ### Current Limitations
 - Castling is not yet supported  
 - En passant is not implemented  
-- Pawns do not promote  
 
 ### Planned Features
 - Full rule support  
 - Computer opponents  
-- A more interactive experience for new players  
+- A more interactive experience for new players with dots to show legal moves
 
 
 Visit the deployed website [here](https://itjosephk2.github.io/chess-game/)
@@ -53,7 +52,7 @@ Visit the deployed website [here](https://itjosephk2.github.io/chess-game/)
 
 ### Project Goals
 
-* The website should ay the very least allow people to move chess pieces on a board and play a game of chess
+* The website should allow users to move chess pieces and play a full game of chess.
 
 * Ideally the rules and legal moves will be built into the game.
 
@@ -65,21 +64,19 @@ Visit the deployed website [here](https://itjosephk2.github.io/chess-game/)
 
 * As a user, I want to be able to navigate the website intuitively and be able to play chess.
 
-* As a user, I want to be able to be able to learn how to play the game of chess.
-
-* As a user, I want to be able to customise my board
+* As a user, I want to play chess locally with another person.
 
 * As a user, I want to see the notation of my game on screen
 
-* As a user, I want to only be allowed to make legal moves.
+* As a user, I want to be dissalowed from making illegal moves.
 
 
 ### Color Scheme
-The colors used in this site are primarily based on the black and white of a chessboard. I got the colors from lichess. The user can also change to a somewhat christmas themed board of red and green.
+The colors used in this site are primarily based on the black and white of a chessboard.
 
 ### Typography
 
-The main font used in the site is Roboto, with Arial then Sans Serif as the fallback fonts in Roboto is not being imported correctly. 
+The main font used in the site is The site uses Roboto as the primary font, with Arial and sans-serif as fallbacks. 
 
 ### Wireframes
 
@@ -103,7 +100,7 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 * chess Board
 
-  - This is the board with the chess pieces wher the user can play chess
+  - The chessboard allows players to move pieces using click events.
        
 
 ### Notation Board
@@ -127,7 +124,7 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 ### Frameworks, Libraries and Programs Used
 
 * [Google Fonts](https://fonts.google.com/)
-    - Google Fonts was used to import the fonts Roboto into the style.css file.
+    - Google Fonts – For Roboto font
 
 * [Font Awesome](https://fontawesome.com/)
      - Font Awesome was used throughout all pages to add icons in order to create a better visual experience for UX purposes.
@@ -161,20 +158,18 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
   
     - The website offers a intuitive structure for the user to start playing chess immediately.
 
-* As a user, I want to be able to be able to learn how to play the game of chess.
+* As a user, I want to be able to play chess localy with anothr person.
 
-    - The website offers a link to lichess where you can play a tutorial to learn to play chess
+    - The website offers the ability to control both the white and black pieces allowing for two player game locally.
 
-* As a user, I want to be able to customise my board
-
-    - The user can change the theme of their board in the preset themes section.
+* As a user, I want to be dissalowed from making illegal moves.
+    
+    - Illegal moves are blocked, although en passant and castling are not yet implemented.
 
 * As a user, I want to see the notation of my game on screen
 
     - If the viewport is large enough the user can see their game notation.
 
-* As a user, I want to only be allowed to make legal moves.
-    - The user can make legal moves only. However due to time constraints not all the legal moves have been impleneted. Also check was not succefully implemented so checkmate does not existsts and kings are free to move as they please and illegal moves that involve a king being in check can be played. I had planned on itterarting through all the opponents pieces and then all tyhe squares that piece can legally move to and checking if any of those squares were your king and if that is true then you are in check. however I could not succesfully implement that withought breaking the game due to the way my check if leggal function works. Ideally I will go back and refactor my code to break that function into smaller parts and be able to utilise it for checking for check without breakinging things. Also double check and moving out of check would have to be accounted for which in heinsight as I think about it now would be as simple as checking fo isInCheck as part of checking if a move is legal. If a move is legal should be a function in the model section which calls numerous controller functions to check for things. That way the flow and functionality are seperate. And any updates to the screen visually should be in visual functions. 
 
 ### Code Validation
 
@@ -267,7 +262,7 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
         - Highlights the appropriate piece.
         - deselects a piece if move is illegal allowing users to change the piece they wanted to move withought clicking off the screen.
         - Pieces have restricted movement to their move set.
-        - Unfortunately due to time constraints, I was unable to implement check, checkmate, castling and en passant.
+        - Unfortunately due to time constraints, I was unable to implement castling and en passant.
      
     * Notation Board
 
@@ -287,7 +282,7 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 ## Deployment
 
-* This website was developed using atom and then used condeanywhere to push use the git commits in the terminal. had issues getting github linked to atom due to a token that wouldn't work. Hope to fix this for the future to keep development in the one IDE.  
+* This website was developed using VSCODE and then pushed to github. Deployed using github pages.
 
 ### GitHub Pages
 
@@ -308,13 +303,6 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 ## Credits
 
-### Content
-
-- All content was written by the developer.
-
-### Media
-
-
 
 
 ### Code
@@ -326,9 +314,7 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 ## Acknowledgements
 
-* My mento, Marcel, for his genuine interest in my best end result and invaluable support and guidance. Truly would not have done it without him.
-
-* My friend and piano tuner for his support and feedback throughout the project.
+* Marcel, my mentor, for his constant encouragement and practical guidance and invaluable support and guidance. Truly would not have done it without him.
 
 * My friends, for their valuable opinions and and critic during the design and development process.
 
