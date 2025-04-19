@@ -805,20 +805,10 @@ document.addEventListener("DOMContentLoaded", function() {
   chessController.init();
   
  // Checkmate modal: reset on "Play Again" button click
- const winPlayAgainBtn = document.getElementById('winPlayAgainBtn');
- winPlayAgainBtn.addEventListener('pointerup', () => {
-   const winModal = bootstrap.Modal.getInstance(document.getElementById('winModal'));
-   winModal.hide();
-   resetBoard();
- });
-
+  winPlayAgainBtn.addEventListener('click', () => closeModalAndReset('winModal'));
   // Stalemate modal: reset when "Play Again" is clicked
-  const stalematePlayAgainBtn = document.getElementById('stalematePlayAgainBtn');
-  stalematePlayAgainBtn.addEventListener('pointerup', () => {
-    const stalemateModal = bootstrap.Modal.getInstance(document.getElementById('stalemateModal'));
-    stalemateModal.hide();
-    resetBoard();
-  });
+  stalematePlayAgainBtn.addEventListener('click', () => closeModalAndReset('stalemateModal'));
+
 });
 
 
@@ -858,5 +848,16 @@ function showPromotionModal(callback) {
   };
 
   buttons.forEach(btn => btn.addEventListener('pointerup', handleClick));
+}
+
+function closeModalAndReset(modalId) {
+  const modal = bootstrap.Modal.getInstance(document.getElementById(modalId));
+  modal.hide();
+
+  setTimeout(() => {
+    document.body.classList.remove('modal-open');
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    resetBoard();
+  }, 300);
 }
 
