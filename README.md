@@ -1,7 +1,7 @@
 
 # Chess Game
 
-![Chess Game mockup images](assets/readme-files/image.png)
+![Chess Game mockup images](assets/readme-files/hero.png)
 
 This is a local two-player chess game with basic rule enforcement to prevent most illegal moves. A built-in rules modal offers a quick overview of how each piece moves and the objective of the game.
 
