@@ -416,24 +416,27 @@
         <h5 class="modal-title" id="rulesModalLabel">Chess Rules</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+
       <div class="modal-body">
-        <p><strong>Objective:</strong> The goal is to checkmate your opponent's king.</p>
-        <ul>
-          <li><strong>Pawn:</strong> Moves forward 1 square (2 on first move), captures diagonally.</li>
-          <li><strong>Rook:</strong> Moves horizontally or vertically any number of squares.</li>
-          <li><strong>Knight:</strong> Moves in an “L” shape. Can jump over pieces.</li>
-          <li><strong>Bishop:</strong> Moves diagonally any number of squares.</li>
-          <li><strong>Queen:</strong> Combines rook and bishop movements.</li>
-          <li><strong>King:</strong> Moves 1 square in any direction.</li>
-        </ul>
-        <p><strong>Special Moves (Not Yet Implemented):</strong></p>
-        <ul>
-          <li><strong>Castling:</strong> King and rook move at the same time under specific conditions.</li>
-          <li><strong>En Passant:</strong> Special pawn capture under certain conditions.</li>
-          <li><strong>Promotion:</strong> When a pawn reaches the far end, it becomes another piece.</li>
-        </ul>
-        <p><strong>Winning:</strong> You win by checkmating the opponent’s king or if they resign.</p>
-      </div>
+		<p><strong>Objective:</strong> The goal is to checkmate your opponent's king.</p>
+		<ul>
+		  <li><strong>Pawn:</strong> Moves forward 1 square (2 on first move), captures diagonally.</li>
+		  <li><strong>Rook:</strong> Moves horizontally or vertically any number of squares.</li>
+		  <li><strong>Knight:</strong> Moves in an “L” shape. Can jump over pieces.</li>
+		  <li><strong>Bishop:</strong> Moves diagonally any number of squares.</li>
+		  <li><strong>Queen:</strong> Combines rook and bishop movements.</li>
+		  <li><strong>King:</strong> Moves 1 square in any direction.</li>
+		</ul>
+		<p><strong>Special Moves:</strong></p>
+		<ul>
+		  <li><strong>Promotion:</strong> <i class="fas fa-check-circle text-success"></i> – When a pawn reaches the far end, you can choose to promote it to a queen, rook, bishop, or knight.</li>
+		  <li><strong>Castling:</strong> <i class="fas fa-times-circle text-danger"></i> – A special move where the king and rook move at the same time under specific conditions.</li>
+		  <li><strong>En Passant:</strong> <i class="fas fa-times-circle text-danger"></i> – A special pawn capture available immediately after an opponent moves a pawn two squares forward.</li>
+		</ul>
+		<p><strong>Winning:</strong> You win by checkmating the opponent’s king or if they resign.</p>
+	  </div>
+	  
+	  
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
