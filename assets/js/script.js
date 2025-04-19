@@ -1,827 +1,813 @@
-// Class For pieces
-class Piece {
-  // Constructor for setting default parameters
-  constructor( color, pieceType, square) {
-    this._pieceType = pieceType;
-    switch (this._pieceType) {
-      case 'pawn':
-        this._char = 'p';
-        break;
-      case 'rook':
-        this._char = 'r';
-        break;
-      case 'bishop':
-        this._char = 'b';
-        break;
-      case 'knight':
-        this._char = 'n';
-        break;
-      case 'queen':
-        this._char = 'q';
-        break;
-      case 'king':
-        this._char = 'k';
-        break;
-      default:
-        this._char = '';
-        break;
+/* jshint esversion: 6 */
+/* global bootstrap */
+  /**
+   * Class representing a chess piece.
+   */
+  class Piece {
+    /**
+     * Creates a new chess piece.
+     * @param {string} color - 'white' or 'black'.
+     * @param {string} pieceType - Type of the piece ('pawn', 'rook', etc.).
+     * @param {number} square - The square index (0–63).
+     */
+    constructor(color, pieceType, square) {
+      this._pieceType = pieceType;
+      this._char = {
+        pawn: 'p',
+        rook: 'r',
+        bishop: 'b',
+        knight: 'n',
+        queen: 'q',
+        king: 'k'
+      }[pieceType] || '';
+
+      this._hasMoved = false;
+      this._color = color;
+      this._square = square;
+      this._isSelected = false;
     }
-    this._hasMoved = false;
-    this._color = color;
 
-    this._square = square;
-    this._isSelected = false;
-    this._row = getRow(this._square);
-    this._col = getCol(this._square);
+    get char() { return this._char; }
+    get hasMoved() { return this._hasMoved; }
+    set hasMoved(value) { this._hasMoved = value; }
+    get color() { return this._color; }
+    get pieceType() { return this._pieceType; }
+    set pieceType(value) { this._pieceType = value; }
+    get square() { return this._square; }
+    set square(value) { this._square = value; }
+    get row() { return getRow(this._square); }
+    get col() { return getCol(this._square); }
+    get isSelected() { return this._isSelected; }
+    set isSelected(value) { this._isSelected = value; }
   }
-  // Getter and Setters for variables
-  get char() {
-    return this._char;
-  }
-  get hasMoved() {
-    return this._hasMoved;
-  }
-  set hasMoved(hasMoved) {
-    this._hasMoved = hasMoved;
-  }
-  get color() {
-    return this._color;
-  }
-  get pieceType() {
-    return this._pieceType;
-  }
-  set pieceType(pieceType) {
-    this._pieceType = pieceType;
-  }
-  get square() {
-    return this._square;
-  }
-  set square(square) {
-    this._square = square;
-  }
-  get row() {
-    return getRow(this._square);
-  }
-  get col() {
-    return getCol(this._square);
-  }
-  get isSelected() {
-    return this._isSelected;
-  }
-  set isSelected(isSelected) {
-    this._isSelected = isSelected;
-  }
-}
 
-// Additional state variables and theyre default values
-let isPieceSelected = false;
-let selectedPiece = null;
-let isWhiteToMove = true;
-let selectedPieceElement = null;
-let gameOver = false;
+  // Game state variables
+  let isPieceSelected = false;
+  let selectedPiece = null;
+  let isWhiteToMove = true;
+  let selectedPieceElement = null;
+  let gameOver = false;
+  let chessboard = [];
+  let moveCounter = 1;
 
-document.addEventListener('DOMContentLoaded', () => {
+  /**
+   * Initializes restart button listener on page load.
+   */
+  document.addEventListener('DOMContentLoaded', function () {
     const restartBtn = document.getElementById('restart-btn');
     if (restartBtn) {
-        restartBtn.addEventListener('pointerup', () => {
-            resetBoard();
-            
-        });
+      restartBtn.addEventListener('pointerup', function () {
+        resetBoard();
+      });
     }
-});
+  });
 
-function resetBoard() {
-    // Clear the board visually
-    clearBoard(document.getElementsByClassName("square"));
+  /**
+   * Resets the chessboard and all game state to default.
+   */
+  function resetBoard() {
+    clearBoard(document.getElementsByClassName('square'));
 
-    // Reset any game state variables (like selected piece, turn, etc.)
     selectedPiece = null;
-    currentTurn = 'white';
-    isWhiteToMove = true;
-    isPieceSelected = false;
     selectedPieceElement = null;
+    isPieceSelected = false;
+    isWhiteToMove = true;
     gameOver = false;
-    checkMessage = null;
-    currentTurn = 'white'; 
+    moveCounter = 1;
 
-    // Clear notation board
+    // Clear move history
     document.getElementById('moves').innerHTML = '';
     document.getElementById('white-move').innerHTML = '';
     document.getElementById('black-move').innerHTML = '';
 
-    setupBoard()
+    setupBoard();
+  }
 
-    isWhiteToMove = true;
-}
-
-function setupBoard() {
-    // Step 1: Rebuild the logical chessboard array
+  /**
+   * Sets up a fresh board with all pieces in starting positions.
+   */
+  function setupBoard() {
     chessboard = [
-        [new Piece("black", "rook", 0), new Piece("black", "knight", 1), new Piece("black", "bishop", 2), new Piece("black", "queen", 3), new Piece("black", "king", 4), new Piece("black", "bishop", 5), new Piece("black", "knight", 6), new Piece("black", "rook", 7)],
-        [new Piece("black", "pawn", 8), new Piece("black", "pawn", 9), new Piece("black", "pawn", 10), new Piece("black", "pawn", 11), new Piece("black", "pawn", 12), new Piece("black", "pawn", 13), new Piece("black", "pawn", 14), new Piece("black", "pawn", 15)],
-        Array(8).fill(0),
-        Array(8).fill(0),
-        Array(8).fill(0),
-        Array(8).fill(0),
-        [new Piece("white", "pawn", 48), new Piece("white", "pawn", 49), new Piece("white", "pawn", 50), new Piece("white", "pawn", 51), new Piece("white", "pawn", 52), new Piece("white", "pawn", 53), new Piece("white", "pawn", 54), new Piece("white", "pawn", 55)],
-        [new Piece("white", "rook", 56), new Piece("white", "knight", 57), new Piece("white", "bishop", 58), new Piece("white", "queen", 59), new Piece("white", "king", 60), new Piece("white", "bishop", 61), new Piece("white", "knight", 62), new Piece("white", "rook", 63)],
+      [new Piece('black', 'rook', 0), new Piece('black', 'knight', 1), new Piece('black', 'bishop', 2), new Piece('black', 'queen', 3), new Piece('black', 'king', 4), new Piece('black', 'bishop', 5), new Piece('black', 'knight', 6), new Piece('black', 'rook', 7)],
+      [new Piece('black', 'pawn', 8), new Piece('black', 'pawn', 9), new Piece('black', 'pawn', 10), new Piece('black', 'pawn', 11), new Piece('black', 'pawn', 12), new Piece('black', 'pawn', 13), new Piece('black', 'pawn', 14), new Piece('black', 'pawn', 15)],
+      Array(8).fill(0),
+      Array(8).fill(0),
+      Array(8).fill(0),
+      Array(8).fill(0),
+      [new Piece('white', 'pawn', 48), new Piece('white', 'pawn', 49), new Piece('white', 'pawn', 50), new Piece('white', 'pawn', 51), new Piece('white', 'pawn', 52), new Piece('white', 'pawn', 53), new Piece('white', 'pawn', 54), new Piece('white', 'pawn', 55)],
+      [new Piece('white', 'rook', 56), new Piece('white', 'knight', 57), new Piece('white', 'bishop', 58), new Piece('white', 'queen', 59), new Piece('white', 'king', 60), new Piece('white', 'bishop', 61), new Piece('white', 'knight', 62), new Piece('white', 'rook', 63)]
     ];
 
     moveCounter = 1;
 
-    // Step 2: Reassign square data attributes
-    const squares = document.getElementsByClassName("square");
+    const squares = document.getElementsByClassName('square');
     for (let i = 0; i < squares.length; i++) {
-        squares[i].setAttribute("data-square", i);
+      squares[i].setAttribute('data-square', i);
     }
 
-    // Step 3: Render the new board state visually
     chessView.renderChessboard(chessboard, squares);
-}
+  }
 
-// Controller
-const chessController = {
-  init: function () {
-    const squares = document.getElementsByClassName("square");
 
-    setupBoard();
-    // setupStalemateTestBoard();
+  /**
+   * Main controller for the chess game. Handles initialization and square clicks.
+   */
+  const chessController = {
+    /**
+     * Initializes the game and binds square click events.
+     */
+    init: function () {
+      const squares = document.getElementsByClassName('square');
 
-    // Event listener for clicking on a square
-    for (let square of squares) {
-      square.addEventListener("click", function () {
-        if (gameOver) {
-          alert("The game is over! Please click 'Play Again' to start a new game.");
-          return;
-        }
+      setupBoard();
 
-        if (isPieceSelected) {
-          if (checkifMoveIsLegal(selectedPiece, square, chessboard)) {
-            // Save from/to info
-            const fromRow = getRow(selectedPiece.square);
-            const fromCol = getCol(selectedPiece.square);
-            const toRow = getRow(square.dataset.square);
-            const toCol = getCol(square.dataset.square);
-            const capturedPiece = chessboard[toRow][toCol];
-            const originalSquare = selectedPiece.square;
+      for (let i = 0; i < squares.length; i++) {
+        squares[i].addEventListener('click', function () {
+          if (gameOver) {
+            alert("The game is over! Please click 'Play Again' to start a new game.");
+            return;
+          }
 
-            // Try the move (manually)
-            chessboard[toRow][toCol] = selectedPiece;
-            chessboard[fromRow][fromCol] = 0;
-            selectedPiece.square = square.dataset.square;
+          if (isPieceSelected) {
+            if (checkifMoveIsLegal(selectedPiece, squares[i], chessboard)) {
+              const fromRow = getRow(selectedPiece.square);
+              const fromCol = getCol(selectedPiece.square);
+              const toRow = getRow(squares[i].dataset.square);
+              const toCol = getCol(squares[i].dataset.square);
+              const capturedPiece = chessboard[toRow][toCol];
+              const originalSquare = selectedPiece.square;
 
-            // Check if the king is still in check after move
-            if (isKingInCheck(isWhiteToMove ? 'white' : 'black', chessboard, squares)) {
-              alert('Check');
+              // Try move
+              chessboard[toRow][toCol] = selectedPiece;
+              chessboard[fromRow][fromCol] = 0;
+              selectedPiece.square = squares[i].dataset.square;
 
-              // Undo move
-              chessboard[fromRow][fromCol] = selectedPiece;
-              chessboard[toRow][toCol] = capturedPiece;
-              selectedPiece.square = originalSquare;
+              if (isKingInCheck(isWhiteToMove ? 'white' : 'black', chessboard, squares)) {
+                alert('Check');
 
-              resetSelection(square.firstChild);
-              return;
-            }
+                // Undo move
+                chessboard[fromRow][fromCol] = selectedPiece;
+                chessboard[toRow][toCol] = capturedPiece;
+                selectedPiece.square = originalSquare;
 
-            // Move is legal — continue as normal
-            selectedPiece.hasMoved = true;
-            const squareIndex = parseInt(square.dataset.square);
-            moveCounter = updateNotation(selectedPiece, squareIndex, moveCounter);
-            resetSelection(square.firstChild);
-            chessView.renderChessboard(chessboard, squares);
-
-            // Get reference to the moved piece
-            const movedPiece = chessboard[toRow][toCol];
-
-            // Check for stalemate
-            if (checkForStalemate(isWhiteToMove ? 'black' : 'white')) {
-              showStalemateModal();
-              return;
-            }
-
-            // Switch turns
-            changePlayerTurn();
-
-            // Check if the next player is in check or checkmate
-            const currentPlayer = isWhiteToMove ? 'white' : 'black';
-            if (isKingInCheck(currentPlayer, chessboard, squares)) {
-              if (isCheckMate(currentPlayer, chessboard, squares)) {
-                const winner = isWhiteToMove ? "Black" : "White";
-                showWinModal(winner);
+                resetSelection(squares[i].firstChild);
                 return;
               }
-            }
-            
-            // Check for promotion
-            if (movedPiece.pieceType === 'pawn') {
-              const promotionRank = movedPiece.color === 'white' ? 0 : 7;
-              if (toRow === promotionRank) {
-                showPromotionModal((choice) => {
-                  movedPiece.pieceType = choice;
-                  movedPiece.promoted = true;
-                  chessView.renderChessboard(chessboard, squares);
-                });
+
+              selectedPiece.hasMoved = true;
+              const squareIndex = parseInt(squares[i].dataset.square, 10);
+              moveCounter = updateNotation(selectedPiece, squareIndex, moveCounter);
+              resetSelection(squares[i].firstChild);
+              chessView.renderChessboard(chessboard, squares);
+
+              const movedPiece = chessboard[toRow][toCol];
+
+              if (checkForStalemate(isWhiteToMove ? 'black' : 'white')) {
+                showStalemateModal();
+                return;
               }
-            }
-            
 
+              changePlayerTurn();
+
+              const currentPlayer = isWhiteToMove ? 'white' : 'black';
+              if (isKingInCheck(currentPlayer, chessboard, squares)) {
+                if (isCheckMate(currentPlayer, chessboard, squares)) {
+                  const winner = isWhiteToMove ? 'Black' : 'White';
+                  showWinModal(winner);
+                  return;
+                }
+              }
+
+              if (movedPiece.pieceType === 'pawn') {
+                const promotionRank = movedPiece.color === 'white' ? 0 : 7;
+                if (toRow === promotionRank) {
+                  showPromotionModal(function (choice) {
+                    movedPiece.pieceType = choice;
+                    movedPiece.promoted = true;
+                    chessView.renderChessboard(chessboard, squares);
+                  });
+                }
+              }
+
+            } else {
+              resetSelection(squares[i].firstChild);
+            }
           } else {
-            // Illegal move — reset selection
-            resetSelection(square.firstChild);
+            trySelectPiece(squares[i], chessboard);
           }
-        } else {
-          // No piece selected yet — try selecting
-          trySelectPiece(square, chessboard);
-        }
-      });
-    }
-  }
-};
-
-
-
-
-/** Find the position of the selected king on the board */
-function findKingSquare(playerColor, chessboard) {
-  for (let row = 0; row < 8; row++) {
-    for (let col = 0; col < 8; col++) {
-      let piece = chessboard[row][col];
-      if (piece !== 0 && piece.color === playerColor && piece.pieceType === 'king') {
-        return row * 8 + col;
+        });
       }
     }
-  }
-  return -1;
-}
-
-/** Get the row of the index given */
-function getRow(squareId) {
-  return Math.floor(squareId / 8);
-}
-
-/** Get the column of the index given */
-function getCol(squareId) {
-  return squareId % 8;
-}
-
-/** CHeck which direction the piece is moving */
-function getDirection(isDirection, direction) {
-  if (isDirection) {
-    return direction * -1;
-  }
-  return direction;
-}
-
-/** Reset the piece selection state */
-function resetSelection(piece) {
-  selectedPieceElement.classList.remove("selected");
-  isPieceSelected = false;
-  selectedPiece = null;
-}
-
-/** Change player*/
-function changePlayerTurn() {
-  isWhiteToMove = isWhiteToMove ? false : true;
-}
-
-/** Checks if the polayer is in check */
-function isKingInCheck(playerColor, chessboard, squares) {
-  let kingSquare = findKingSquare(playerColor, chessboard);
-
-  for (let square of squares) {
-    let piece = chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)];
-    if (piece !== 0 && piece.color !== playerColor) {
-      if (checkifMoveIsLegal(piece, squares[kingSquare], chessboard)) {
-        return true;
-      }
-    }
-  }
-
-  return false;
-}
-
-/** Checks if the polayer is in check */
-function isCheckMate(playerColor, chessboard, squares) {
-  if (!isKingInCheck(playerColor, chessboard, squares)) {
-    return false;
-  }
-
-  // Loop through all pieces of the given color
-  for (let row = 0; row < 8; row++) {
-    for (let col = 0; col < 8; col++) {
-      const piece = chessboard[row][col];
-
-      // Check if square is not empty and the piece on the square is the same as the player whos turn it is
-      if (piece !== 0 && piece.color === playerColor) {
-        const fromSquareIndex = row * 8 + col;
-
-        // Try moving this piece to every square on the board
-        for (let targetIndex = 0; targetIndex < 64; targetIndex++) {
-          
-          const toRow = getRow(targetIndex);
-          const toCol = getCol(targetIndex);
-          const targetSquare = squares[targetIndex];
-
-          // Skip if it's the same square
-          if (fromSquareIndex === targetIndex) continue;
-
-          // Check if the move is legal
-          if (checkifMoveIsLegal(piece, targetSquare, chessboard)) {
-            // Simulate the move
-            const originalPiece = chessboard[toRow][toCol];
-            const oldSquare = piece.square;
-
-            // Make the move
-            chessboard[toRow][toCol] = piece;
-            chessboard[row][col] = 0;
-            piece.square = targetIndex;
-
-            const stillInCheck = isKingInCheck(playerColor, chessboard, squares);
-
-            // Undo the move
-            piece.square = oldSquare;
-            chessboard[row][col] = piece;
-            chessboard[toRow][toCol] = originalPiece;
-
-            // If the king is NOT in check after this move, it's not stalemate
-            if (!stillInCheck) {
-              chessView.renderChessboard(chessboard, squares);
-              return false;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  const winner = isWhiteToMove ? "Black" : "White";
-  showWinModal(winner);
-  return true;
-}
-
-
-function checkForStalemate(playerColor) {
-  // Quick draw check: only two kings left
-  const allPieces = chessboard.flat().filter(p => p !== 0);
-  const onlyKingsLeft = allPieces.length === 2;
-  const singleMinorPiece = allPieces.length === 3 && allPieces.filter(p => p.pieceType !== 'king').length === 1 && allPieces.some(p => (p.pieceType === 'bishop' || p.tpieceTypeype === 'knight'));
-  const doubleKnightDraw = allPieces.length === 4 && allPieces.filter(p => p.pieceType === 'knight').length === 2 && allPieces.filter(p => p.pieceType === 'king').length === 2;
-
-  if (onlyKingsLeft || singleMinorPiece || doubleKnightDraw) {
-    return true;
-  }
-
-  const squares = document.getElementsByClassName("square");
-
-  // If the player is in check, it's not stalemate
-  if (isKingInCheck(playerColor, chessboard, squares)) {
-    return false;
-  }
-
-  // Loop through all pieces of the given color
-  for (let row = 0; row < 8; row++) {
-    for (let col = 0; col < 8; col++) {
-      const piece = chessboard[row][col];
-
-      // Check if square is not empty and the piece on the square is the same as the player whos turn it is
-      if (piece !== 0 && piece.color === playerColor) {
-        const fromSquareIndex = row * 8 + col;
-
-        // Try moving this piece to every square on the board
-        for (let targetIndex = 0; targetIndex < 64; targetIndex++) {
-          
-          const toRow = getRow(targetIndex);
-          const toCol = getCol(targetIndex);
-          const targetSquare = squares[targetIndex];
-
-          // Skip if it's the same square
-          if (fromSquareIndex === targetIndex) continue;
-
-          // Check if the move is legal
-          if (checkifMoveIsLegal(piece, targetSquare, chessboard)) {
-            // Simulate the move
-            const originalPiece = chessboard[toRow][toCol];
-            const oldSquare = piece.square;
-
-            // Make the move
-            chessboard[toRow][toCol] = piece;
-            chessboard[row][col] = 0;
-            piece.square = targetIndex;
-
-            const stillInCheck = isKingInCheck(playerColor, chessboard, squares);
-
-            // Undo the move
-            piece.square = oldSquare;
-            chessboard[row][col] = piece;
-            chessboard[toRow][toCol] = originalPiece;
-
-            // If the king is NOT in check after this move, it's not stalemate
-            if (!stillInCheck) {
-              chessView.renderChessboard(chessboard, squares);
-              return false;
-            }
-          }
-        }
-      }
-    }
-  }
-  chessView.renderChessboard(chessboard, squares);
-  // No legal moves found and not in check = stalemate
-  return true;
-}
-
-
-
-/**
-* This does way too much right now and needs to be refactored
-*/
-function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
-  // setting variables for current square
-  let currentSquare = parseInt(selectedPieceElement.square);
-  let currentSquareRow = getRow(currentSquare);
-  let currentSquareCol = getCol(currentSquare);
-  // Setting variables for selectedSquare
-  let selectedSquare = parseInt(square.dataset.square);
-  let selectedSquareRow = getRow(selectedSquare);
-  let selectedSquareCol = getCol(selectedSquare);
-  // current Piece variables
-  let currentPiece = chessboard[currentSquareRow][currentSquareCol];
-  // selected Piece variables
-  let selectedPiece = chessboard[selectedSquareRow][selectedSquareCol];
-
-  // Movement Variables
-  const LEFT = -1;
-  const RIGHT = 1;
-  const UP = - 8;
-  const DOWN = + 8;
-  const UPRIGHT = -7;
-  const UPLEFT = -9;
-  const DOWNLEFT = 7;
-  const DOWNRIGHT = 9;
-  let isBackwards = true;
-  let isLeft = true;
-  let rowChange;
-  let colChange;
-  
-  // destination square check
-  let isDestinationSquareEmpty = isSquareEmpty(selectedPiece);
-
-  // Squares array
-  let squares = document.getElementsByClassName("square");
-
-  // checks if pieces are the same colour
-  if (isSameColor(currentPiece, selectedPiece)) {
-    return false;
-  }
-
-  // Squares Moved
-  let squaresMoved = getSquaresMoved(currentSquare, selectedSquare);
-
-
-  // check Movement of pieces
-  switch (currentPiece.pieceType) {
-    //  checking the legality of the pawn move
-    case 'pawn':
-      // white Moves
-      let direction = UP;
-      let takeLeft = UPLEFT;
-      let takeRight = UPRIGHT;
-      // black Moves
-      if (currentPiece.color == 'black') {
-        direction = DOWN;
-        takeLeft = DOWNLEFT;
-        takeRight = DOWNRIGHT;
-      }
-      // Destination squaer is Empty
-      if (isDestinationSquareEmpty) {
-        // normal Move
-        if (selectedSquare == currentSquare + direction ) {
-          return true;
-        }
-        // If piece has moved they only have a normal move left
-        if (currentPiece.hasMoved) {
-          return false;
-        }
-        // Moving forwards 2 spaces if has not moved 
-        const oneStepForward = currentSquare + direction;
-        const twoStepsForward = currentSquare + (direction * 2);
-
-        if (
-          selectedSquare === twoStepsForward &&
-          isSquareEmpty(chessboard[getRow(oneStepForward)][getCol(oneStepForward)]) 
-        ) {
-          return true;
-        }
-        // After moving the piece
-      } 
-      // destination Square is not empty
-      else {
-        // Taking Left
-        if (selectedSquare == currentSquare + takeLeft) {
-          return true;
-        }
-        else if (selectedSquare == currentSquare + takeRight) {
-          return true;
-        }
-        return false;
-      }
-      return false;
-      
-      
-    //  checking the legality of the rook move
-    case 'rook':
-      // Move must be either in the same row or same column
-      if (selectedSquareRow !== currentSquareRow && selectedSquareCol !== currentSquareCol) {
-        return false;
-      }
-
-      // Horizontal move
-      if (selectedSquareRow === currentSquareRow) {
-        let start = Math.min(currentSquareCol, selectedSquareCol) + 1;
-        let end = Math.max(currentSquareCol, selectedSquareCol);
-        for (let col = start; col < end; col++) {
-          if (!isSquareEmpty(chessboard[currentSquareRow][col])) {
-            return false;
-          }
-        }
-        return true;
-      }
-
-      // Vertical move
-      if (selectedSquareCol === currentSquareCol) {
-        let start = Math.min(currentSquareRow, selectedSquareRow) + 1;
-        let end = Math.max(currentSquareRow, selectedSquareRow);
-        for (let row = start; row < end; row++) {
-          if (!isSquareEmpty(chessboard[row][currentSquareCol])) {
-            return false;
-          }
-        }
-        return true;
-      }
-
-      return false;
-
-
-    //  checking the legality of the knight move
-    case 'knight':
-      if (
-        currentSquare + 10 === selectedSquare ||
-        currentSquare - 10 === selectedSquare ||
-        currentSquare + 17 === selectedSquare ||
-        currentSquare - 17 === selectedSquare ||
-        currentSquare + 15 === selectedSquare ||
-        currentSquare - 15 === selectedSquare ||
-        currentSquare + 6 === selectedSquare ||
-        currentSquare - 6 === selectedSquare
-      ) {
-        return true;
-      }
-      return false;
-
-    //  checking the legality of the bishop move
-    case 'bishop':
-      let rowDiff = Math.abs(currentSquareRow - selectedSquareRow);
-      let colDiff = Math.abs(currentSquareCol - selectedSquareCol);
-
-      // Diagonal check: row and col diffs must be equal
-      if (rowDiff !== colDiff) {
-        return false;
-      }
-
-      // Determine direction
-      let rowStep = selectedSquareRow > currentSquareRow ? 1 : -1;
-      let colStep = selectedSquareCol > currentSquareCol ? 1 : -1;
-
-      // Check each square between current and target
-      for (let i = 1; i < rowDiff; i++) {
-        let row = currentSquareRow + i * rowStep;
-        let col = currentSquareCol + i * colStep;
-        if (!isSquareEmpty(chessboard[row][col])) {
-          return false;
-        }
-      }
-
-      return true;
-
-    
-    //  checking the legality of the queen move
-    case 'queen':
-      let originalType = currentPiece.pieceType;
-
-      // Try rook move
-      currentPiece.pieceType = 'rook';
-      if (checkifMoveIsLegal(selectedPieceElement, square, chessboard)) {
-        currentPiece.pieceType = originalType;
-        return true;
-      }
-
-      // Try bishop move
-      currentPiece.pieceType = 'bishop';
-      if (checkifMoveIsLegal(selectedPieceElement, square, chessboard)) {
-        currentPiece.pieceType = originalType;
-        return true;
-      }
-
-      // Restore and fail
-      currentPiece.pieceType = originalType;
-      return false;
-
-    
-    //  checking the legality of the king move
-    case 'king':
-      if (selectedSquare + LEFT == currentSquare ||
-          selectedSquare + RIGHT == currentSquare ||
-          selectedSquare + DOWN == currentSquare ||
-          selectedSquare + UP == currentSquare ||
-          selectedSquare + DOWNLEFT == currentSquare ||
-          selectedSquare + DOWNRIGHT == currentSquare ||
-          selectedSquare + UPLEFT == currentSquare ||
-          selectedSquare + UPRIGHT == currentSquare) {
-            return true;
-      }
-      return false;
-    default:
-      break;
-  }
-  return true;
-}
-
-/** checks if square is empty */
-function isSquareEmpty(selectedSquarePiece){
-  return selectedSquarePiece == 0;
-}
-
-/** checks if the pieces are the same color */
-function isSameColor(currentPiece, selectedPiece) {
-  return currentPiece.color == selectedPiece.color;
-}
-
-function getSquaresMoved(currentSquare, selectedSquare) {
-  let squaresMoved = currentSquare - selectedSquare;
-  if (squaresMoved < 0) {
-    squaresMoved = squaresMoved * -1;
-  }
-  return squaresMoved;
-}
-
-/**
-* Select square to move to
-*/
-function movePiece(square, chessboard, selectedPiece) {
-  chessboard[getRow(selectedPiece.square)][getCol(selectedPiece.square)] = 0;
-  chessboard[getRow(square.dataset.square)][getCol(square.dataset.square)] = selectedPiece;
-  selectedPiece.hasMoved = true;
-  return chessboard;
-}
-
-// View
-/**
-* Creates a piece Element
-*/
-function createPieceElement(piece) {
-  const pieceElement = document.createElement("i");
-  pieceElement.classList.add('chess-piece', piece.color + "-piece", 'fa-solid', 'fa-chess-' + piece.pieceType);
-  return pieceElement;
-}
-
-/**
-* Piece selection
-*/
-function selectPiece(piece) {
-  // Apply styles to indicate the selected piece
-  if (isPieceSelected && selectedPieceElement != null) {
-    resetSelection(piece);
-  }
-  selectedPieceElement = piece;
-  piece.classList.add("selected");
-}
-
-/**
-* Render the chessboard based on the provided array
-*/
-const chessView = {
-  renderChessboard: function (chessboard, squares) {
-    // Clear the board
-    clearBoard(squares);
-    // Loop throught the chessboard array
-    for (let i = 0; i < squares.length; i++) {
-      // Get rows and colums for each id
-      const row = getRow(i);
-      const col = getCol(i);
-      // If there is a piece on the square render an html element
-      if (chessboard[row][col] !== 0) {
-        squares[i].appendChild(createPieceElement(chessboard[row][col]));
-      }
-    }
-  }
-};
-
-/**
-* Clear existing content in the container
-*/
-function clearBoard(squares) {
-  // loop through squares
-  for (let square of squares) {
-    // Remove all html from inside the divs of the squares
-    square.innerHTML = "";
-
-  }
-}
-
-// Show win modal
-function showWinModal(winner) {
-  document.getElementById("modalMessage").textContent = `${winner} wins!`;
-  const winModal = new bootstrap.Modal(document.getElementById('winModal'));
-  gameOver = true;
-  winModal.show();
-}
-
-
-/**
-* Adds last move to the notation board
-*/
-function updateNotation(piece, squareIndex, moveCounter) {
-  const file = "abcdefgh"[squareIndex % 8];
-  const rank = 8 - Math.floor(squareIndex / 8);
-  const notation = `${file}${rank}`;
-
-  // Only show a character if it's NOT a pawn
-  const pieceLabel = piece.pieceType === "pawn" ? "" : piece.char;
-
-  const moves = document.getElementById('moves');
-  const whiteMove = document.getElementById('white-move');
-  const blackMove = document.getElementById('black-move');
-
-  if (piece.color === 'white') {
-    moves.innerHTML += `<li>${moveCounter}</li>`;
-    whiteMove.innerHTML += `<li>${pieceLabel}${notation}</li>`;
-    return moveCounter;
-  }
-
-  blackMove.innerHTML += `<li>${pieceLabel}${notation}</li>`;
-  return moveCounter + 1;
-}
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-  // initialise the game
-  chessController.init();
-  
- // Checkmate modal: reset on "Play Again" button click
-  winPlayAgainBtn.addEventListener('click', () => closeModalAndReset('winModal'));
-  // Stalemate modal: reset when "Play Again" is clicked
-  stalematePlayAgainBtn.addEventListener('click', () => closeModalAndReset('stalemateModal'));
-
-});
-
-
-function trySelectPiece(square, chessboard) {
-  const squareIndex = parseInt(square.dataset.square);
-  const piece = chessboard[getRow(squareIndex)][getCol(squareIndex)];
-
-  if (piece === 0) return false;
-
-  if ((isWhiteToMove && piece.color === 'white') || (!isWhiteToMove && piece.color === 'black')) {
-    selectedPiece = piece;
-    selectedPieceElement = square.firstChild;
-    selectPiece(selectedPieceElement);
-    isPieceSelected = true;
-    return true;
-  }
-  return false;
-}
-
-function showStalemateModal() {
-  const stalemateModal = new bootstrap.Modal(document.getElementById('stalemateModal'));
-  gameOver = true;
-  stalemateModal.show();
-}
-
-function showPromotionModal(callback) {
-  const promotionModal = new bootstrap.Modal(document.getElementById('promotionModal'));
-  promotionModal.show();
-
-  const buttons = document.querySelectorAll('#promotionModal button');
-
-  const handleClick = (e) => {
-    const choice = e.target.getAttribute('data-piece');
-    promotionModal.hide();
-    buttons.forEach(btn => btn.removeEventListener('pointerup', handleClick));
-    callback(choice);
   };
 
-  buttons.forEach(btn => btn.addEventListener('pointerup', handleClick));
-}
+  /**
+   * Finds the square index of the player's king on the board.
+   * @param {string} playerColor - 'white' or 'black'.
+   * @param {Array} chessboard - The 2D array of board state.
+   * @returns {number} The square index of the king, or -1 if not found.
+   */
+  function findKingSquare(playerColor, chessboard) {
+    for (let row = 0; row < 8; row++) {
+      for (let col = 0; col < 8; col++) {
+        const piece = chessboard[row][col];
+        if (piece !== 0 && piece.color === playerColor && piece.pieceType === 'king') {
+          return row * 8 + col;
+        }
+      }
+    }
+    return -1;
+  }
 
-function closeModalAndReset(modalId) {
-  const modal = bootstrap.Modal.getInstance(document.getElementById(modalId));
-  modal.hide();
+  /**
+   * Gets the row number (0–7) from a square index.
+   * @param {number} squareId - The square index.
+   * @returns {number} The row.
+   */
+  function getRow(squareId) {
+    return Math.floor(squareId / 8);
+  }
 
-  setTimeout(() => {
-    document.body.classList.remove('modal-open');
-    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-    resetBoard();
-  }, 300);
-}
+  /**
+   * Gets the column number (0–7) from a square index.
+   * @param {number} squareId - The square index.
+   * @returns {number} The column.
+   */
+  function getCol(squareId) {
+    return squareId % 8;
+  }
+
+  /**
+   * Resets the piece selection state in the UI and logic.
+   * @param {HTMLElement} piece - The DOM element to unselect.
+   */
+  function resetSelection(piece) {
+    if (selectedPieceElement) {
+      selectedPieceElement.classList.remove('selected');
+    }
+    isPieceSelected = false;
+    selectedPiece = null;
+  }
+
+  /**
+   * Switches the active player turn.
+   */
+  function changePlayerTurn() {
+    isWhiteToMove = !isWhiteToMove;
+  }
+
+  /**
+   * Checks if the given player's king is currently in check.
+   * @param {string} playerColor - 'white' or 'black'.
+   * @param {Array} chessboard - 2D array representing the current board.
+   * @param {HTMLCollection} squares - DOM elements representing the board squares.
+   * @returns {boolean} True if the king is in check, false otherwise.
+   */
+  function isKingInCheck(playerColor, chessboard, squares) {
+    const kingSquare = findKingSquare(playerColor, chessboard);
+
+    for (let i = 0; i < squares.length; i++) {
+      const piece = chessboard[getRow(i)][getCol(i)];
+      if (piece !== 0 && piece.color !== playerColor) {
+        if (checkifMoveIsLegal(piece, squares[kingSquare], chessboard)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Determines whether the specified player is in checkmate.
+   * @param {string} playerColor - 'white' or 'black'.
+   * @param {Array} chessboard - The game board array.
+   * @param {HTMLCollection} squares - The DOM elements representing board squares.
+   * @returns {boolean} True if checkmate is detected.
+   */
+  function isCheckMate(playerColor, chessboard, squares) {
+    if (!isKingInCheck(playerColor, chessboard, squares)) {
+      return false;
+    }
+
+    for (let row = 0; row < 8; row++) {
+      for (let col = 0; col < 8; col++) {
+        const piece = chessboard[row][col];
+
+        if (piece !== 0 && piece.color === playerColor) {
+          const fromSquareIndex = row * 8 + col;
+
+          for (let targetIndex = 0; targetIndex < 64; targetIndex++) {
+            if (fromSquareIndex === targetIndex) {
+              continue;
+            }
+
+            const toRow = getRow(targetIndex);
+            const toCol = getCol(targetIndex);
+            const targetSquare = squares[targetIndex];
+
+            if (checkifMoveIsLegal(piece, targetSquare, chessboard)) {
+              const originalPiece = chessboard[toRow][toCol];
+              const oldSquare = piece.square;
+
+              chessboard[toRow][toCol] = piece;
+              chessboard[row][col] = 0;
+              piece.square = targetIndex;
+
+              const stillInCheck = isKingInCheck(playerColor, chessboard, squares);
+
+              // Undo move
+              piece.square = oldSquare;
+              chessboard[row][col] = piece;
+              chessboard[toRow][toCol] = originalPiece;
+
+              if (!stillInCheck) {
+                chessView.renderChessboard(chessboard, squares);
+                return false;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    const winner = isWhiteToMove ? 'Black' : 'White';
+    showWinModal(winner);
+    return true;
+  }
+
+  /**
+   * Checks for stalemate or specific draw conditions (e.g. insufficient material).
+   * @param {string} playerColor - The player to check ('white' or 'black').
+   * @returns {boolean} True if stalemate or draw is detected.
+   */
+  function checkForStalemate(playerColor) {
+    const allPieces = chessboard.flat().filter(function (p) {
+      return p !== 0;
+    });
+
+    const onlyKingsLeft = allPieces.length === 2;
+    const singleMinorPiece = (
+      allPieces.length === 3 &&
+      allPieces.filter(function (p) {
+        return p.pieceType !== 'king';
+      }).length === 1 &&
+      allPieces.some(function (p) {
+        return p.pieceType === 'bishop' || p.pieceType === 'knight';
+      })
+    );
+
+    const doubleKnightDraw = (
+      allPieces.length === 4 &&
+      allPieces.filter(function (p) {
+        return p.pieceType === 'knight';
+      }).length === 2 &&
+      allPieces.filter(function (p) {
+        return p.pieceType === 'king';
+      }).length === 2
+    );
+
+    if (onlyKingsLeft || singleMinorPiece || doubleKnightDraw) {
+      return true;
+    }
+
+    const squares = document.getElementsByClassName('square');
+
+    if (isKingInCheck(playerColor, chessboard, squares)) {
+      return false;
+    }
+
+    for (let row = 0; row < 8; row++) {
+      for (let col = 0; col < 8; col++) {
+        const piece = chessboard[row][col];
+
+        if (piece !== 0 && piece.color === playerColor) {
+          const fromSquareIndex = row * 8 + col;
+
+          for (let targetIndex = 0; targetIndex < 64; targetIndex++) {
+            if (fromSquareIndex === targetIndex) {
+              continue;
+            }
+
+            const toRow = getRow(targetIndex);
+            const toCol = getCol(targetIndex);
+            const targetSquare = squares[targetIndex];
+
+            if (checkifMoveIsLegal(piece, targetSquare, chessboard)) {
+              const originalPiece = chessboard[toRow][toCol];
+              const oldSquare = piece.square;
+
+              chessboard[toRow][toCol] = piece;
+              chessboard[row][col] = 0;
+              piece.square = targetIndex;
+
+              const stillInCheck = isKingInCheck(playerColor, chessboard, squares);
+
+              // Undo move
+              piece.square = oldSquare;
+              chessboard[row][col] = piece;
+              chessboard[toRow][toCol] = originalPiece;
+
+              if (!stillInCheck) {
+                chessView.renderChessboard(chessboard, squares);
+                return false;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    chessView.renderChessboard(chessboard, squares);
+    return true;
+  }
+
+
+  /**
+   * Delegates move validation to the appropriate function based on piece type.
+   * @param {Piece} selectedPieceElement - The piece being moved.
+   * @param {HTMLElement} square - The target DOM square.
+   * @param {Array} chessboard - The 2D game board.
+   * @returns {boolean} Whether the move is legal.
+   */
+  function checkifMoveIsLegal(selectedPieceElement, square, chessboard) {
+    const from = parseInt(selectedPieceElement.square, 10);
+    const to = parseInt(square.dataset.square, 10);
+
+    const piece = chessboard[getRow(from)][getCol(from)];
+    const target = chessboard[getRow(to)][getCol(to)];
+
+    if (isSameColor(piece, target)) {
+      return false;
+    }
+
+    switch (piece.pieceType) {
+      case 'pawn':
+        return isLegalPawnMove(piece, from, to, chessboard);
+      case 'rook':
+        return isLegalRookMove(from, to, chessboard);
+      case 'knight':
+        return isLegalKnightMove(from, to);
+      case 'bishop':
+        return isLegalBishopMove(from, to, chessboard);
+      case 'queen':
+        return isLegalRookMove(from, to, chessboard) || isLegalBishopMove(from, to, chessboard);
+      case 'king':
+        return isLegalKingMove(from, to);
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * Determines if a pawn move is legal.
+   * @param {Piece} piece - The pawn being moved.
+   * @param {number} from - The index of the starting square.
+   * @param {number} to - The index of the destination square.
+   * @param {Array} chessboard - The 2D board array.
+   * @returns {boolean} True if the move is legal.
+   */
+  function isLegalPawnMove(piece, from, to, chessboard) {
+    const direction = piece.color === 'white' ? -8 : 8;
+    const takeLeft = direction === -8 ? -9 : 7;
+    const takeRight = direction === -8 ? -7 : 9;
+
+    const toRow = getRow(to);
+    const toCol = getCol(to);
+
+    const targetPiece = chessboard[toRow][toCol];
+
+    // Forward move
+    if (to === from + direction && isSquareEmpty(targetPiece)) {
+      return true;
+    }
+
+    // Double move on first turn
+    if (
+      !piece.hasMoved &&
+      to === from + direction * 2 &&
+      isSquareEmpty(chessboard[getRow(from + direction)][getCol(from)]) &&
+      isSquareEmpty(targetPiece)
+    ) {
+      return true;
+    }
+
+    // Diagonal capture
+    if ((to === from + takeLeft || to === from + takeRight) && !isSquareEmpty(targetPiece) && targetPiece.color !== piece.color) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Determines if a rook move is legal.
+   * @param {number} from - Starting square index.
+   * @param {number} to - Destination square index.
+   * @param {Array} chessboard - The board array.
+   * @returns {boolean} True if the move is legal.
+   */
+  function isLegalRookMove(from, to, chessboard) {
+    const fromRow = getRow(from);
+    const fromCol = getCol(from);
+    const toRow = getRow(to);
+    const toCol = getCol(to);
+
+    if (fromRow === toRow) {
+      const step = fromCol < toCol ? 1 : -1;
+      for (let col = fromCol + step; col !== toCol; col += step) {
+        if (!isSquareEmpty(chessboard[fromRow][col])) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    if (fromCol === toCol) {
+      const step = fromRow < toRow ? 1 : -1;
+      for (let row = fromRow + step; row !== toRow; row += step) {
+        if (!isSquareEmpty(chessboard[row][fromCol])) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Determines if a knight move is legal.
+   * @param {number} from - Starting square index.
+   * @param {number} to - Destination square index.
+   * @returns {boolean} True if the move is legal.
+   */
+  function isLegalKnightMove(from, to) {
+    const validDeltas = [6, 10, 15, 17];
+    const diff = Math.abs(from - to);
+    return validDeltas.includes(diff);
+  }
+
+  /**
+   * Determines if a bishop move is legal.
+   * @param {number} from - Starting square index.
+   * @param {number} to - Destination square index.
+   * @param {Array} chessboard - The board array.
+   * @returns {boolean} True if the move is legal.
+   */
+  function isLegalBishopMove(from, to, chessboard) {
+    const fromRow = getRow(from);
+    const fromCol = getCol(from);
+    const toRow = getRow(to);
+    const toCol = getCol(to);
+
+    const rowDiff = Math.abs(toRow - fromRow);
+    const colDiff = Math.abs(toCol - fromCol);
+
+    if (rowDiff !== colDiff) {
+      return false;
+    }
+
+    const rowStep = toRow > fromRow ? 1 : -1;
+    const colStep = toCol > fromCol ? 1 : -1;
+
+    for (let i = 1; i < rowDiff; i++) {
+      const row = fromRow + i * rowStep;
+      const col = fromCol + i * colStep;
+      if (!isSquareEmpty(chessboard[row][col])) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Determines if a king move is legal.
+   * @param {number} from - Starting square index.
+   * @param {number} to - Destination square index.
+   * @returns {boolean} True if the move is legal.
+   */
+  function isLegalKingMove(from, to) {
+    const diff = Math.abs(from - to);
+    const validMoves = [1, 7, 8, 9];
+    return validMoves.includes(diff);
+  }
+
+
+  /**
+   * Checks if a square is empty.
+   * @param {*} selectedSquarePiece - The content of the square to check.
+   * @returns {boolean} True if the square is empty (0), false otherwise.
+   */
+  function isSquareEmpty(selectedSquarePiece) {
+    return selectedSquarePiece === 0;
+  }
+
+  /**
+   * Checks if two pieces are the same color.
+   * @param {Piece} currentPiece - The first piece to compare.
+   * @param {Piece} selectedPiece - The second piece to compare.
+   * @returns {boolean} True if both pieces are the same color, false otherwise.
+   */
+  function isSameColor(currentPiece, selectedPiece) {
+    return currentPiece.color === selectedPiece.color;
+  }
+
+  /**
+   * Creates a DOM element for a chess piece.
+   * @param {Piece} piece - The piece to create a DOM element for.
+   * @returns {HTMLElement} The created element.
+   */
+  function createPieceElement(piece) {
+    const pieceElement = document.createElement('i');
+    pieceElement.classList.add('chess-piece', piece.color + '-piece', 'fa-solid', 'fa-chess-' + piece.pieceType);
+    return pieceElement;
+  }
+
+  /**
+   * Applies visual styling to indicate a selected piece.
+   * @param {HTMLElement} piece - The DOM element representing the selected piece.
+   */
+  function selectPiece(piece) {
+    if (isPieceSelected && selectedPieceElement !== null) {
+      resetSelection(piece);
+    }
+    selectedPieceElement = piece;
+    piece.classList.add('selected');
+  }
+
+  /**
+   * View object responsible for rendering the chessboard.
+   * @type {{renderChessboard: function(Array, HTMLCollection): void}}
+   */
+  const chessView = {
+    /**
+     * Renders the board state to the UI.
+     * @param {Array} chessboard - 2D array of Piece objects and 0s.
+     * @param {HTMLCollection} squares - The DOM elements for the board squares.
+     */
+    renderChessboard: function (chessboard, squares) {
+      clearBoard(squares);
+      for (let i = 0; i < squares.length; i++) {
+        const row = getRow(i);
+        const col = getCol(i);
+        if (chessboard[row][col] !== 0) {
+          squares[i].appendChild(createPieceElement(chessboard[row][col]));
+        }
+      }
+    }
+  };
+
+  /**
+   * Clears all inner content from each square element.
+   * @param {HTMLCollection} squares - The DOM elements for the board squares.
+   */
+  function clearBoard(squares) {
+    for (let i = 0; i < squares.length; i++) {
+      squares[i].innerHTML = '';
+    }
+  }
+
+  /**
+   * Displays the win modal for the specified winner.
+   * @param {string} winner - The winning side ('White' or 'Black').
+   */
+  function showWinModal(winner) {
+    document.getElementById('modalMessage').textContent = winner + ' wins!';
+    const winModal = new bootstrap.Modal(document.getElementById('winModal'));
+    gameOver = true;
+    winModal.show();
+  }
+
+  /**
+   * Updates the move notation display in the UI.
+   * @param {Piece} piece - The piece that was moved.
+   * @param {number} squareIndex - The square index it moved to.
+   * @param {number} moveCounter - The current move number.
+   * @returns {number} Updated move counter.
+   */
+  function updateNotation(piece, squareIndex, moveCounter) {
+    const file = 'abcdefgh'[squareIndex % 8];
+    const rank = 8 - Math.floor(squareIndex / 8);
+    const notation = file + rank;
+    const pieceLabel = piece.pieceType === 'pawn' ? '' : piece.char;
+
+    const moves = document.getElementById('moves');
+    const whiteMove = document.getElementById('white-move');
+    const blackMove = document.getElementById('black-move');
+
+    if (piece.color === 'white') {
+      moves.innerHTML += '<li>' + moveCounter + '</li>';
+      whiteMove.innerHTML += '<li>' + pieceLabel + notation + '</li>';
+      return moveCounter;
+    }
+
+    blackMove.innerHTML += '<li>' + pieceLabel + notation + '</li>';
+    return moveCounter + 1;
+  }
+
+  /**
+   * Initializes modal listeners and the game on page load.
+   */
+  document.addEventListener('DOMContentLoaded', function () {
+    chessController.init();
+
+    const winBtn = document.getElementById('winPlayAgainBtn');
+    const stalemateBtn = document.getElementById('stalematePlayAgainBtn');
+
+    if (winBtn) {
+      winBtn.addEventListener('click', function () {
+        closeModalAndReset('winModal');
+      });
+    }
+
+    if (stalemateBtn) {
+      stalemateBtn.addEventListener('click', function () {
+        closeModalAndReset('stalemateModal');
+      });
+    }
+  });
+
+
+  /**
+   * Attempts to select a piece on the given square if it belongs to the current player.
+   * @param {HTMLElement} square - The DOM element representing the clicked square.
+   * @param {Array} chessboard - The 2D array representing the current game board.
+   * @returns {boolean} True if a piece was selected, false otherwise.
+   */
+  function trySelectPiece(square, chessboard) {
+    const squareIndex = parseInt(square.dataset.square, 10);
+    const piece = chessboard[getRow(squareIndex)][getCol(squareIndex)];
+
+    if (piece === 0) {
+      return false;
+    }
+
+    if ((isWhiteToMove && piece.color === 'white') || (!isWhiteToMove && piece.color === 'black')) {
+      selectedPiece = piece;
+      selectedPieceElement = square.firstChild;
+      selectPiece(selectedPieceElement);
+      isPieceSelected = true;
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Displays the stalemate modal and ends the game.
+   */
+  function showStalemateModal() {
+    const stalemateModal = new bootstrap.Modal(document.getElementById('stalemateModal'));
+    gameOver = true;
+    stalemateModal.show();
+  }
+
+  /**
+   * Displays the pawn promotion modal and handles piece choice.
+   * @param {function} callback - The function to call with the selected promotion piece.
+   */
+  function showPromotionModal(callback) {
+    const promotionModal = new bootstrap.Modal(document.getElementById('promotionModal'));
+    promotionModal.show();
+
+    const buttons = document.querySelectorAll('#promotionModal button');
+
+    /**
+     * Handles the click event for promotion choice.
+     * @param {PointerEvent} e - The event object from the button click.
+     */
+    const handleClick = function (e) {
+      const choice = e.target.getAttribute('data-piece');
+      promotionModal.hide();
+      buttons.forEach(function (btn) {
+        btn.removeEventListener('pointerup', handleClick);
+      });
+      callback(choice);
+    };
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('pointerup', handleClick);
+    });
+  }
+
+  /**
+   * Closes a modal and resets the board after a short delay.
+   * @param {string} modalId - The ID of the modal to close.
+   */
+  function closeModalAndReset(modalId) {
+    const modal = bootstrap.Modal.getInstance(document.getElementById(modalId));
+    if (modal) {
+      modal.hide();
+    }
+
+    setTimeout(function () {
+      document.body.classList.remove('modal-open');
+      document.querySelectorAll('.modal-backdrop').forEach(function (el) {
+        el.remove();
+      });
+      resetBoard();
+    }, 300);
+  }
+
 
