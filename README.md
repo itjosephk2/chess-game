@@ -220,13 +220,16 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
    - Location: `isKingInCheck` and pawn move logic in `isLegalPawnMove` / `checkifMoveIsLegal` in `script.js`
 
   
-![Game Board Image](assets/readme-files/king-takes-pawn-bug.png)
+![King takes pawn bug](assets/readme-files/king-takes-pawn-bug.png)
 
 
 ### Code Validation
 
 * The [W3C Markup Validator](https://validator.w3.org/) and [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) and [JSHint](https://jshint.com/) services were used to validate all pages of the project in order to ensure there were no syntax errors.
 
+![JS HINT](assets/readme-files/js-hint.png)
+* These closures are intentionally defined within loops to associate each board square with its specific event handler, safely capturing the loop index and current game state.  
+* Extensive playtesting has verified that this approach works reliably without causing unexpected behavior, mitigating the theoretical lint concern.
 
 ### Tools Testing
 

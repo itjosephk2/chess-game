@@ -371,7 +371,7 @@ function checkForStalemate(playerColor) {
 
   const squares = document.getElementsByClassName('square');
 
-  if (isKingInCheck) {return false}
+  if (isKingInCheck) {return false;}
 
   if (!isKingInCheck(playerColor, chessboard, squares)) {
     for (let row = 0; row < 8; row++) {
@@ -709,7 +709,7 @@ function updateNotation(piece, squareIndex, moveCounter) {
  */
 document.addEventListener('DOMContentLoaded', function () {
   chessController.init();
-  
+
   // Show the Rules modal on load 
   const rulesModalEl = document.getElementById('rulesModal');
   if (rulesModalEl) {
