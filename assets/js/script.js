@@ -709,6 +709,12 @@ function updateNotation(piece, squareIndex, moveCounter) {
  */
 document.addEventListener('DOMContentLoaded', function () {
   chessController.init();
+  
+  // Show the Rules modal on load 
+  const rulesModalEl = document.getElementById('rulesModal');
+  if (rulesModalEl) {
+    new bootstrap.Modal(rulesModalEl).show();
+  }
 
   const winBtn = document.getElementById('winPlayAgainBtn');
   const stalemateBtn = document.getElementById('stalematePlayAgainBtn');
