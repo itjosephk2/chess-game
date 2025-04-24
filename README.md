@@ -315,9 +315,9 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 ## Finished Product
 
-When the page loads, the Rules modal appears by default; clicking the green **Play** button starts the game. Players then take turns selecting and moving their pieces on the board. The objective is to checkmate your opponent’s king—placing it under attack so that it has no legal moves to escape.
+When the page loads, the Rules modal appears by default; clicking the green **Play** button starts the game. Players then take turns selecting and moving their pieces on the board. The objective is to checkmate your opponent’s king by placing it under attack so that it has no legal moves to escape.
 
-![Finished Site](assets/readme-files/image.png)
+![Finished Site](assets/readme-files/start-state.png)
 ![Win State Modal](assets/readme-files/win-state.png)
 
 
