@@ -90,10 +90,7 @@ The main font used in the site is The site uses Roboto as the primary font, with
 
 Wire frames were drawn by hand to form a rough structural shape of the site and then each section was designed with pen and paper and mocked up with html and css befor implementation.
 
-
-
 [Back to top ⇧](#Chess-Game)
-
 
 ## Features
 
@@ -119,6 +116,37 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
   - This updates with the moves of the game in order they occur.
 
   - It dissapears on smaller viewports
+
+### Chess Rules
+![Chess Rules Image](assets/readme-files/chess-rules.png)
+
+* Chess Rules  
+  - Shows a list of all piece movements and special rules.  
+
+  - Accessible modal with focus trapping and keyboard support.  
+
+  - Green **Play** button starts the game and dismisses the modal.  
+
+### Win Modal
+![Win Modal Image](assets/readme-files/win-modal.png)
+
+* Win Modal  
+  - Shows “Checkmate!” title and dynamically inserts the winning side.  
+
+  - Presents the winner’s message in the modal body (`<p id="modalMessage">`).  
+
+  - Includes a **Play Again** button to reset the board and close the modal.  
+
+### Stalemate Modal
+![Stalemate Modal Image](assets/readme-files/draw-modal.png)
+
+* Stalemate Modal  
+  - Triggered when stalemate is detected.  
+
+  - Displays “Draw” title to inform players of the stalemate.  
+  
+  - Offers a **Play Again** button to restart the game and close the modal.  
+
  
 [Back to top ⇧](#Chess-Game)
 
@@ -193,8 +221,6 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
   
 ![Game Board Image](assets/readme-files/king-takes-pawn-bug.png)
-
-
 
 
 ### Code Validation
