@@ -178,18 +178,6 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 * The [W3C Markup Validator](https://validator.w3.org/) and [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) and [JSHint](https://jshint.com/) services were used to validate all pages of the project in order to ensure there were no syntax errors.
 
 
-### Accessibility
-
-* Lighthouse reports
-
-    * Landing Page Desktop
-    
-        - ![Lighthouse report for landing page Desktop image](assets/readme-files/desktop-lighthouse.png)
-   
-    * Landing Page mobile
-     
-        - ![Lighthouse report for landing page Mobile image](assets/readme-files/mobile-lighthouse.png)
-
 ### Tools Testing
 
 * [Firefox Developer Edition](https://www.mozilla.org/en-US/firefox/developer/)
