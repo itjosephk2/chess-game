@@ -142,7 +142,7 @@ const chessController = {
             selectedPiece.square = squares[i].dataset.square;
 
             if (isKingInCheck(isWhiteToMove ? 'white' : 'black', chessboard, squares)) {
-              alert('Check');
+              new bootstrap.Modal(document.getElementById('checkModal')).show();
 
               // Undo move
               chessboard[fromRow][fromCol] = selectedPiece;
@@ -169,6 +169,11 @@ const chessController = {
             changePlayerTurn();
 
             const currentPlayer = isWhiteToMove ? 'white' : 'black';
+
+            if (isKingInCheck(currentPlayer, chessboard, squares)) {
+              new bootstrap.Modal(document.getElementById('checkModal')).show();
+            }
+            
             if (isKingInCheck(currentPlayer, chessboard, squares)) {
               if (isCheckMate(currentPlayer, chessboard, squares)) {
                 const winner = isWhiteToMove ? 'Black' : 'White';
@@ -176,7 +181,7 @@ const chessController = {
                 return;
               }
             }
-
+            
             if (movedPiece.pieceType === 'pawn') {
               const promotionRank = movedPiece.color === 'white' ? 0 : 7;
               if (toRow === promotionRank) {
