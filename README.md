@@ -19,34 +19,40 @@ Visit the deployed website [here](https://itjosephk2.github.io/chess-game/)
 
 ## Table of Contents
 
-1. [User Experience (UX)](#user-experience-ux)  
-    1. [Project Goals](#project-goals)  
-    2. [User Requirements](#user-requirements)  
-    3. [Color Scheme](#color-scheme)  
-    4. [Typography](#typography)  
-    5. [Wireframes](#wireframes)  
-2. [Features](#features)  
-    1. [General](#general)  
-    2. [Game Board](#game-board)  
-    3. [Notation Board](#notation-board)  
-3. [Technologies Used](#technologies-used)  
-    1. [Languages Used](#languages-used)  
-    2. [Frameworks, Libraries and Programs Used](#frameworks-libraries-and-programs-used)  
-4. [Testing](#testing)  
-    1. [Testing User Stories](#testing-user-stories)  
-    2. [Code Validation](#code-validation)  
-    3. [Accessibility](#accessibility)  
-    4. [Tools Testing](#tools-testing)  
-    5. [Browser Compatibility](#browser-compatibility)  
-5. [Finished Product](#finished-product)  
-6. [Deployment](#deployment)  
-    1. [GitHub Pages](#github-pages)  
-7. [Credits](#credits)  
-    1. [Content](#content)  
-    2. [Media](#media)  
-    3. [Code](#code)  
-8. [Acknowledgements](#acknowledgements)  
+## Table of Contents
 
+1. [Current Limitations](#current-limitations)  
+2. [Planned Features](#planned-features)  
+3. [User Experience (UX)](#user-experience-ux)  
+   1. [Project Goals](#project-goals)  
+   2. [User Requirements](#user-requirements)  
+   3. [Color Scheme](#color-scheme)  
+   4. [Typography](#typography)  
+   5. [Wireframes](#wireframes)  
+4. [Features](#features)  
+   1. [General](#general)  
+   2. [index.html](#indexhtml)  
+   3. [Game Board](#game-board)  
+   4. [Notation Board](#notation-board)  
+5. [Technologies Used](#technologies-used)  
+   1. [Languages Used](#languages-used)  
+   2. [Frameworks, Libraries and Programs Used](#frameworks-libraries-and-programs-used)  
+6. [Testing](#testing)  
+   1. [Testing User Requirements](#testing-user-requirements)  
+   2. [Known Bugs](#known-bugs)  
+   3. [Code Validation](#code-validation)  
+   4. [Tools Testing](#tools-testing)  
+   5. [Browser Compatibility](#browser-compatibility)  
+   6. [Device Compatibility](#device-compatibility)  
+   7. [Common Elements Testing](#common-elements-testing)  
+7. [Finished Product](#finished-product)  
+8. [Deployment](#deployment)  
+   1. [GitHub Pages](#github-pages)  
+9. [Credits](#credits)  
+   1. [Content](#content)  
+   2. [Media](#media)  
+   3. [Code](#code)  
+10. [Acknowledgements](#acknowledgements)  
 
 ***
 
@@ -171,6 +177,21 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 * As a user, I want to see the notation of my game on screen
 
     - If the viewport is large enough the user can see their game notation.
+
+
+## Known Bugs
+
+1. **Stalemate detection failure**
+   - Description: The game does not correctly identify a stalemate when the player’s king has no legal moves remaining and no other piece can be moved.
+   - Expected behavior: When the side to move has no legal moves and is not in check, the game should declare a stalemate.
+   - Location: `checkForStalemate` function in `script.js`
+
+2. **False check on king capture of pawn with two-square move possibility**
+   - Description: The king is flagged as being in check when it attempts to capture a pawn that has the option of moving two squares on its initial move.
+   - Expected behavior: Capturing the pawn should be evaluated normally without incorrectly marking the king as in check.
+   - Location: `isKingInCheck` and pawn move logic in `isLegalPawnMove` / `checkifMoveIsLegal` in `script.js`
+
+
 
 
 ### Code Validation
