@@ -191,6 +191,9 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
    - Expected behavior: Capturing the pawn should be evaluated normally without incorrectly marking the king as in check.
    - Location: `isKingInCheck` and pawn move logic in `isLegalPawnMove` / `checkifMoveIsLegal` in `script.js`
 
+  
+![Game Board Image](assets/readme-files/king-takes-pawn-bug.png)
+
 
 
 
