@@ -144,7 +144,7 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
   - Triggered when stalemate is detected.  
 
   - Displays “Draw” title to inform players of the stalemate.  
-  
+
   - Offers a **Play Again** button to restart the game and close the modal.  
 
  
@@ -315,7 +315,11 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 ## Finished Product
 
+When the page loads, the Rules modal appears by default; clicking the green **Play** button starts the game. Players then take turns selecting and moving their pieces on the board. The objective is to checkmate your opponent’s king—placing it under attack so that it has no legal moves to escape.
+
 ![Finished Site](assets/readme-files/image.png)
+![Win State Modal](assets/readme-files/win-state.png)
+
 
 [Back to top ⇧](#Chess-Game)
 
