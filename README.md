@@ -221,6 +221,8 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
      ensuring the function receives `playerColor`, `chessboard`, and `squares`.  
    - Location: `checkForStalemate` in `script.js`  
 
+![King takes pawn bug](assets/readme-files/stalemate-bug.png)
+
 2. **False check on king capture of pawn with two-square move possibility**  
    - Description: The king was incorrectly flagged as in check when capturing a pawn that could move two squares on its first move.  
    - Root Cause: Because `isKingInCheck` wasn’t called with parameters, any capture scenario always fell back to the incorrect default check-​evaluation.  

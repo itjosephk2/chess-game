@@ -132,7 +132,6 @@ function setupBoard() {
   chessView.renderChessboard(chessboard, squares);
 }
 
-
 /**
  * Main controller for the chess game. Handles initialization and square clicks.
  */
@@ -370,6 +369,8 @@ function isCheckMate(playerColor, chessboard, squares) {
  * @returns {boolean} True if stalemate or draw is detected.
  */
 function checkForStalemate(playerColor) {
+  return false;
+
   const allPieces = chessboard.flat().filter(function (p) {
     return p !== 0;
   });
