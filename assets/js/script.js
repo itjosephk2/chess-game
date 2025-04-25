@@ -82,31 +82,6 @@ function resetBoard() {
   setupBoard();
 }
 
-function setupStalemateTestBoard() {
-  chessboard = Array(8).fill(null).map(() => Array(8).fill(0));
-  moveCounter = 1;
-
-  const whiteKing = new Piece('white', 'king', 0);
-  const blackQueen = new Piece('black', 'queen', 11); 
-  const blackKing = new Piece('black', 'king', 15); 
-
-  chessboard[0][0] = whiteKing;
-  chessboard[1][3] = blackQueen;
-  chessboard[1][7] = blackKing; 
-
-  isWhiteToMove = false;
-
-  const squares = document.getElementsByClassName("square");
-  for (let i = 0; i < squares.length; i++) {
-    squares[i].setAttribute("data-square", i);
-  }
-  chessView.renderChessboard(chessboard, squares);
-
-  if (checkForStalemate('white')) {
-    alert('Stalemate detected on game start!');
-  }
-}
-
 /**
  * Sets up a fresh board with all pieces in starting positions.
  */
@@ -169,7 +144,6 @@ const chessController = {
     const squares = document.getElementsByClassName('square');
 
     setupBoard();
-    setupStalemateTestBoard();
 
     for (let i = 0; i < squares.length; i++) {
       squares[i].addEventListener('click', function () {
