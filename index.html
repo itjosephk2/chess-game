@@ -454,14 +454,18 @@
 		</div>
 	</section>
   
-
 	<!-- Win Modal -->
 	<section class="modal fade" id="winModal" tabindex="-1" aria-labelledby="winModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content text-center">
 				<div class="modal-header">
 					<h5 class="modal-title" id="winModalLabel">Checkmate!</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button 
+					     type="button" 
+					     class="btn-close" 
+					     aria-label="Close"
+					     onclick="closeModalAndReset('winModal')">
+					</button>
 				</div>
 				<div class="modal-body">
 					<p id="modalMessage">White wins!</p>

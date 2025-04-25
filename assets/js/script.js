@@ -171,10 +171,6 @@ const chessController = {
             const currentPlayer = isWhiteToMove ? 'white' : 'black';
 
             if (isKingInCheck(currentPlayer, chessboard, squares)) {
-              new bootstrap.Modal(document.getElementById('checkModal')).show();
-            }
-            
-            if (isKingInCheck(currentPlayer, chessboard, squares)) {
               if (isCheckMate(currentPlayer, chessboard, squares)) {
                 const winner = isWhiteToMove ? 'Black' : 'White';
                 showWinModal(winner);
@@ -182,6 +178,10 @@ const chessController = {
               }
             }
             
+            if (isKingInCheck(currentPlayer, chessboard, squares)) {
+              new bootstrap.Modal(document.getElementById('checkModal')).show();
+            } 
+
             if (movedPiece.pieceType === 'pawn') {
               const promotionRank = movedPiece.color === 'white' ? 0 : 7;
               if (toRow === promotionRank) {
@@ -724,12 +724,14 @@ document.addEventListener('DOMContentLoaded', function () {
   const winBtn = document.getElementById('winPlayAgainBtn');
   const stalemateBtn = document.getElementById('stalematePlayAgainBtn');
 
+  // colse win modal after cta
   if (winBtn) {
     winBtn.addEventListener('click', function () {
       closeModalAndReset('winModal');
     });
   }
 
+  // close stalemate modal after cta 
   if (stalemateBtn) {
     stalemateBtn.addEventListener('click', function () {
       closeModalAndReset('stalemateModal');
