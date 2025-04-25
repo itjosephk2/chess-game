@@ -209,17 +209,24 @@ Wire frames were drawn by hand to form a rough structural shape of the site and 
 
 ## Known Bugs
 
-1. **Stalemate detection failure**
-   - Description: The game does not correctly identify a stalemate when the player’s king has no legal moves remaining and no other piece can be moved.
-   - Expected behavior: When the side to move has no legal moves and is not in check, the game should declare a stalemate.
-   - Location: `checkForStalemate` function in `script.js`
+1. **Stalemate detection failure**  
+   - Description: The game does not correctly identify a stalemate when the player’s king has no legal moves remaining and no other piece can be moved.  
+   - Root Cause: In the `checkForStalemate` function, the code used a bare reference to `isKingInCheck` without invoking it with the current board state, causing the condition to always evaluate incorrectly.  
+   - Fix: Updated the check to correctly call:  
+     ```js
+     if (isKingInCheck(playerColor, chessboard, squares)) {
+       return false;
+     }
+     ```
+     ensuring the function receives `playerColor`, `chessboard`, and `squares`.  
+   - Location: `checkForStalemate` in `script.js`  
 
-2. **False check on king capture of pawn with two-square move possibility**
-   - Description: The king is flagged as being in check when it attempts to capture a pawn that has the option of moving two squares on its initial move.
-   - Expected behavior: Capturing the pawn should be evaluated normally without incorrectly marking the king as in check.
-   - Location: `isKingInCheck` and pawn move logic in `isLegalPawnMove` / `checkifMoveIsLegal` in `script.js`
+2. **False check on king capture of pawn with two-square move possibility**  
+   - Description: The king was incorrectly flagged as in check when capturing a pawn that could move two squares on its first move.  
+   - Root Cause: Because `isKingInCheck` wasn’t called with parameters, any capture scenario always fell back to the incorrect default check-​evaluation.  
+   - Fix: The same invocation correction of `isKingInCheck(playerColor, chessboard, squares)` also resolved this bug, allowing accurate post-capture check detection. I honestly have no Idea why this is. 
+   - Location: `checkForStalemate` in `script.js`  
 
-  
 ![King takes pawn bug](assets/readme-files/king-takes-pawn-bug.png)
 
 
